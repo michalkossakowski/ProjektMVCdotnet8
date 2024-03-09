@@ -1,0 +1,58 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+
+<div class="container">
+  <div class="row">
+
+    <div class="col">
+            <h1 class="display-4">Contact</h1>
+            <form asp-controller="Home" asp-action="ThxForContact" method="post">
+                <div class="form-group">
+                    <label for="Email">E-mail:</label>
+                    <input type="email" id="Email" name="Email" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="Type">Wybierz typ zgłoszenia</label>
+                    <select id="Type" name="Type" class="form-control">
+                        <option>Znalazłem błąd</option>
+                        <option>Strona nie działa</option>
+                        <option>Propozycja zmian</option>
+                        <option>Chciałbym podzielić się swoją opinią</option>
+                        <option>Inne</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="Topic">Temat:</label>
+                    <input type="text" id="Topic" name="Topic" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="Message">Wiadomość:</label>
+                    <textarea id="Message" name="Message" class="form-control" rows="6" required></textarea>
+                </div>
+                <div style="margin-top: 10px">
+                    <button type="submit" class="btn btn-primary">Wyślij</button>
+                    <button type="reset" class="btn btn-default">Wyczyść</button>
+                </div>
+
+            </form>
+    </div>
+
+    <div class="col">
+            <h1 class="display-4">Częste problemy:</h1>
+
+            <div style=" margin-top: 30px">
+                <ul class="list-group">
+                    <li class="list-group-item">Nie moge połączyć się ze stroną</li>
+                    <li class="list-group-item">Dodawanie postów nie działa</li>
+                    <li class="list-group-item">Mój post zniknął</li>
+                    <li class="list-group-item">Nie moge zalogować się na konto</li>
+                </ul>
+            </div>
+          
+    </div>
+
+  </div>

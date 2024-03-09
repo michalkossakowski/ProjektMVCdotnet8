@@ -22,6 +22,15 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult ThxForContact(ContactModel model)
+        {
+            return View("ThxForContact", model);
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

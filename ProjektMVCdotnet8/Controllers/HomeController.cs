@@ -31,7 +31,6 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View("ThxForContact", model);
         }
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

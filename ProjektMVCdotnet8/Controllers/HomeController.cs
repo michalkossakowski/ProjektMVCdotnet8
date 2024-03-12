@@ -26,7 +26,18 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
-
+        public IActionResult Login()
+        {
+            return View();
+        }
+        public IActionResult Register()
+        {
+            return View();
+        }
+        public IActionResult PasswordRecovery()
+        {
+            return View();
+        }
         public IActionResult ThxForContact(ContactModel model)
         {
             return View("ThxForContact", model);

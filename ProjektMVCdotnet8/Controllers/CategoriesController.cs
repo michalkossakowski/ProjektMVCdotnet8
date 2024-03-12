@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjektMVCdotnet8.Models;
 
 namespace ProjektMVCdotnet8.Controllers
 {
@@ -9,17 +10,10 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
-        public IActionResult Elektronika()
+        public IActionResult Index(string CategoryName)
         {
-            return View("CategoryIndex");
-        }
-        public IActionResult Informatyka()
-        {
-            return View("CategoryIndex");
-        }
-        public IActionResult DYI()
-        {
-            return View("CategoryIndex");
+            ViewBag.CategoryName = CategoryName;
+            return View("CategoryIndex", CategoryName);
         }
     }
 }

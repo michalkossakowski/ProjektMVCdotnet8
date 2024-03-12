@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -33,9 +34,21 @@
                                 Categories
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="CategoryIndex">Elektronika</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="CategoryIndex">Informatyka</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-controller="Categories" asp-action="CategoryIndex">DYI</a></li>
+                                <li>
+                                    @Html.ActionLink("Elektronika", "Index", "Categories", new { CategoryName = "Elektronika" }, new { @class = "dropdown-item" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Programowanie", "Index", "Categories", new { CategoryName = "Programowanie" }, new { @class = "dropdown-item" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Komputery", "Index", "Categories", new { CategoryName = "Komputery" }, new { @class = "dropdown-item" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Spawanie", "Index", "Categories", new { CategoryName = "Spawanie" }, new { @class = "dropdown-item" })
+                                </li>
+                                <li>
+                                    @Html.ActionLink("Elektryka", "Index", "Categories", new { CategoryName = "Elektryka" }, new { @class = "dropdown-item" })
+                                </li>
                             </ul>
                         </li>
                     </ul>

@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Register";
+}
+<form method="post">
+    <h1>Rejestracja</h1>
+    <div>
+        <label for="newEmail">Email:</label>
+        <input type="email" id="newEmail" name="newEmail" required />
+    </div>
+    <div>
+        <label for="newPassword">Hasło:</label>
+        <input type="password" id="newPassword" name="newPassword" required />
+    </div>
+    <div>
+        <label for="confirmPassword">Potwierdź hasło:</label>
+        <input type="password" id="confirmPassword" name="confirmPassword" required />
+    </div>
+    <button type="submit">Zarejestruj się</button>
+</form>

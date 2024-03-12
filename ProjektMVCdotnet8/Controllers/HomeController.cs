@@ -34,6 +34,10 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
+        public IActionResult AddPost()
+        {
+            return View();
+        }
         public IActionResult PasswordRecovery()
         {
             return View();

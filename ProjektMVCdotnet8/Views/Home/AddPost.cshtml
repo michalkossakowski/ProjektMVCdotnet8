@@ -1,0 +1,54 @@
+﻿
+@{
+    ViewData["Title"] = "AddPost";
+}
+
+<h1>Dodaj Post</h1>
+<form method="post" class="row g-3 needs-validation" novalidate>
+    <div class="mb-3">
+        <label for="postTitle" class="form-label">Tytuł Postu</label>
+        <input type="text" class="form-control" id="postTitle" aria-describedby="emailHelp" required>
+        <div class="invalid-feedback">
+            Proszę podać tytuł postu!
+        </div>
+    </div>
+    <div class="form-check mb-3">
+        Wybierz kategorie postu.<br>
+        <input type="checkbox" class="btn-check" id="btn-check-outlined1" autocomplete="off" >
+        <label class="btn btn-outline-primary" for="btn-check-outlined1">Elektronika</label>
+
+        <input type="checkbox" class="btn-check" id="btn-check-outlined2" autocomplete="off" >
+        <label class="btn btn-outline-primary" for="btn-check-outlined2">Programowanie</label>
+
+        <input type="checkbox" class="btn-check" id="btn-check-outlined3" autocomplete="off" >
+        <label class="btn btn-outline-primary" for="btn-check-outlined3">Komputery</label>
+
+        <input type="checkbox" class="btn-check" id="btn-check-outlined4" autocomplete="off" >
+        <label class="btn btn-outline-primary" for="btn-check-outlined4">Sieci</label>
+
+        <input type="checkbox" class="btn-check" id="btn-check-outlined5" autocomplete="off" >
+        <label class="btn btn-outline-primary" for="btn-check-outlined5">Spawanie</label>
+
+        <input type="checkbox" class="btn-check" id="btn-check-outlined6" autocomplete="off" >
+        <label class="btn btn-outline-primary" for="btn-check-outlined6">Elektryka</label>
+        <div class="invalid-feedback">
+            proszę wybrac przynajmniej jedną kategorię.
+        </div>
+    </div>
+   
+
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Treść Postu</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="formFileMultiple" class="form-label"></label>
+        <label for="formFileMultiple" class="form-label">Dodaj załączniki</label>
+        <input class="form-control" type="file" id="formFileMultiple" multiple>
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="submit">Submit form</button>
+    </div>
+</form>
+

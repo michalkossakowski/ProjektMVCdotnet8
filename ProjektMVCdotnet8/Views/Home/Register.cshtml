@@ -1,19 +1,68 @@
 ﻿@{
     ViewData["Title"] = "Register";
 }
+
+<style>
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+        .form-group label {
+            display: block;
+        }
+
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="text"] {
+            width: 50%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+            .form-group input[type="email"]:focus,
+            .form-group input[type="password"]:focus,
+            .form-group input[type="text"]:focus {
+                outline: none;
+                border-color: #007bff;
+            }
+
+        .form-group button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+</style>
+
 <form method="post">
-    <h1>Rejestracja</h1>
-    <div>
+    <h1 class="display-4">Rejestracja</h1>
+    <div class="form-group">
         <label for="newEmail">Email:</label>
         <input type="email" id="newEmail" name="newEmail" required />
     </div>
-    <div>
+    <div class="form-group">
+        <label for="userName">Nazwa użytkownika:</label>
+        <input type="text" id="userName" name="userName" required />
+    </div>
+    <div class="form-group">
+        <label for="confirmEmail">Potwierdź email:</label>
+        <input type="email" id="confirmEmail" name="confirmEmail" required />
+    </div>
+    <div class="form-group">
         <label for="newPassword">Hasło:</label>
         <input type="password" id="newPassword" name="newPassword" required />
     </div>
-    <div>
+    <div class="form-group">
         <label for="confirmPassword">Potwierdź hasło:</label>
         <input type="password" id="confirmPassword" name="confirmPassword" required />
     </div>
-    <button type="submit">Zarejestruj się</button>
+    <div>
+        <button type="submit">Zarejestruj się</button>
+    </div>
 </form>

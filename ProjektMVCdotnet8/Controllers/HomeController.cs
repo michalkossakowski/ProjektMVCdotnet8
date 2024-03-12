@@ -46,7 +46,10 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View("ThxForContact", model);
         }
-
+        public IActionResult Chat()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -1,127 +1,47 @@
 ﻿@{
-    ViewBag.Title = "Chat";
+    ViewData["Title"] = "Chat";
 }
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        /* Podstawowe style */
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f6f6f6;
-            margin: 0;
-            padding: 0;
-        }
+<style>
+    .chat-container {
+        height: calc(85vh - 56px); /* 100% wysokości ekranu minus wysokość nagłówka */
+    }
 
-        .chat-container {
-            max-width: auto;
-            max-height: auto;
-            border: 2px solid #ddd;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+    .messages-container {
+        height: calc(85vh - 150px); /* Ustawienie wysokości na 100% wysokości okna minus 150px (wysokość nagłówka, stopki itp.) */
+        overflow-y: auto; /* Dodanie przewijania, jeśli zawartość przekracza wysokość */
+    }
+</style>
 
-        .chat-header {
-            background-color: #8A2BE2;
-            color: #fff;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .chat-content {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        .friends-list {
-            flex: 1;
-            padding: 10px;
-            background-color: #fff;
-            border-right: 1px solid #ddd;
-        }
-
-        .friend {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-            cursor: pointer;
-        }
-
-            .friend:hover {
-                background-color: #f6f6f6;
-            }
-
-        .chat-messages {
-            flex: 3;
-            padding: 10px;
-            background-color: #f9f9f9;
-            overflow-y: auto;
-        }
-
-        .message {
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-
-            .message .sender {
-                color: #8A2BE2;
-                font-weight: bold;
-            }
-
-            .message .text {
-                margin-top: 5px;
-            }
-
-        .chat-input {
-            flex: 1;
-            padding: 10px;
-            background-color: #ddd;
-            overflow-ye;
-        }
-
-        .send-btn {
-            width: 40px;
-            height: 40px;
-            border: none;
-            background-color: #8A2BE2;
-            color: #fff;
-            font-size: 20px;
-            cursor: pointer;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="chat-container">
-        <div class="chat-header">
-            Chat z Nazwa Osoby
-        </div>
-        <div class="chat-content">
-            <div class="friends-list">
-                <div class="friend">Znajomy 1</div>
-                <div class="friend">Znajomy 2</div>
-                <div class="friend">Znajomy 3</div>
+<div class="container-fluid flex-grow-1 chat-container">
+    <div class="row flex-grow-1">
+        <div class="col-md-3 bg-light border"> <!-- Dodana klasa border -->
+            <div class="list-group mt-3 h-100">
+                <a href="#" class="list-group-item list-group-item-action">Znajomy 1</a>
+                <a href="#" class="list-group-item list-group-item-action">Znajomy 2</a>
+                <a href="#" class="list-group-item list-group-item-action">Znajomy 3</a>
                 <!-- Lista znajomych -->
             </div>
-            <div class="chat-messages" id="chatMessages">
-                <!-- Wiadomości czatu -->
-            </div>
         </div>
-        <div class="input-group">
-            <input type="text" class="form-control chat-input" placeholder="Napisz wiadomość...">
-            <div class="input-group-append">
-                <button class="btn send-btn" type="button"><i class="fas fa-paper-plane"></i></button>
+        <div class="col-md-9">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
+                    Chat z Nazwa Osoby
+                </div>
+                <div class="card-footer">
+                    <div class="messages-container">
+                    </div>
+                    <div class="card-body overflow-auto">
+                        <!-- Wiadomości czatu -->
+                    </div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Napisz wiadomość...">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">Wyślij</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-</body>
-</html>
+</div>

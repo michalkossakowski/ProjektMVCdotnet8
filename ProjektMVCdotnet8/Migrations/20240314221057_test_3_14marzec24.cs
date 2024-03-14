@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class test_migracja_2_14_marzec_2024 : Migration
+    public partial class test_3_14marzec24 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -167,8 +167,8 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserIdId = table.Column<int>(type: "int", nullable: false),
-                    ChatIdId = table.Column<int>(type: "int", nullable: false),
+                    UsingUserId = table.Column<int>(type: "int", nullable: false),
+                    UsedChatId = table.Column<int>(type: "int", nullable: false),
                     MessageContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -176,14 +176,14 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     table.PrimaryKey("PK_MessageEntity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MessageEntity_ChatEntity_ChatIdId",
-                        column: x => x.ChatIdId,
+                        name: "FK_MessageEntity_ChatEntity_UsedChatId",
+                        column: x => x.UsedChatId,
                         principalTable: "ChatEntity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MessageEntity_UserEntity_UserIdId",
-                        column: x => x.UserIdId,
+                        name: "FK_MessageEntity_UserEntity_UsingUserId",
+                        column: x => x.UsingUserId,
                         principalTable: "UserEntity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -334,14 +334,14 @@ namespace ProjektMVCdotnet8.Migrations
                 column: "FollowingUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MessageEntity_ChatIdId",
+                name: "IX_MessageEntity_UsedChatId",
                 table: "MessageEntity",
-                column: "ChatIdId");
+                column: "UsedChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MessageEntity_UserIdId",
+                name: "IX_MessageEntity_UsingUserId",
                 table: "MessageEntity",
-                column: "UserIdId");
+                column: "UsingUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostEntity_AuthorUserId",

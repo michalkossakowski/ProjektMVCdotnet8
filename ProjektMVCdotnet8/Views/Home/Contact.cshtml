@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Contact";
 }
-
+@model ProjektMVCdotnet8.Entities.ContactEntity
 <div class="container">
   <div class="row">
 
@@ -14,8 +14,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Type">Wybierz typ zgłoszenia</label>
-                    <select id="Type" name="Type" class="form-control">
+                    <label for="ContactType">Wybierz typ zgłoszenia</label>
+                    <select id="ContactType" name="ContactType" class="form-control">
                         <option>Znalazłem błąd</option>
                         <option>Strona nie działa</option>
                         <option>Propozycja zmian</option>
@@ -30,14 +30,45 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="Message">Wiadomość:</label>
-                    <textarea id="Message" name="Message" class="form-control" rows="6" required></textarea>
+                    <label for="ContactContent">Wiadomość:</label>
+                    <textarea id="ContactContent" name="ContactContent" class="form-control" rows="6" required></textarea>
                 </div>
                 <div style="margin-top: 10px">
                     <button type="submit" class="btn btn-primary">Wyślij</button>
                     <button type="reset" class="btn btn-default">Wyczyść</button>
                 </div>
+            </form>
 
+            <form asp-controller="ContactEntities" asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Topic" class="control-label"></label>
+                    <input asp-for="Topic" class="form-control" />
+                    <span asp-validation-for="Topic" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactType" class="control-label"></label>
+                    <input asp-for="ContactType" class="form-control" />
+                    <span asp-validation-for="ContactType" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactContent" class="control-label"></label>
+                    <input asp-for="ContactContent" class="form-control" />
+                    <span asp-validation-for="ContactContent" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ContactDate" class="control-label"></label>
+                    <input asp-for="ContactDate" class="form-control" />
+                    <span asp-validation-for="ContactDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
             </form>
     </div>
 

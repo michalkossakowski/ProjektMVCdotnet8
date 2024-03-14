@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Entities;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240314195649_test_migracja_1_14_marzec_2024")]
-    partial class test_migracja_1_14_marzec_2024
+    [Migration("20240314204204_test_migracja_2_14_marzec_2024")]
+    partial class test_migracja_2_14_marzec_2024
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,10 +48,10 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BlockedUserId")
+                    b.Property<int>("BlockedUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BlockingUserId")
+                    b.Property<int>("BlockingUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -94,12 +94,6 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<int>("ChattingUser2Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("User1Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("User2Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChattingUser1Id");
@@ -117,9 +111,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AuthorUserId")
                         .HasColumnType("int");
 
@@ -132,9 +123,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -185,10 +173,10 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("FollowedUserId")
+                    b.Property<int>("FollowedUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FollowingUserId")
+                    b.Property<int>("FollowingUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -370,11 +358,15 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "BlockedUser")
                         .WithMany()
-                        .HasForeignKey("BlockedUserId");
+                        .HasForeignKey("BlockedUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "BlockingUser")
                         .WithMany()
-                        .HasForeignKey("BlockingUserId");
+                        .HasForeignKey("BlockingUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BlockedUser");
 
@@ -423,11 +415,15 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "FollowedUser")
                         .WithMany()
-                        .HasForeignKey("FollowedUserId");
+                        .HasForeignKey("FollowedUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "FollowingUser")
                         .WithMany()
-                        .HasForeignKey("FollowingUserId");
+                        .HasForeignKey("FollowingUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("FollowedUser");
 

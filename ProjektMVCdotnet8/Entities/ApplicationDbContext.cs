@@ -4,7 +4,7 @@ namespace ProjektMVCdotnet8.Entities
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
         public DbSet<BlockedUserEntity> BlockedUsers { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ChatEntity> Chats { get; set; }
@@ -30,6 +30,7 @@ namespace ProjektMVCdotnet8.Entities
             }
             base.OnModelCreating(mb);
         }
-       
+
     }
+
 }

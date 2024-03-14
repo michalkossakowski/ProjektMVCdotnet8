@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Entities;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240314204204_test_migracja_2_14_marzec_2024")]
-    partial class test_migracja_2_14_marzec_2024
+    [Migration("20240314221057_test_3_14marzec24")]
+    partial class test_3_14marzec24
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -196,9 +196,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChatIdId")
-                        .HasColumnType("int");
-
                     b.Property<string>("MessageContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -206,14 +203,17 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<DateTime>("SendDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserIdId")
+                    b.Property<int>("UsedChatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsingUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatIdId");
+                    b.HasIndex("UsedChatId");
 
-                    b.HasIndex("UserIdId");
+                    b.HasIndex("UsingUserId");
 
                     b.ToTable("MessageEntity");
                 });
@@ -432,21 +432,21 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.MessageEntity", b =>
                 {
-                    b.HasOne("ProjektMVCdotnet8.Entities.ChatEntity", "ChatId")
+                    b.HasOne("ProjektMVCdotnet8.Entities.ChatEntity", "UsedChat")
                         .WithMany()
-                        .HasForeignKey("ChatIdId")
+                        .HasForeignKey("UsedChatId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "UserId")
+                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "UsingUser")
                         .WithMany()
-                        .HasForeignKey("UserIdId")
+                        .HasForeignKey("UsingUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ChatId");
+                    b.Navigation("UsedChat");
 
-                    b.Navigation("UserId");
+                    b.Navigation("UsingUser");
                 });
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.PostEntity", b =>

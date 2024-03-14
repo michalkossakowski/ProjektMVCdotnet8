@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class test_migracja_1_14_marzec_2024 : Migration
+    public partial class test_migracja_2_14_marzec_2024 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,8 +66,8 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BlockedUserId = table.Column<int>(type: "int", nullable: true),
-                    BlockingUserId = table.Column<int>(type: "int", nullable: true)
+                    BlockingUserId = table.Column<int>(type: "int", nullable: false),
+                    BlockedUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,12 +76,14 @@ namespace ProjektMVCdotnet8.Migrations
                         name: "FK_BlockedUserEntity_UserEntity_BlockedUserId",
                         column: x => x.BlockedUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BlockedUserEntity_UserEntity_BlockingUserId",
                         column: x => x.BlockingUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,8 +92,6 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    User1Id = table.Column<int>(type: "int", nullable: true),
-                    User2Id = table.Column<int>(type: "int", nullable: true),
                     ChattingUser1Id = table.Column<int>(type: "int", nullable: false),
                     ChattingUser2Id = table.Column<int>(type: "int", nullable: false)
                 },
@@ -118,8 +118,8 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FollowingUserId = table.Column<int>(type: "int", nullable: true),
-                    FollowedUserId = table.Column<int>(type: "int", nullable: true)
+                    FollowingUserId = table.Column<int>(type: "int", nullable: false),
+                    FollowedUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,12 +128,14 @@ namespace ProjektMVCdotnet8.Migrations
                         name: "FK_FollowUserEntity_UserEntity_FollowedUserId",
                         column: x => x.FollowedUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FollowUserEntity_UserEntity_FollowingUserId",
                         column: x => x.FollowingUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -217,8 +219,6 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AuthorId = table.Column<int>(type: "int", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false),
                     AuthorUserId = table.Column<int>(type: "int", nullable: false),
                     CommentedPostId = table.Column<int>(type: "int", nullable: false),
                     CommentContent = table.Column<string>(type: "nvarchar(max)", nullable: false),

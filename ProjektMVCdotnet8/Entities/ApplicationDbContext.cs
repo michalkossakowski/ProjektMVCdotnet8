@@ -4,10 +4,7 @@ namespace ProjektMVCdotnet8.Entities
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) 
-        {
-            Init();
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
         public DbSet<BlockedUserEntity> BlockedUsers { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ChatEntity> Chats { get; set; }
@@ -34,20 +31,6 @@ namespace ProjektMVCdotnet8.Entities
             base.OnModelCreating(mb);
         }
 
-        // testowe dane do tabel
-        public void Init()
-        {
-            var newContactForm = new ContactEntity { Email = "John@jhonny.com", Topic = "Bardzo mocno pada", ContactType = "problem", ContactContent = "Wyszedł na dwór i padało", ContactDate = DateTime.Now };
-            ContactForms.Add(newContactForm);
-
-            var newContactForm2 = new ContactEntity { Email = "John2@jhonny.com", Topic = "Bardzo mocno pada", ContactType = "problem", ContactContent = "Wyszedł na dwór i padało", ContactDate = DateTime.Now };
-            ContactForms.Add(newContactForm2);
-
-
-            SaveChanges();
-            Console.WriteLine("Wykonano init bazy danych.");
-
-        }
     }
 
 }

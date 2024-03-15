@@ -45,10 +45,10 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("BlockedUserId")
+                    b.Property<int>("BlockedUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("BlockingUserId")
+                    b.Property<int>("BlockingUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -91,12 +91,6 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<int>("ChattingUser2Id")
                         .HasColumnType("int");
 
-                    b.Property<int?>("User1Id")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("User2Id")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChattingUser1Id");
@@ -114,9 +108,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
                     b.Property<int>("AuthorUserId")
                         .HasColumnType("int");
 
@@ -129,9 +120,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("PostId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -182,10 +170,10 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("FollowedUserId")
+                    b.Property<int>("FollowedUserId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("FollowingUserId")
+                    b.Property<int>("FollowingUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -205,9 +193,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChatIdId")
-                        .HasColumnType("int");
-
                     b.Property<string>("MessageContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -215,14 +200,17 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<DateTime>("SendDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserIdId")
+                    b.Property<int>("UsedChatId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsingUserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ChatIdId");
+                    b.HasIndex("UsedChatId");
 
-                    b.HasIndex("UserIdId");
+                    b.HasIndex("UsingUserId");
 
                     b.ToTable("MessageEntity");
                 });
@@ -367,11 +355,15 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "BlockedUser")
                         .WithMany()
-                        .HasForeignKey("BlockedUserId");
+                        .HasForeignKey("BlockedUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "BlockingUser")
                         .WithMany()
-                        .HasForeignKey("BlockingUserId");
+                        .HasForeignKey("BlockingUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("BlockedUser");
 
@@ -420,11 +412,15 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "FollowedUser")
                         .WithMany()
-                        .HasForeignKey("FollowedUserId");
+                        .HasForeignKey("FollowedUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "FollowingUser")
                         .WithMany()
-                        .HasForeignKey("FollowingUserId");
+                        .HasForeignKey("FollowingUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("FollowedUser");
 
@@ -433,21 +429,21 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.MessageEntity", b =>
                 {
-                    b.HasOne("ProjektMVCdotnet8.Entities.ChatEntity", "ChatId")
+                    b.HasOne("ProjektMVCdotnet8.Entities.ChatEntity", "UsedChat")
                         .WithMany()
-                        .HasForeignKey("ChatIdId")
+                        .HasForeignKey("UsedChatId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "UserId")
+                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "UsingUser")
                         .WithMany()
-                        .HasForeignKey("UserIdId")
+                        .HasForeignKey("UsingUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("ChatId");
+                    b.Navigation("UsedChat");
 
-                    b.Navigation("UserId");
+                    b.Navigation("UsingUser");
                 });
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.PostEntity", b =>

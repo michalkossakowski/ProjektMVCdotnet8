@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class test_migracja_1_14_marzec_2024 : Migration
+    public partial class test_3_14marzec24 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -66,8 +66,8 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BlockedUserId = table.Column<int>(type: "int", nullable: true),
-                    BlockingUserId = table.Column<int>(type: "int", nullable: true)
+                    BlockingUserId = table.Column<int>(type: "int", nullable: false),
+                    BlockedUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,12 +76,14 @@ namespace ProjektMVCdotnet8.Migrations
                         name: "FK_BlockedUserEntity_UserEntity_BlockedUserId",
                         column: x => x.BlockedUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_BlockedUserEntity_UserEntity_BlockingUserId",
                         column: x => x.BlockingUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -90,8 +92,6 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    User1Id = table.Column<int>(type: "int", nullable: true),
-                    User2Id = table.Column<int>(type: "int", nullable: true),
                     ChattingUser1Id = table.Column<int>(type: "int", nullable: false),
                     ChattingUser2Id = table.Column<int>(type: "int", nullable: false)
                 },
@@ -118,8 +118,8 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FollowingUserId = table.Column<int>(type: "int", nullable: true),
-                    FollowedUserId = table.Column<int>(type: "int", nullable: true)
+                    FollowingUserId = table.Column<int>(type: "int", nullable: false),
+                    FollowedUserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -128,12 +128,14 @@ namespace ProjektMVCdotnet8.Migrations
                         name: "FK_FollowUserEntity_UserEntity_FollowedUserId",
                         column: x => x.FollowedUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_FollowUserEntity_UserEntity_FollowingUserId",
                         column: x => x.FollowingUserId,
                         principalTable: "UserEntity",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,8 +167,8 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserIdId = table.Column<int>(type: "int", nullable: false),
-                    ChatIdId = table.Column<int>(type: "int", nullable: false),
+                    UsingUserId = table.Column<int>(type: "int", nullable: false),
+                    UsedChatId = table.Column<int>(type: "int", nullable: false),
                     MessageContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -174,14 +176,14 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     table.PrimaryKey("PK_MessageEntity", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_MessageEntity_ChatEntity_ChatIdId",
-                        column: x => x.ChatIdId,
+                        name: "FK_MessageEntity_ChatEntity_UsedChatId",
+                        column: x => x.UsedChatId,
                         principalTable: "ChatEntity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_MessageEntity_UserEntity_UserIdId",
-                        column: x => x.UserIdId,
+                        name: "FK_MessageEntity_UserEntity_UsingUserId",
+                        column: x => x.UsingUserId,
                         principalTable: "UserEntity",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -217,8 +219,6 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AuthorId = table.Column<int>(type: "int", nullable: false),
-                    PostId = table.Column<int>(type: "int", nullable: false),
                     AuthorUserId = table.Column<int>(type: "int", nullable: false),
                     CommentedPostId = table.Column<int>(type: "int", nullable: false),
                     CommentContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -334,14 +334,14 @@ namespace ProjektMVCdotnet8.Migrations
                 column: "FollowingUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MessageEntity_ChatIdId",
+                name: "IX_MessageEntity_UsedChatId",
                 table: "MessageEntity",
-                column: "ChatIdId");
+                column: "UsedChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_MessageEntity_UserIdId",
+                name: "IX_MessageEntity_UsingUserId",
                 table: "MessageEntity",
-                column: "UserIdId");
+                column: "UsingUserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostEntity_AuthorUserId",

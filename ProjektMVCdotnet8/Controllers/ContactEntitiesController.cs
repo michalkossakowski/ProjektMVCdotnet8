@@ -60,7 +60,8 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 _context.Add(contactEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ThxForContact", "Home",contactEntity);
+                //return RedirectToAction(nameof(Index));
             }
             return View(contactEntity);
         }

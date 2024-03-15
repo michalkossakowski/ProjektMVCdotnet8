@@ -53,13 +53,15 @@ namespace ProjektMVCdotnet8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Email,Topic,ContactType,ContactContent,ContactDate")] ContactEntity contactEntity)
+        public async Task<IActionResult> Create([Bind("Id,Email,Topic,ContactType,ContactContent")] ContactEntity contactEntity)
         {
+            contactEntity.ContactDate = DateTime.Now;
             if (ModelState.IsValid)
             {
                 _context.Add(contactEntity);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("ThxForContact", "Home",contactEntity);
+                //return RedirectToAction(nameof(Index));
             }
             return View(contactEntity);
         }

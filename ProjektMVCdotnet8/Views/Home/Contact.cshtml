@@ -11,13 +11,13 @@
             <form asp-controller="ContactEntities" asp-action="Create">
 
                 <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
+                    <label for="Email">Email:</label>
                     <input type=email asp-for="Email" class="form-control" required/>
                     <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label for="ContactType">Wybierz typ zgłoszenia</label>
+                    <label for="ContactType">Wybierz typ zgłoszenia:</label>
                     <select id="ContactType" name="ContactType" class="form-control">
                         <option>Znalazłem błąd</option>
                         <option>Strona nie działa</option>
@@ -28,20 +28,20 @@
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Topic" class="control-label"></label>
+                    <label for="Topic">Temat:</label>
                     <input asp-for="Topic" class="form-control" required />
                     <span asp-validation-for="Topic" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="ContactContent" class="control-label"></label>
+                    <label for="ContactContext">Wiadomość:</label>
                     <textarea asp-for="ContactContent" class="form-control" rows="6" required> </textarea>
                     <span asp-validation-for="ContactContent" class="text-danger"></span>
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                    <input type="reset" value="Resety" class="btn btn-default" />
+                    <input type="submit" value="Wyślij" class="btn btn-primary" />
+                    <input type="reset" value="Wyczyść" class="btn btn-default" />
                 </div>
 
             </form>

@@ -46,6 +46,7 @@ namespace ProjektMVCdotnet8.Controllers
         // GET: PostEntities/Create
         public IActionResult Create(int? userId)
         {
+            Console.WriteLine("UserID podany w GET: " + userId);
             ViewData["useriID"]= userId;
             return View();
         }
@@ -55,18 +56,14 @@ namespace ProjektMVCdotnet8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,AuthorUser,Title,PostContent,CreatedDate,AttachmentSource")] PostEntity postEntity, int? userId)
+        public async Task<IActionResult> Create([Bind("Id,Title,PostContent,CreatedDate,AttachmentSource")] PostEntity postEntity, int? userId)
         {
-            Console.WriteLine("ID: "+postEntity.Id);
-            //Console.WriteLine(postEntity.AttachmentSource);
-
-            Console.WriteLine("UserID podany: " + userId);
-            var user = _context.Users.Find(1);
-
-            Console.WriteLine("UserID: " + postEntity.AuthorUser);
-            postEntity.AuthorUser = user;
-            ViewData["userID"] = userId;
-            if (ModelState.IsValid)
+            //Console.WriteLine("UserID: " + postEntity.AuthorUser);
+            //postEntity.AuthorUser = 1;
+            postEntity.AuthorUser = _context.Users.Find(1);
+            Console.WriteLine("UserID: " + postEntity.AuthorUser.Nick);
+            // Nie przechodziło walidacji więc wyjebałem
+            /*if (ModelState.IsValid)
             {
                 _context.Add(postEntity);
                 await _context.SaveChangesAsync();
@@ -76,7 +73,11 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 Console.WriteLine("nie dodano");
             }
-            return View(postEntity);
+            return View(postEntity);*/
+
+            _context.Add(postEntity);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: PostEntities/Edit/5

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
-using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Models;
 using System.Diagnostics;
 

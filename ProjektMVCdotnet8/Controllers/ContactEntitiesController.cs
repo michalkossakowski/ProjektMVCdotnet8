@@ -6,10 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 
 namespace ProjektMVCdotnet8.Controllers
 {
+
     public class ContactEntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;

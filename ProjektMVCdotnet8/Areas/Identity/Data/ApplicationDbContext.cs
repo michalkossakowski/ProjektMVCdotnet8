@@ -1,10 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using ProjektMVCdotnet8.Entities;
 
-namespace ProjektMVCdotnet8.Entities
+namespace ProjektMVCdotnet8.Areas.Identity.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) {}
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<BlockedUserEntity> BlockedUsers { get; set; }
         public DbSet<CategoryEntity> Categories { get; set; }
         public DbSet<ChatEntity> Chats { get; set; }

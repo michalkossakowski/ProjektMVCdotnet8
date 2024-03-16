@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Areas.Identity.Data;
+
 namespace ProjektMVCdotnet8.ViewComponents
 {
     public class CategoryMenuViewComponent : ViewComponent

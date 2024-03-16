@@ -1,4 +1,6 @@
-﻿namespace ProjektMVCdotnet8.Entities
+﻿using ProjektMVCdotnet8.Areas.Identity.Data;
+
+namespace ProjektMVCdotnet8.Entities
 {
     public class ReactionEntity
     {

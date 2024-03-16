@@ -74,7 +74,7 @@ namespace ProjektMVCdotnet8.Controllers
             //postEntity.Id = postModel.Id;
             postEntity.Title = postModel.Title;
             postEntity.PostContent = postModel.PostContent;
-            var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");
+            var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");// tu zmieniajcie mail
             postEntity.AuthorUser = user;
             postEntity.CreatedDate = DateTime.Now;
             Console.WriteLine(postModel.AttachmentSource);

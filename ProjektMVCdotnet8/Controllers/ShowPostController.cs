@@ -7,12 +7,12 @@ using ProjektMVCdotnet8.Models;
 
 namespace ProjektMVCdotnet8.Controllers
 {
-    public class CategoriesController : Controller
+    public class ShowPostController : Controller
     {
 
         private readonly ApplicationDbContext _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public ShowPostController(ApplicationDbContext context)
         {
             _context = context;
 
@@ -21,10 +21,10 @@ namespace ProjektMVCdotnet8.Controllers
                 CreateElements();
             }
         }
-        public IActionResult Index(string CategoryName)
+        public async Task<IActionResult> Index(string CategoryName)
         {
-            ViewBag.CategoryName = CategoryName;
-            return View("Index", CategoryName);
+            var posts = _context.Posts.Where(post => post.Categories.Any(category => category.CategoryName.Equals(CategoryName))).ToList();
+            return View("Index", posts);
         }
 
         //Rekordy testowe ----Usunąć w finalnej wersji----

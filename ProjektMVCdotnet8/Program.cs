@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Entities;
+using Microsoft.AspNetCore.Identity;
+using ProjektMVCdotnet8.Data;
 
 namespace ProjektMVCdotnet8
 {
@@ -10,6 +12,8 @@ namespace ProjektMVCdotnet8
             var builder = WebApplication.CreateBuilder(args);
             
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<AuthDbContext>();
             
             // Add services to the container.
             builder.Services.AddControllersWithViews();

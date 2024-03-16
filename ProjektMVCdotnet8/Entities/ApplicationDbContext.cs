@@ -15,7 +15,7 @@ namespace ProjektMVCdotnet8.Entities
         public DbSet<PostEntity> Posts { get; set; }
         public DbSet<ReactionEntity> Reactions { get; set; }
         public DbSet<ReportPostEntity> ReportPosts { get; set; }
-        public DbSet<UserEntity> Users { get; set; } // tymaczasowo
+        //public DbSet<UserEntity> Users { get; set; } // tymaczasowo
 
         // umożliwia dwa pola tej samej customowej klasy w tabeli
         protected override void OnModelCreating(ModelBuilder mb)

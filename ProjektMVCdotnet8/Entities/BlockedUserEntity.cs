@@ -3,7 +3,7 @@
     public class BlockedUserEntity
     {
         public int Id { get; set; }
-        public UserEntity BlockingUser { get; set; }
-        public UserEntity BlockedUser { get; set; }
+        //public UserEntity BlockingUser { get; set; }
+        //public UserEntity BlockedUser { get; set; }
     }
 }

@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240316203824_nowy_user_16marzec24")]
-    partial class nowy_user_16marzec24
+    [Migration("20240316222950_16marzec24")]
+    partial class _16marzec24
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -40,7 +40,34 @@ namespace ProjektMVCdotnet8.Migrations
                     b.ToTable("CategoryEntityPostEntity (Dictionary<string, object>)");
                 });
 
-            modelBuilder.Entity("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,25 +75,126 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Avatar")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
-
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -79,14 +207,12 @@ namespace ProjektMVCdotnet8.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -97,13 +223,6 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -111,11 +230,20 @@ namespace ProjektMVCdotnet8.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserEntity");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.BlockedUserEntity", b =>
@@ -126,11 +254,11 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("BlockedUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("BlockedUserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("BlockingUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("BlockingUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -166,11 +294,11 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ChattingUser1Id")
-                        .HasColumnType("int");
+                    b.Property<string>("ChattingUser1Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("ChattingUser2Id")
-                        .HasColumnType("int");
+                    b.Property<string>("ChattingUser2Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -189,8 +317,8 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AuthorUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("AuthorUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CommentContent")
                         .IsRequired()
@@ -251,11 +379,11 @@ namespace ProjektMVCdotnet8.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("FollowedUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("FollowedUserId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("FollowingUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("FollowingUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -284,8 +412,8 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<int>("UsedChatId")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsingUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UsingUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -308,8 +436,8 @@ namespace ProjektMVCdotnet8.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("AuthorUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("AuthorUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
@@ -340,8 +468,8 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<int>("ReactedPostId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ReactingUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("ReactingUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("ReactionName")
                         .IsRequired()
@@ -393,19 +521,66 @@ namespace ProjektMVCdotnet8.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.BlockedUserEntity", b =>
                 {
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "BlockedUser")
                         .WithMany()
-                        .HasForeignKey("BlockedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("BlockedUserId");
 
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "BlockingUser")
                         .WithMany()
-                        .HasForeignKey("BlockingUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("BlockingUserId");
 
                     b.Navigation("BlockedUser");
 
@@ -416,15 +591,11 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "ChattingUser1")
                         .WithMany()
-                        .HasForeignKey("ChattingUser1Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ChattingUser1Id");
 
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "ChattingUser2")
                         .WithMany()
-                        .HasForeignKey("ChattingUser2Id")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ChattingUser2Id");
 
                     b.Navigation("ChattingUser1");
 
@@ -435,9 +606,7 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "AuthorUser")
                         .WithMany()
-                        .HasForeignKey("AuthorUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("AuthorUserId");
 
                     b.HasOne("ProjektMVCdotnet8.Entities.PostEntity", "CommentedPost")
                         .WithMany()
@@ -454,15 +623,11 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "FollowedUser")
                         .WithMany()
-                        .HasForeignKey("FollowedUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("FollowedUserId");
 
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "FollowingUser")
                         .WithMany()
-                        .HasForeignKey("FollowingUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("FollowingUserId");
 
                     b.Navigation("FollowedUser");
 
@@ -479,9 +644,7 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "UsingUser")
                         .WithMany()
-                        .HasForeignKey("UsingUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("UsingUserId");
 
                     b.Navigation("UsedChat");
 
@@ -492,9 +655,7 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "AuthorUser")
                         .WithMany()
-                        .HasForeignKey("AuthorUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("AuthorUserId");
 
                     b.Navigation("AuthorUser");
                 });
@@ -509,9 +670,7 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "ReactingUser")
                         .WithMany()
-                        .HasForeignKey("ReactingUserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("ReactingUserId");
 
                     b.Navigation("ReactedPost");
 

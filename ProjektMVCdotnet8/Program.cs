@@ -42,7 +42,6 @@ namespace ProjektMVCdotnet8
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
             app.Run();
-
         }
     }
 }

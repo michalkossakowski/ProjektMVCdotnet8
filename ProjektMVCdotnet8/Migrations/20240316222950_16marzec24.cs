@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:ProjektMVCdotnet8/Migrations/20240316222950_16marzec24.cs
     public partial class _16marzec24 : Migration
+========
+    public partial class posty : Migration
+>>>>>>>> Tworzenie-postow-z-zdjeciami:ProjektMVCdotnet8/Migrations/20240316212703_posty.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -269,7 +273,7 @@ namespace ProjektMVCdotnet8.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AttachmentSource = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    AttachmentSource = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {

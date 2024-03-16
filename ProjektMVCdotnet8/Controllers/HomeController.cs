@@ -1,4 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
+using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Models;
 using System.Diagnostics;
 
@@ -6,13 +9,13 @@ namespace ProjektMVCdotnet8.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger , ApplicationDbContext context)
         {
             _logger = logger;
         }
-
         public IActionResult Index()
         {
             return View();

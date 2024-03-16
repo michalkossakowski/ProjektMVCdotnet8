@@ -34,21 +34,7 @@
                                 Categories
                             </a>
                             <ul class="dropdown-menu">
-                                <li>
-                                    @Html.ActionLink("Elektronika", "Index", "Categories", new { CategoryName = "Elektronika" }, new { @class = "dropdown-item" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("Programowanie", "Index", "Categories", new { CategoryName = "Programowanie" }, new { @class = "dropdown-item" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("Komputery", "Index", "Categories", new { CategoryName = "Komputery" }, new { @class = "dropdown-item" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("Spawanie", "Index", "Categories", new { CategoryName = "Spawanie" }, new { @class = "dropdown-item" })
-                                </li>
-                                <li>
-                                    @Html.ActionLink("Elektryka", "Index", "Categories", new { CategoryName = "Elektryka" }, new { @class = "dropdown-item" })
-                                </li>
+                                @await Component.InvokeAsync("CategoryMenu")
                             </ul>
                         </li>
                         <li class="nav-item">

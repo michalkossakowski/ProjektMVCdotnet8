@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Areas.Identity.Data;
+
+
 
 #nullable disable
 

@@ -5,12 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Areas.Identity.Data;
+
+
 
 #nullable disable
 
 namespace ProjektMVCdotnet8.Migrations
 {
+
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20240314221057_test_3_14marzec24")]
     partial class test_3_14marzec24

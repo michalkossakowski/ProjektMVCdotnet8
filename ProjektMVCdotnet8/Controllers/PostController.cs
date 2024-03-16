@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Models;
+using ProjektMVCdotnet8.Areas.Identity.Data;
 
 namespace ProjektMVCdotnet8.Controllers
 {

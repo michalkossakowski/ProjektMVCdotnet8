@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using ProjektMVCdotnet8.Entities;
+using Microsoft.AspNetCore.Identity;
+using ProjektMVCdotnet8.Areas.Identity.Data;
 
 namespace ProjektMVCdotnet8
 {
@@ -8,12 +9,17 @@ namespace ProjektMVCdotnet8
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            var connectionString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connectionString));
+
+            builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDbContext>(); // na ten moment false, bo jeszcze nie ma potwierdzenia
             
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddRazorPages();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -34,6 +40,7 @@ namespace ProjektMVCdotnet8
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
+            app.MapRazorPages();
             app.Run();
 
         }

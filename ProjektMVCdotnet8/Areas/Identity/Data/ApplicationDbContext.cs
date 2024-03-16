@@ -5,7 +5,7 @@ using ProjektMVCdotnet8.Entities;
 
 namespace ProjektMVCdotnet8.Areas.Identity.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<UserEntity>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
         public DbSet<BlockedUserEntity> BlockedUsers { get; set; }
@@ -18,7 +18,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
         public DbSet<PostEntity> Posts { get; set; }
         public DbSet<ReactionEntity> Reactions { get; set; }
         public DbSet<ReportPostEntity> ReportPosts { get; set; }
-        public DbSet<UserEntity> Users { get; set; } // tymaczasowo
+        public DbSet<UserEntity> Users { get; set; } 
 
         // umożliwia dwa pola tej samej customowej klasy w tabeli
         protected override void OnModelCreating(ModelBuilder mb)

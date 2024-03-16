@@ -37,6 +37,7 @@ namespace ProjektMVCdotnet8.Migrations
                     b.ToTable("CategoryEntityPostEntity (Dictionary<string, object>)");
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -178,10 +179,20 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
+=======
+            modelBuilder.Entity("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
 
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+<<<<<<< HEAD
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -189,10 +200,28 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+=======
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+<<<<<<< HEAD
+=======
+                    b.Property<DateTime>("JoinDate")
+                        .HasColumnType("datetime2");
+
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -204,12 +233,23 @@ namespace ProjektMVCdotnet8.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
+<<<<<<< HEAD
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
+=======
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -220,6 +260,16 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+<<<<<<< HEAD
+=======
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -227,6 +277,7 @@ namespace ProjektMVCdotnet8.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+<<<<<<< HEAD
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -241,6 +292,13 @@ namespace ProjektMVCdotnet8.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+=======
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserEntity");
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
                 });
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.BlockedUserEntity", b =>
@@ -520,7 +578,11 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
+<<<<<<< HEAD
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+=======
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "BlockedUser")
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -553,7 +615,11 @@ namespace ProjektMVCdotnet8.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+<<<<<<< HEAD
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", null)
+=======
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "BlockingUser")
+>>>>>>> 92710e91b22b767df82cc23001c247bb786508b9
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

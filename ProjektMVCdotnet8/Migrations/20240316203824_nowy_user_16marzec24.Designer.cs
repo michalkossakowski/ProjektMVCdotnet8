@@ -7,16 +7,13 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 
-
-
 #nullable disable
 
 namespace ProjektMVCdotnet8.Migrations
 {
-
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240314221057_test_3_14marzec24")]
-    partial class test_3_14marzec24
+    [Migration("20240316203824_nowy_user_16marzec24")]
+    partial class nowy_user_16marzec24
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,6 +38,84 @@ namespace ProjektMVCdotnet8.Migrations
                     b.HasIndex("PostsId");
 
                     b.ToTable("CategoryEntityPostEntity (Dictionary<string, object>)");
+                });
+
+            modelBuilder.Entity("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("JoinDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Nick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Points")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserEntity");
                 });
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.BlockedUserEntity", b =>
@@ -303,45 +378,6 @@ namespace ProjektMVCdotnet8.Migrations
                     b.ToTable("ReportPostEntity");
                 });
 
-            modelBuilder.Entity("ProjektMVCdotnet8.Entities.UserEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Avatar")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("JoinDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Nick")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Role")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserEntity");
-                });
-
             modelBuilder.Entity("CategoryEntityPostEntity", b =>
                 {
                     b.HasOne("ProjektMVCdotnet8.Entities.CategoryEntity", null)
@@ -359,13 +395,13 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.BlockedUserEntity", b =>
                 {
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "BlockedUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "BlockedUser")
                         .WithMany()
                         .HasForeignKey("BlockedUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "BlockingUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "BlockingUser")
                         .WithMany()
                         .HasForeignKey("BlockingUserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -378,13 +414,13 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.ChatEntity", b =>
                 {
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "ChattingUser1")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "ChattingUser1")
                         .WithMany()
                         .HasForeignKey("ChattingUser1Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "ChattingUser2")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "ChattingUser2")
                         .WithMany()
                         .HasForeignKey("ChattingUser2Id")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -397,7 +433,7 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.CommentEntity", b =>
                 {
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "AuthorUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "AuthorUser")
                         .WithMany()
                         .HasForeignKey("AuthorUserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -416,13 +452,13 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.FollowUserEntity", b =>
                 {
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "FollowedUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "FollowedUser")
                         .WithMany()
                         .HasForeignKey("FollowedUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "FollowingUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "FollowingUser")
                         .WithMany()
                         .HasForeignKey("FollowingUserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -441,7 +477,7 @@ namespace ProjektMVCdotnet8.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "UsingUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "UsingUser")
                         .WithMany()
                         .HasForeignKey("UsingUserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -454,7 +490,7 @@ namespace ProjektMVCdotnet8.Migrations
 
             modelBuilder.Entity("ProjektMVCdotnet8.Entities.PostEntity", b =>
                 {
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "AuthorUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "AuthorUser")
                         .WithMany()
                         .HasForeignKey("AuthorUserId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -471,7 +507,7 @@ namespace ProjektMVCdotnet8.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("ProjektMVCdotnet8.Entities.UserEntity", "ReactingUser")
+                    b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "ReactingUser")
                         .WithMany()
                         .HasForeignKey("ReactingUserId")
                         .OnDelete(DeleteBehavior.Restrict)

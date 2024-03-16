@@ -1,0 +1,7 @@
+﻿@model IEnumerable<ProjektMVCdotnet8.Entities.CategoryEntity>
+@foreach (var element in Model)
+{
+    <li>
+        @Html.ActionLink(element.CategoryName, "Index", "ShowPost", new { CategoryName = element.CategoryName }, new { @class = "dropdown-item" })
+    </li>
+}

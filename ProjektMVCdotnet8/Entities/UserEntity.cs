@@ -12,6 +12,5 @@
         public DateTime JoinDate { get; set; }
         public string Avatar {  get; set; }
         public int Points { get; set; } // my musimy dodać reszta jest w identity
-
     }
 }

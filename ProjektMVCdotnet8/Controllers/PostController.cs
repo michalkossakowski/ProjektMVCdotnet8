@@ -7,12 +7,12 @@ using ProjektMVCdotnet8.Models;
 
 namespace ProjektMVCdotnet8.Controllers
 {
-    public class ShowPostController : Controller
+    public class PostController : Controller
     {
 
         private readonly ApplicationDbContext _context;
 
-        public ShowPostController(ApplicationDbContext context)
+        public PostController(ApplicationDbContext context)
         {
             _context = context;
         }

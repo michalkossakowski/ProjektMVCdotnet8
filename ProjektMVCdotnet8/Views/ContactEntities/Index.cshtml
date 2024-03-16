@@ -5,9 +5,7 @@
 }
 
 <h1 class="display-4">Próby Kontaktu:</h1>
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
@@ -48,9 +46,10 @@
                 @Html.DisplayFor(modelItem => item.ContactDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <ul class="list-group">
+                        <li class="list-group-item"> <a asp-action="Details" asp-route-id="@item.Id" class="link-primary">Szczegóły</a></li>
+                        <li class="list-group-item"><a asp-action="Delete" asp-route-id="@item.Id" class="link-danger">Oznacz jako obsłużone</a></li>
+                    </ul> 
             </td>
         </tr>
 }

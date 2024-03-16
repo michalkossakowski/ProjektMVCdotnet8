@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Entities;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240314221057_test_3_14marzec24")]
-    partial class test_3_14marzec24
+    [Migration("20240316212703_posty")]
+    partial class posty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -227,7 +227,6 @@ namespace ProjektMVCdotnet8.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AttachmentSource")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("AuthorUserId")

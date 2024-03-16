@@ -1,54 +1,44 @@
-﻿
+﻿@model ProjektMVCdotnet8.Models.PostModel
 @{
     ViewData["Title"] = "AddPost";
 }
 
 <h1>Dodaj Post</h1>
-<form method="post" class="row g-3 needs-validation" novalidate>
-    <div class="mb-3">
-        <label for="postTitle" class="form-label">Tytuł Postu</label>
-        <input type="text" class="form-control" id="postTitle" aria-describedby="emailHelp" required>
-        <div class="invalid-feedback">
-            Proszę podać tytuł postu!
-        </div>
+<form asp-controller="PostEntities" asp-action="Create" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
     </div>
-    <div class="form-check mb-3">
+    @* <div class="form-check mb-3">
         Wybierz kategorie postu.<br>
-        <input type="checkbox" class="btn-check" id="btn-check-outlined1" autocomplete="off" >
-        <label class="btn btn-outline-primary" for="btn-check-outlined1">Elektronika</label>
+        @foreach (var category in Model.Categories)
+        {
+            <input type="checkbox" name="SelectedCategories" value="@category.Id" />
+            <label>@category.CategoryName</label>
 
-        <input type="checkbox" class="btn-check" id="btn-check-outlined2" autocomplete="off" >
-        <label class="btn btn-outline-primary" for="btn-check-outlined2">Programowanie</label>
-
-        <input type="checkbox" class="btn-check" id="btn-check-outlined3" autocomplete="off" >
-        <label class="btn btn-outline-primary" for="btn-check-outlined3">Komputery</label>
-
-        <input type="checkbox" class="btn-check" id="btn-check-outlined4" autocomplete="off" >
-        <label class="btn btn-outline-primary" for="btn-check-outlined4">Sieci</label>
-
-        <input type="checkbox" class="btn-check" id="btn-check-outlined5" autocomplete="off" >
-        <label class="btn btn-outline-primary" for="btn-check-outlined5">Spawanie</label>
-
-        <input type="checkbox" class="btn-check" id="btn-check-outlined6" autocomplete="off" >
-        <label class="btn btn-outline-primary" for="btn-check-outlined6">Elektryka</label>
+            <br />
+        }
         <div class="invalid-feedback">
             proszę wybrac przynajmniej jedną kategorię.
         </div>
-    </div>
+    </div> *@
    
 
-    <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Treść Postu</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+    <div class="form-group">
+        <label asp-for="PostContent" class="control-label"></label>
+        <input asp-for="PostContent" class="form-control" />
+        <span asp-validation-for="PostContent" class="text-danger"></span>
     </div>
-    <div class="mb-3">
-        <label for="formFileMultiple" class="form-label"></label>
-        <label for="formFileMultiple" class="form-label">Dodaj załączniki</label>
-        <input class="form-control" type="file" id="formFileMultiple" multiple>
+    <div class="form-group">
+        <label asp-for="AttachmentSource" class="control-label"></label>
+        <input asp-for="AttachmentSource" class="form-control" accept="image/*"/>
+        <span asp-validation-for="AttachmentSource" class="text-danger" ></span>
     </div>
 
-    <div class="col-12">
-        <button class="btn btn-primary" type="submit">Submit form</button>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-primary" />
     </div>
 </form>
 

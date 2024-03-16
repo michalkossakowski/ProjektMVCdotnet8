@@ -75,6 +75,8 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 CategoryEntity category = new CategoryEntity();
                 category.CategoryName = "Elektronika";
+                
+
                 _context.Add(category);
 
                 category = new CategoryEntity();

@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:ProjektMVCdotnet8/Migrations/20240316222950_16marzec24.cs
-    public partial class _16marzec24 : Migration
-========
-    public partial class posty : Migration
->>>>>>>> Tworzenie-postow-z-zdjeciami:ProjektMVCdotnet8/Migrations/20240316212703_posty.cs
+    public partial class _17marzec : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

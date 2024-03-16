@@ -12,6 +12,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Threading.Tasks;
+using ProjektMVCdotnet8.Areas.Identity.Data;
+using System.Runtime.ConstrainedExecution;
 
 namespace ProjektMVCdotnet8.Controllers
 {
@@ -72,7 +74,8 @@ namespace ProjektMVCdotnet8.Controllers
             //postEntity.Id = postModel.Id;
             postEntity.Title = postModel.Title;
             postEntity.PostContent = postModel.PostContent;
-            postEntity.AuthorUser = _context.Users.Find(1); 
+            var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");
+            postEntity.AuthorUser = user;
             postEntity.CreatedDate = DateTime.Now;
             Console.WriteLine(postModel.AttachmentSource);
             if (postModel.AttachmentSource != null && postModel.AttachmentSource.Length > 0)

@@ -1,4 +1,5 @@
-﻿using ProjektMVCdotnet8.Entities;
+﻿using ProjektMVCdotnet8.Areas.Identity.Data;
+using ProjektMVCdotnet8.Entities;
 
 namespace ProjektMVCdotnet8.Models
 {

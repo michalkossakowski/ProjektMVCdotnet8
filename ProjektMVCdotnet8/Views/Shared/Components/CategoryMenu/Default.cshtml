@@ -2,6 +2,6 @@
 @foreach (var element in Model)
 {
     <li>
-        @Html.ActionLink(element.CategoryName, "Index", "ShowPost", new { CategoryName = element.CategoryName }, new { @class = "dropdown-item" })
+        @Html.ActionLink(element.CategoryName, "Index", "Post", new { CategoryName = element.CategoryName }, new { @class = "dropdown-item" })
     </li>
 }

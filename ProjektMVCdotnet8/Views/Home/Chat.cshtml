@@ -13,11 +13,35 @@
         height: calc(85vh - 150px); /* Ustawienie wysokości na 100% wysokości okna minus 150px (wysokość nagłówka, stopki itp.) */
         overflow-y: auto; /* Dodanie przewijania, jeśli zawartość przekracza wysokość */
     }
+
+    .message-box {
+        background-color: #f0f0f0;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .message-row {
+        display: flex;
+        flex-direction: row-reverse; /* Wyświetlanie wiadomości od prawej do lewej */
+    }
+
+    .message-content {
+        margin-left: auto; /* Wyśrodkowanie treści wiadomości */
+        padding: 10px;
+    }
+
+    .message-date {
+        margin-left: auto; /* Wyśrodkowanie daty */
+        color: #777;
+        font-size: 12px;
+    }
 </style>
 
 <div class="container-fluid flex-grow-1 chat-container">
     <div class="row flex-grow-1">
-        <div class="col-md-3 bg-light border"> <!-- Dodana klasa border -->
+        <div class="col-md-3 bg-light border">
+            <!-- Dodana klasa border -->
             <div class="list-group mt-3 h-100">
                 <a href="#" class="list-group-item list-group-item-action">Znajomy 1</a>
                 <a href="#" class="list-group-item list-group-item-action">Znajomy 2</a>
@@ -26,33 +50,46 @@
             </div>
         </div>
         <div class="col-md-9">
-            <div class="card h-100">
+            <div class="card h-80">
                 <div class="card-header bg-primary text-white">
-                    Chat z Nazwa Osoby
+                    Chat z Weryk
                 </div>
                 <div class="card-footer">
-                    <div class="messages-container">
+                    <div class="messages-container" id="messagesContainer">
+                        <!-- Wyswietlanie wiadomosci -->
+                        @foreach (var item in Model)
+                        {
+                            <div class="message-row">
+                                <div class="message-box">
+                                    <div class="message-content">
+                                        <strong>@item.MessageContent</strong>
+                                    </div>
+                                    <div class="message-date">
+                                        <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
+                                    </div>
+                                </div>
+                            </div>
+                        }
                     </div>
-                    <div class="card-body overflow-auto">
-                        <!-- Wiadomości czatu -->
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MessageContent)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.SendDate)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Napisz wiadomość...">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">Wyślij</button>
-                        </div>
+                    <div class="d-flex align-items-center justify-content-between mt-3">
+                        <!-- Wysylanie wiadomosci -->
+                        <form id="sendMessageForm" method="post" asp-controller="MessageEntities" asp-action="Create" class="d-flex flex-grow-1">
+                            <div class="form-group mb-0 flex-grow-1 mr-3">
+                                <input asp-for="@Model.ElementAt(0).MessageContent" class="form-control" value="" placeholder="Napisz wiadomość..." required />
+                                <input type="submit" value="Wyślij" class="btn btn-primary mt-2" />
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    // Po załadowaniu strony
+    window.onload = function () {
+        // Przewiń do dołu
+        var messagesContainer = document.getElementById("messagesContainer");
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
+</script>

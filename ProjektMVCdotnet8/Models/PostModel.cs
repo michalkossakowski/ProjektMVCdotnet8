@@ -11,9 +11,9 @@ namespace ProjektMVCdotnet8.Models
         public string PostContent { get; set; }
         public DateTime CreatedDate { get; set; }
         public IFormFile AttachmentSource { get; set; }
-        public List<CategoryModel> Categories = new List<CategoryModel>();
+        public List<CategoryEntity> Categories = new List<CategoryEntity>();
 
-        public PostModel() 
+/*        public PostModel() 
         {
             CategoryModel categoryModel = new CategoryModel();
             categoryModel.CategoryName = "Elektronika";
@@ -41,6 +41,6 @@ namespace ProjektMVCdotnet8.Models
             categoryModel.CategoryName = "Elektryka";
             categoryModel.Id = 6;
             Categories.Add(categoryModel);
-        }
+        }*/
     }
 }

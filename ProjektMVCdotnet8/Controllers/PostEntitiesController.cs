@@ -77,7 +77,6 @@ namespace ProjektMVCdotnet8.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");// tu zmieniajcie mail
             postEntity.AuthorUser = user;
             postEntity.CreatedDate = DateTime.Now;
-            Console.WriteLine(postModel.AttachmentSource);
             if (postModel.AttachmentSource != null && postModel.AttachmentSource.Length > 0)
             {
                 string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "attachments");
@@ -95,14 +94,18 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 postEntity.AttachmentSource = null;
             }
-
-            foreach (CategoryModel category in postModel.Categories)
+            postEntity.Categories = new List<CategoryEntity>();
+            var selectedCategoryIds = Request.Form["SelectedCategories"].ToList();
+            foreach (var categoryId in selectedCategoryIds)
             {
-                if (category.isSelected)
+                var category = _context.Categories.FirstOrDefault(c => c.Id == int.Parse(categoryId));
+                if (category != null)
                 {
-                    postEntity.Categories.Add(_context.Categories.Find(category.Id));
+                    postEntity.Categories.Add(category);
                 }
             }
+            
+            Console.WriteLine(selectedCategoryIds.Count);
 
 
             _context.Add(postEntity);

@@ -61,10 +61,17 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View("ThxForContact", model);
         }
+/*        
         public IActionResult Chat()
         {
             return View();
         }
+*/
+        public async Task<IActionResult> Chat()
+        {
+            return View(await _context.Messages.ToListAsync());
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
@@ -73,7 +80,7 @@ namespace ProjektMVCdotnet8.Controllers
 
         public async void CreateElements()
         {
-            if (_context.Categories.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, je¿eli tak to tworzy elementy do tablicy
+            if (_context.Categories.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, jeï¿½eli tak to tworzy elementy do tablicy
             {
                 if (ModelState.IsValid)
                 {

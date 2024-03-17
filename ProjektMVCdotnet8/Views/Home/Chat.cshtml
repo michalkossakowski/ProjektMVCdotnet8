@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<ProjektMVCdotnet8.Entities.MessageEntity>
 
+
+
 @{
     ViewData["Title"] = "Chat";
 }
@@ -26,30 +28,35 @@
             </div>
         </div>
         <div class="col-md-9">
-            <div class="card h-100">
+            <div class="card h-80">
                 <div class="card-header bg-primary text-white">
                     Chat z Nazwa Osoby
                 </div>
                 <div class="card-footer">
                     <div class="messages-container">
+                        <!-- Wyswietlanie wiadomosci -->
+                        @foreach (var item in Model)
+                        {
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MessageContent)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.SendDate)
+                            </td>
+                            <br></br>
+                        }
                     </div>
-                    <div class="card-body overflow-auto">
-                        <!-- Wiadomości czatu -->
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.MessageContent)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.SendDate)
-                            </th>
-                            <th></th>
-                        </tr>
-                    </div>
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Napisz wiadomość...">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">Wyślij</button>
-                        </div>
+                    <div>
+                        <!-- Wysylanie wiadomosci -->
+                        @{
+                            <form method="post" asp-controller="MessageEntities" asp-action="Create">
+                                <div class="form-group">
+                                    <label asp-for="@Model.ElementAt(0).MessageContent" class="control-label">Treść wiadomości</label>
+                                    <input asp-for="@Model.ElementAt(0).MessageContent" class="form-control" required />
+                                    <input type="submit" value="Wyślij" class="btn btn-primary" />
+                                </div>
+                            </form>
+                        }
                     </div>
                 </div>
             </div>

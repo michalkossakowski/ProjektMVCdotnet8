@@ -63,7 +63,8 @@ namespace ProjektMVCdotnet8.Controllers
             messageEntity.SendDate = DateTime.Now;
             _context.Add(messageEntity);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Chat", "Home", messageEntity); // przekierowuje do chatu
+            //return RedirectToAction(nameof(Index)); // przekierowuje do indexa z message
             /*if (ModelState.IsValid)
             {
                 _context.Add(messageEntity);

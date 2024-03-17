@@ -44,6 +44,13 @@ namespace ProjektMVCdotnet8.Controllers
         }
         public IActionResult AddPost()
         {
+            List<CategoryEntity> nameCategory = new List<CategoryEntity>();
+            foreach(var el in _context.Categories)
+            {
+                nameCategory.Add(el);
+            }
+            
+            ViewBag.nameCategory = nameCategory;
             return View();
         }
         public IActionResult PasswordRecovery()

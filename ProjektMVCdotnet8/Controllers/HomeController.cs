@@ -61,9 +61,14 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View("ThxForContact", model);
         }
-        public IActionResult Chat()
+/*        public IActionResult Chat()
         {
             return View();
+        }*/
+
+        public async Task<IActionResult> Chat()
+        {
+            return View(await _context.Messages.ToListAsync());
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

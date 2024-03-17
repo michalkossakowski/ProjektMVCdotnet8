@@ -77,43 +77,38 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    CategoryEntity category = new CategoryEntity();
-                    category.CategoryName = "Elektronika";
+                    CategoryEntity category = new CategoryEntity("Elektronika");
                     _context.Add(category);
 
-                    category = new CategoryEntity();
-                    category.CategoryName = "Programowanie";
+                    category = new CategoryEntity("Programowanie");
                     _context.Add(category);
 
-                    category = new CategoryEntity();
-                    category.CategoryName = "Komputery";
+                    category = new CategoryEntity("Komputery");
                     _context.Add(category);
 
-                    category = new CategoryEntity();
-                    category.CategoryName = "Sieci";
+                    category = new CategoryEntity("Sieci");
                     _context.Add(category);
 
-                    category = new CategoryEntity();
-                    category.CategoryName = "Spawanie";
+                    category = new CategoryEntity("Spawanie");
                     _context.Add(category);
 
-                    category = new CategoryEntity();
-                    category.CategoryName = "Elektryka";
+                    category = new CategoryEntity("Elektryka");
                     _context.Add(category);
                     await _context.SaveChangesAsync();
                 }
             }
-            else if (_context.Posts.IsNullOrEmpty()) 
+            else if (_context.Posts.IsNullOrEmpty())
             {
-                PostEntity postEntity = new PostEntity();
-                postEntity.Title = "Tytul testowy";
-                postEntity.PostContent = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In porta luctus efficitur. Aenean ultricies leo ut ante placerat fermentum. Mauris rhoncus lacus non urna consectetur euismod. Curabitur aliquam orci ipsum, eget vestibulum ligula egestas vitae. Aliquam vel suscipit nisi. Aenean massa nibh, luctus sit amet nulla et, tincidunt eleifend diam. Quisque nec nulla tempor, posuere lectus vel, rutrum velit. Pellentesque tincidunt justo quis facilisis viverra.";
-                var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");// tu zmieniajcie mail
-                postEntity.AuthorUser = user;
-                postEntity.CreatedDate = DateTime.Now;
-                postEntity.AttachmentSource = "./wwwroot//attachments//f8286b0a-fcfa-44c3-a63d-cb5e15947f6b_WolfAttack5.png";
-                postEntity.Categories = new List<CategoryEntity>() {new CategoryEntity("Spawanie"), new CategoryEntity("Sieci") };
-                _context.Add(postEntity);
+                var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");
+                PostEntity posts = new PostEntity();
+                var categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie")).ToList();
+                posts.AuthorUser = user;
+                posts.Title = "Tytul_1";
+                posts.PostContent = "lorem ipsum w gipsum";
+                posts.CreatedDate = DateTime.Now;
+                posts.Categories = categories;
+                _context.Add(posts);
+                posts.AttachmentSource = ("29a5ddb2-5544-4fdd-993c-5139fd04d0e4_WolfAttack5.png");
                 await _context.SaveChangesAsync();
             }
         }

@@ -12,7 +12,7 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240317175643_test123")]
+    [Migration("20240317181246_test123")]
     partial class test123
     {
         /// <inheritdoc />

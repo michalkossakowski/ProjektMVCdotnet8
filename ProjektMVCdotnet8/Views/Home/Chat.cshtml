@@ -33,7 +33,7 @@
                     Chat z Nazwa Osoby
                 </div>
                 <div class="card-footer">
-                    <div class="messages-container">
+                    <div class="messages-container" id="messagesContainer">
                         <!-- Wyswietlanie wiadomosci -->
                         @foreach (var item in Model)
                         {
@@ -63,3 +63,11 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    window.onload = function() {
+        var messagesContainer = document.getElementById("messagesContainer");
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+    };
+</script>

@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Areas.Identity.Data;
@@ -15,7 +14,7 @@ namespace ProjektMVCdotnet8.Controllers
 
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger , ApplicationDbContext context)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
             _context = context;
@@ -45,11 +44,11 @@ namespace ProjektMVCdotnet8.Controllers
         public IActionResult AddPost()
         {
             List<CategoryEntity> nameCategory = new List<CategoryEntity>();
-            foreach(var el in _context.Categories)
+            foreach (var el in _context.Categories)
             {
                 nameCategory.Add(el);
             }
-            
+
             ViewBag.nameCategory = nameCategory;
             return View();
         }
@@ -61,10 +60,10 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View("ThxForContact", model);
         }
-/*        public IActionResult Chat()
-        {
-            return View();
-        }*/
+        /*        public IActionResult Chat()
+                {
+                    return View();
+                }*/
 
         public async Task<IActionResult> Chat()
         {
@@ -78,6 +77,16 @@ namespace ProjektMVCdotnet8.Controllers
 
         public async void CreateElements()
         {
+            if (_context.Users.IsNullOrEmpty())
+            {
+                UserEntity userEntity = new UserEntity();
+                userEntity.Email="WERYKTEST@PL";
+                userEntity.Nick = "WerykSon";
+                userEntity.UserName = "Weryk";
+                userEntity.PasswordHash = "ZAQ!2wsx";
+                _context.Add(userEntity);
+                await _context.SaveChangesAsync();
+            }
             if (_context.Categories.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, je¿eli tak to tworzy elementy do tablicy
             {
                 if (ModelState.IsValid)
@@ -102,7 +111,7 @@ namespace ProjektMVCdotnet8.Controllers
                     await _context.SaveChangesAsync();
                 }
             }
-            else if (_context.Posts.IsNullOrEmpty())
+            if (_context.Posts.IsNullOrEmpty())
             {
                 var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");
                 var categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie")).ToList();

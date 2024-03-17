@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<ProjektMVCdotnet8.Entities.MessageEntity>
+
+@{
     ViewData["Title"] = "Chat";
 }
 
@@ -33,6 +35,15 @@
                     </div>
                     <div class="card-body overflow-auto">
                         <!-- Wiadomości czatu -->
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.MessageContent)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.SendDate)
+                            </th>
+                            <th></th>
+                        </tr>
                     </div>
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="Napisz wiadomość...">

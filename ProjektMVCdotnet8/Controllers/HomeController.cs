@@ -1,7 +1,11 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Areas.Identity.Data;
+using ProjektMVCdotnet8.Areas.Identity.Pages.Account;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Models;
 using System.Diagnostics;
@@ -10,6 +14,8 @@ namespace ProjektMVCdotnet8.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPasswordHasher<UserEntity> has = new PasswordHasher<UserEntity> ();
+
         private readonly ApplicationDbContext _context;
 
         private readonly ILogger<HomeController> _logger;
@@ -83,8 +89,10 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.Email="user@test";
                 userEntity.UserName = "testuser";
                 userEntity.NormalizedUserName = "TESTUSER";
-                userEntity.PasswordHash = "to_haslo_nie_ma_dzialac";
                 userEntity.Nick = "testuser";
+                var hashedPassword = has.HashPassword(userEntity, "zaq1@WSX");
+                userEntity.PasswordHash = hashedPassword;
+
                 _context.Users.Add(userEntity);
                 await _context.SaveChangesAsync();
             }

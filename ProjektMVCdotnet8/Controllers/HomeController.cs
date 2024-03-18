@@ -205,9 +205,7 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(messageEntity);
 
                 await _context.SaveChangesAsync();
-
             }
         }
-
     }
 }

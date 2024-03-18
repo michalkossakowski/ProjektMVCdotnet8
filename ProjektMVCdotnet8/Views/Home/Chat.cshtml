@@ -57,8 +57,14 @@
                 <div class="card-footer">
                     <div class="messages-container" id="messagesContainer">
                         <!-- Wyswietlanie wiadomosci -->
-                        @foreach (var item in Model)
-                        {
+                        @{
+                            bool first = true;
+                            foreach (var item in Model)
+                            {
+                                if(first==true){
+                                    first = false;
+                                    continue;
+                                }
                             <div class="message-row">
                                 <div class="message-box">
                                     <div class="message-content">
@@ -69,6 +75,7 @@
                                     </div>
                                 </div>
                             </div>
+                            }
                         }
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-3">

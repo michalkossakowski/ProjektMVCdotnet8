@@ -103,7 +103,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.PasswordHash = hashedPassword;
                 _context.Users.Add(userEntity);
 
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             if (_context.Categories.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, je¿eli tak to tworzy elementy do tablicy
             {
@@ -126,7 +126,7 @@ namespace ProjektMVCdotnet8.Controllers
 
                     category = new CategoryEntity("Elektryka");
                     _context.Add(category);
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
             }
             if (_context.Posts.IsNullOrEmpty())
@@ -156,7 +156,7 @@ namespace ProjektMVCdotnet8.Controllers
                 posts = new PostEntity(user, "Lisa Al Gaib, Prince of Arrakis", "In the mystical world of Racoonia, where shifting sands whispered secrets and ancient prophecies danced on the wind, there existed a peculiar raccoon named Lisa al-Gaib. Her story was woven into the very fabric of the desert planet Arrakis, a place where sandstorms painted the skies and hidden wonders lay beneath the dunes.\r\n\r\nThe Chronicles of Lisa al-Gaib: Raccoon Messiah\r\n1. The Whispering Sands:\r\nLisa al-Gaib was no ordinary raccoon. Born under the crescent moon, her fur bore the hues of sunsets—amber, russet, and gold. The Fremen, native inhabitants of Arrakis, believed her to be the Lisan al-Gaib—the “Voice from the Outer World.”\r\nThe prophecy spoke of a savior, an outsider destined to lead the Fremen to salvation. Lisa’s masked eyes held ancient wisdom, and her paws traced constellations in the shifting sands.\r\n2. The Acorn of Destiny:\r\nOne scorching day, Lisa stumbled upon an acorn unlike any other. It glimmered with starlight, and its whispers echoed through her dreams. The Fremen gathered, chanting her name: “Lisan al-Gaib!”\r\nGuided by the acorn’s glow, Lisa embarked on a quest. She climbed dunes, crossed salt flats, and danced with mirages. Each step revealed a fragment of her purpose.\r\n3. The Trials of the Dunes:\r\nLisa faced trials that tested her raccoon heart. She outwitted sandworms, negotiated with spice traders, and brewed potions from cactus blooms. Her tail flicked like a compass, pointing toward destiny.\r\nStilgar, a grizzled Fremen leader, watched her. His eyes held reverence and doubt. “Is she truly the Lisan al-Gaib?” he wondered.\r\n4. The Bene Gesserit’s Web:\r\nThe Bene Gesserit, a sisterhood of powerful beings, wove their machinations. Lady Jessica, Lisa’s mother, whispered secrets in the wind. “Your daughter is the One,” she told Stilgar.\r\nLisa’s paws traced the ancient glyphs of the Portal Oak, the gateway between worlds. To prove her messianic status, she must perform feats: steal moonlight, balance on a single paw, and recite riddles to sandstorms.\r\n5. The Moonlit Masquerade:\r\nAt the grand Moonlit Masquerade, Lisa donned a cloak of stardust. She danced with Stilgar, who marveled at her every move. “The Lisan al-Gaib!” he exclaimed, mistaking her twirl for cosmic magic.\r\nThe stars whispered, “You are the bridge between realms, Lisa. Your raccoon heart holds the universe.”\r\n6. The Final Glyph:\r\nBeneath the Portal Oak, Lisa faced her ultimate trial. The desert winds carried riddles:\r\n“What has roots as deep as the dunes?”\r\n“What blooms when hope fades?”\r\n“What is the truest treasure?”\r\nLisa answered: “Friendship, resilience, and acorns.”\r\nThe portal shimmered. Lisa stepped through, her tail trailing stardust.\r\nAnd so, Lisa al-Gaib became the raccoon messiah—the Voice from the Outer World. Her legend echoed across Arrakis, whispered by sandstorms and etched into the hearts of Fremen. Whether she returned to her forest home or remained among the dunes, her pawprints remained—a constellation of hope.", AttachmentSource, categories);
                 _context.Add(posts);
 
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
             //contact init jak puste
             if (_context.ContactForms.IsNullOrEmpty())
@@ -203,7 +203,7 @@ namespace ProjektMVCdotnet8.Controllers
                     contact.ContactDate = DateTime.Now;
                     _context.Add(contact);
 
-                    await _context.SaveChangesAsync();
+                    _context.SaveChanges();
                 }
             }
             //chat + wiadomość init jak puste
@@ -221,7 +221,7 @@ namespace ProjektMVCdotnet8.Controllers
                 messageEntity.UsingUser = user;
                 _context.Add(messageEntity);
 
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
             }
         }
     }

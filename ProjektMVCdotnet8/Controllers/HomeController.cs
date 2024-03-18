@@ -80,10 +80,10 @@ namespace ProjektMVCdotnet8.Controllers
             if (_context.Users.IsNullOrEmpty())
             {
                 UserEntity userEntity = new UserEntity();
-                userEntity.Email="user@test";
+                userEntity.Email= "test@user";
                 userEntity.UserName = "testuser";
                 userEntity.NormalizedUserName = "TESTUSER";
-                userEntity.PasswordHash = "to_haslo_nie_ma_dzialac";
+                userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "testuser";
                 _context.Users.Add(userEntity);
                 await _context.SaveChangesAsync();
@@ -199,7 +199,7 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(chatEntity);
 
                 MessageEntity messageEntity = new MessageEntity();
-                messageEntity.MessageContent = "Rozpoczęcie chatu !!! Wiadomość kontrolna";
+                messageEntity.MessageContent = "Rozpoczęcie chatu";
                 messageEntity.UsedChat = chatEntity;
                 messageEntity.UsingUser = user;
                 _context.Add(messageEntity);

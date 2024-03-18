@@ -86,14 +86,23 @@ namespace ProjektMVCdotnet8.Controllers
             if (_context.Users.IsNullOrEmpty())
             {
                 UserEntity userEntity = new UserEntity();
-                userEntity.Email="user@test";
+                userEntity.Email= "test@user";
                 userEntity.UserName = "testuser";
                 userEntity.NormalizedUserName = "TESTUSER";
+                userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "testuser";
-                var hashedPassword = has.HashPassword(userEntity, "zaq1@WSX");
-                userEntity.PasswordHash = hashedPassword;
 
                 _context.Users.Add(userEntity);
+
+                userEntity = new UserEntity();
+                userEntity.Email = "test2@user";
+                userEntity.UserName = "test2user";
+                userEntity.NormalizedUserName = "TEST2USER";
+                userEntity.Nick = "test2user";
+                var hashedPassword = has.HashPassword(userEntity, "zaq1@WSX");
+                userEntity.PasswordHash = hashedPassword;
+                _context.Users.Add(userEntity);
+
                 await _context.SaveChangesAsync();
             }
             if (_context.Categories.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, je¿eli tak to tworzy elementy do tablicy
@@ -207,7 +216,7 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(chatEntity);
 
                 MessageEntity messageEntity = new MessageEntity();
-                messageEntity.MessageContent = "Rozpoczęcie chatu !!! Wiadomość kontrolna";
+                messageEntity.MessageContent = "Rozpoczęcie chatu";
                 messageEntity.UsedChat = chatEntity;
                 messageEntity.UsingUser = user;
                 _context.Add(messageEntity);

@@ -81,7 +81,6 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 UserEntity userEntity = new UserEntity();
                 userEntity.Email="WERYKTEST@PL";
-                userEntity.Nick = "WerykSon";
                 userEntity.UserName = "Weryk";
                 userEntity.PasswordHash = "ZAQ!2wsx";
                 _context.Add(userEntity);

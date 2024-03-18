@@ -19,12 +19,6 @@ namespace ProjektMVCdotnet8.Controllers
         public ContactEntitiesController(ApplicationDbContext context)
         {
             _context = context;
-
-            // tworzenie przykaldowych danych
-            if (_context.ContactForms.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, jeżeli tak to tworzy elementy do tablicy
-            {
-                CreateElements();
-            }
         }
 
         // GET: ContactEntities
@@ -162,54 +156,6 @@ namespace ProjektMVCdotnet8.Controllers
         private bool ContactEntityExists(int id)
         {
             return _context.ContactForms.Any(e => e.Id == id);
-        }
-        //Rekordy testowe ----Usunąć w finalnej wersji----
-        public async Task CreateElements()
-        {
-            if (ModelState.IsValid)
-            {
-                ContactEntity contact = new ContactEntity();
-                contact.Email = "joe@mama.com";
-                contact.Topic = "Nie jestem moderatorem a widze panel moderatora";
-                contact.ContactType = "Znalazłem błąd";
-                contact.ContactContent = "Wydaję mi się że to trochę niebezpieczne ale bede korzystał póki mogę";
-                contact.ContactDate = DateTime.Now;
-                _context.Add(contact);
-
-                contact = new ContactEntity();
-                contact.Email = "niewidomyMaciek@onet.pl";
-                contact.Topic = "Nic nie widzę";
-                contact.ContactType = "Strona nie działa";
-                contact.ContactContent = "Wchodzę na stronę a tu ciemno, dobrze że mogę kliknąć w formularz kontaktowy";
-                contact.ContactDate = DateTime.Now;
-                _context.Add(contact);
-
-                contact = new ContactEntity();
-                contact.Email = "WrumWruom@bmw.pl";
-                contact.Topic = "Powinniście dodać coś o samochodach";
-                contact.ContactType = "Propozycja zmian";
-                contact.ContactContent = "Uwielbiam wasze forum ale przydała by się kategoria motoryzacja muszę zapytać się o poradę jak wstwić nowy silnik do mojego 30 letniego bmw bo stary niestety uległ awari";
-                contact.ContactDate = DateTime.Now;
-                _context.Add(contact);
-
-                contact = new ContactEntity();
-                contact.Email = "GrzegorzHejter@wp.pl";
-                contact.Topic = "Obrzydliwa czcionka";
-                contact.ContactType = "Chciałbym podzielić się swoją opinią";
-                contact.ContactContent = "Uważam że wasza strona powinna zmienić czcionkę na comic sans jest taka mięciutka i miła w czytaniu a to co jest teraz to skandal";
-                contact.ContactDate = DateTime.Now;
-                _context.Add(contact);
-
-                contact = new ContactEntity();
-                contact.Email = "cojarobietutaj@sanah.kabanosy";
-                contact.Topic = "Zastanawialiście się kiedyś jak samkuje drewno";
-                contact.ContactType = "Inne";
-                contact.ContactContent = "No właśnie ja też nie";
-                contact.ContactDate = DateTime.Now;
-                _context.Add(contact);
-
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

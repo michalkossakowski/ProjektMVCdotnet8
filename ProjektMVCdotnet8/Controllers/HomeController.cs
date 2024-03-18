@@ -80,11 +80,11 @@ namespace ProjektMVCdotnet8.Controllers
             if (_context.Users.IsNullOrEmpty())
             {
                 UserEntity userEntity = new UserEntity();
-                userEntity.Email="WERYKTEST@PL";
-                userEntity.UserName = "Weryk";
-                userEntity.NormalizedUserName = "WERYK";
-                userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
-                userEntity.Nick = "Weryk";
+                userEntity.Email="user@test";
+                userEntity.UserName = "testuser";
+                userEntity.NormalizedUserName = "TESTUSER";
+                userEntity.PasswordHash = "to_haslo_nie_ma_dzialac";
+                userEntity.Nick = "testuser";
                 _context.Users.Add(userEntity);
                 await _context.SaveChangesAsync();
             }
@@ -114,7 +114,7 @@ namespace ProjektMVCdotnet8.Controllers
             }
             if (_context.Posts.IsNullOrEmpty())
             {
-                var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");
+                var user = _context.Users.FirstOrDefault(u => u.Email == "user@test");
                 var categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie")).ToList();
                 string AttachmentSource = ("29a5ddb2-5544-4fdd-993c-5139fd04d0e4_WolfAttack5.png");
                 PostEntity posts = new PostEntity(user, "Tytul_1", "lorem ipsum w gipsum", AttachmentSource, categories);
@@ -140,6 +140,72 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(posts);
 
                 await _context.SaveChangesAsync();
+            }
+            //contact init jak puste
+            if (_context.ContactForms.IsNullOrEmpty())
+            {
+                if (ModelState.IsValid)
+                {
+                    ContactEntity contact = new ContactEntity();
+                    contact.Email = "joe@mama.com";
+                    contact.Topic = "Nie jestem moderatorem a widze panel moderatora";
+                    contact.ContactType = "Znalazłem błąd";
+                    contact.ContactContent = "Wydaję mi się że to trochę niebezpieczne ale bede korzystał póki mogę";
+                    contact.ContactDate = DateTime.Now;
+                    _context.Add(contact);
+
+                    contact = new ContactEntity();
+                    contact.Email = "niewidomyMaciek@onet.pl";
+                    contact.Topic = "Nic nie widzę";
+                    contact.ContactType = "Strona nie działa";
+                    contact.ContactContent = "Wchodzę na stronę a tu ciemno, dobrze że mogę kliknąć w formularz kontaktowy";
+                    contact.ContactDate = DateTime.Now;
+                    _context.Add(contact);
+
+                    contact = new ContactEntity();
+                    contact.Email = "WrumWruom@bmw.pl";
+                    contact.Topic = "Powinniście dodać coś o samochodach";
+                    contact.ContactType = "Propozycja zmian";
+                    contact.ContactContent = "Uwielbiam wasze forum ale przydała by się kategoria motoryzacja muszę zapytać się o poradę jak wstwić nowy silnik do mojego 30 letniego bmw bo stary niestety uległ awari";
+                    contact.ContactDate = DateTime.Now;
+                    _context.Add(contact);
+
+                    contact = new ContactEntity();
+                    contact.Email = "GrzegorzHejter@wp.pl";
+                    contact.Topic = "Obrzydliwa czcionka";
+                    contact.ContactType = "Chciałbym podzielić się swoją opinią";
+                    contact.ContactContent = "Uważam że wasza strona powinna zmienić czcionkę na comic sans jest taka mięciutka i miła w czytaniu a to co jest teraz to skandal";
+                    contact.ContactDate = DateTime.Now;
+                    _context.Add(contact);
+
+                    contact = new ContactEntity();
+                    contact.Email = "cojarobietutaj@sanah.kabanosy";
+                    contact.Topic = "Zastanawialiście się kiedyś jak samkuje drewno";
+                    contact.ContactType = "Inne";
+                    contact.ContactContent = "No właśnie ja też nie";
+                    contact.ContactDate = DateTime.Now;
+                    _context.Add(contact);
+
+                    await _context.SaveChangesAsync();
+                }
+            }
+            //chat + wiadomość init jak puste
+            if (_context.Chats.IsNullOrEmpty())
+            {
+                var chatEntity = new ChatEntity();
+                var user = _context.Users.FirstOrDefault(u => u.Email == "user@test");// tu zmieniajcie mail
+                chatEntity.ChattingUser1 = user;
+                chatEntity.ChattingUser2 = user;
+                _context.Add(chatEntity);
+
+                MessageEntity messageEntity = new MessageEntity();
+                messageEntity.MessageContent = "Rozpoczęcie chatu !!! Wiadomość kontrolna";
+                messageEntity.UsedChat = chatEntity;
+                messageEntity.UsingUser = user;
+                _context.Add(messageEntity);
+
+                await _context.SaveChangesAsync();
+
             }
         }
 

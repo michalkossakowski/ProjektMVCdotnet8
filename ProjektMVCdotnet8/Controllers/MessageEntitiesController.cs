@@ -57,7 +57,7 @@ namespace ProjektMVCdotnet8.Controllers
         public async Task<IActionResult> Create([Bind("Id,MessageContent")] MessageEntity messageEntity)
         {
             var chat = _context.Chats.Find(1);
-            var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");// tu zmieniajcie mail
+            var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
             messageEntity.UsedChat = chat;
             messageEntity.UsingUser = user;
             messageEntity.SendDate = DateTime.Now;

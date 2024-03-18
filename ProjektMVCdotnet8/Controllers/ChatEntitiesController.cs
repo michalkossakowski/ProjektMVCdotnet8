@@ -56,9 +56,6 @@ namespace ProjektMVCdotnet8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id")] ChatEntity chatEntity)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");// tu zmieniajcie mail
-            chatEntity.ChattingUser1 = user;
-            chatEntity.ChattingUser2 = user;
             _context.Add(chatEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

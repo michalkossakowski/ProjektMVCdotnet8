@@ -30,6 +30,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
+        [Display(Name = "Nazwa Użytkownika")]
         public string Username { get; set; }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Numer telefonu")]
             public string PhoneNumber { get; set; }
         }
 
@@ -112,7 +113,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Twój profil został zmodyfikowany.";
             return RedirectToPage();
         }
     }

@@ -83,6 +83,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.Email="WERYKTEST@PL";
                 userEntity.UserName = "Weryk";
                 userEntity.PasswordHash = "ZAQ!2wsx";
+                userEntity.Nick = "Weryk";
                 _context.Add(userEntity);
                 await _context.SaveChangesAsync();
             }

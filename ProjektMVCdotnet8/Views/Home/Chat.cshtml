@@ -6,11 +6,11 @@
 
 <style>
     .chat-container {
-        height: calc(85vh - 56px); /* 100% wysokości ekranu minus wysokość nagłówka */
+        height: calc(81vh - 56px); /* 100% wysokości ekranu minus wysokość nagłówka */
     }
 
     .messages-container {
-        height: calc(85vh - 150px); /* Ustawienie wysokości na 100% wysokości okna minus 150px (wysokość nagłówka, stopki itp.) */
+        height: calc(81vh - 150px); /* Ustawienie wysokości na 100% wysokości okna minus 150px (wysokość nagłówka, stopki itp.) */
         overflow-y: auto; /* Dodanie przewijania, jeśli zawartość przekracza wysokość */
     }
 
@@ -75,8 +75,12 @@
                         <!-- Wysylanie wiadomosci -->
                         <form id="sendMessageForm" method="post" asp-controller="MessageEntities" asp-action="Create" class="d-flex flex-grow-1">
                             <div class="form-group mb-0 flex-grow-1 mr-3">
-                                <input asp-for="@Model.ElementAt(0).MessageContent" class="form-control" value="" placeholder="Napisz wiadomość..." required />
-                                <input type="submit" value="Wyślij" class="btn btn-primary mt-2" />
+                                <div class="input-group mb-3">
+                                    <input asp-for="@Model.ElementAt(0).MessageContent" class="form-control" value="" placeholder="Napisz wiadomość..." required />
+                                    <div class="input-group-append">
+                                        <button class="btn btn-primary" type="submit">Wyślij</button>
+                                    </div>
+                                </div>
                             </div>
                         </form>
                     </div>

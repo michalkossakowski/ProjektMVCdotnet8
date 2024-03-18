@@ -131,7 +131,7 @@ namespace ProjektMVCdotnet8.Controllers
             }
             if (_context.Posts.IsNullOrEmpty())
             {
-                var user = _context.Users.FirstOrDefault(u => u.Email == "user@test");
+                var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");
                 var categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie")).ToList();
                 string AttachmentSource = ("29a5ddb2-5544-4fdd-993c-5139fd04d0e4_WolfAttack5.png");
                 PostEntity posts = new PostEntity(user, "Tytul_1", "lorem ipsum w gipsum", AttachmentSource, categories);
@@ -210,15 +210,17 @@ namespace ProjektMVCdotnet8.Controllers
             if (_context.Chats.IsNullOrEmpty())
             {
                 var chatEntity = new ChatEntity();
-                var user = _context.Users.FirstOrDefault(u => u.Email == "user@test");// tu zmieniajcie mail
+                var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
+                var user2 = _context.Users.FirstOrDefault(u => u.Email == "test2@user");// tu zmieniajcie mail
                 chatEntity.ChattingUser1 = user;
-                chatEntity.ChattingUser2 = user;
+                chatEntity.ChattingUser2 = user2;
                 _context.Add(chatEntity);
 
                 MessageEntity messageEntity = new MessageEntity();
                 messageEntity.MessageContent = "Rozpoczęcie chatu";
                 messageEntity.UsedChat = chatEntity;
                 messageEntity.UsingUser = user;
+                messageEntity.SendDate = DateTime.Now;
                 _context.Add(messageEntity);
 
                 await _context.SaveChangesAsync();

@@ -82,9 +82,10 @@ namespace ProjektMVCdotnet8.Controllers
                 UserEntity userEntity = new UserEntity();
                 userEntity.Email="WERYKTEST@PL";
                 userEntity.UserName = "Weryk";
-                userEntity.PasswordHash = "ZAQ!2wsx";
+                userEntity.NormalizedUserName = "WERYK";
+                userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "Weryk";
-                _context.Add(userEntity);
+                _context.Users.Add(userEntity);
                 await _context.SaveChangesAsync();
             }
             if (_context.Categories.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, je¿eli tak to tworzy elementy do tablicy

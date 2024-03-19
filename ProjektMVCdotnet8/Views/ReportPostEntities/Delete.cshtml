@@ -1,0 +1,32 @@
+﻿@model ProjektMVCdotnet8.Entities.ReportPostEntity
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h1 class="display-4">Usuń post ze zgłoszonych postów:</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Treść zgłoszenia:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ReportContent)
+        </dd>
+    </dl>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Id zgłoszonego postu:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.postId)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="Id" />
+        <input type="submit" value="Usuń ze zgłoszonych" class="btn btn-danger" /> |
+        <a asp-action="Index">Powrót do panelu</a>
+    </form>
+</div>

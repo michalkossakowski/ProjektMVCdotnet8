@@ -72,6 +72,10 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View("ThxForContact", model);
         }
+        public IActionResult ThxForReport()
+        {
+            return View();
+        }
         /*        public IActionResult Chat()
                 {
                     return View();
@@ -236,7 +240,7 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(chatEntity);
 
                 MessageEntity messageEntity = new MessageEntity();
-                messageEntity.MessageContent = "Rozpoczęcie chatu ";
+                messageEntity.MessageContent = "Rozpoczęcie chatu";
                 messageEntity.UsedChat = chatEntity;
                 messageEntity.UsingUser = user;
                 messageEntity.SendDate = DateTime.Now;
@@ -248,13 +252,6 @@ namespace ProjektMVCdotnet8.Controllers
                 chatEntity2.ChattingUser1 = user21;
                 chatEntity2.ChattingUser2 = user22;
                 _context.Add(chatEntity2);
-
-                MessageEntity messageEntity2 = new MessageEntity();
-                messageEntity2.MessageContent = "Rozpoczęcie chatu ";
-                messageEntity2.UsedChat = chatEntity2;
-                messageEntity2.UsingUser = user21;
-                messageEntity2.SendDate = DateTime.Now;
-                _context.Add(messageEntity2);
 
                 _context.SaveChanges();
             }

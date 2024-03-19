@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class test123 : Migration
+    public partial class _19marzec : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -392,6 +392,7 @@ namespace ProjektMVCdotnet8.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReportedPostId = table.Column<int>(type: "int", nullable: false),
+                    postId = table.Column<int>(type: "int", nullable: false),
                     ReportContent = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

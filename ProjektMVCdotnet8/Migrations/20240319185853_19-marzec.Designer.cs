@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240318202855_test123")]
-    partial class test123
+    [Migration("20240319185853_19-marzec")]
+    partial class _19marzec
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -496,6 +496,9 @@ namespace ProjektMVCdotnet8.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ReportedPostId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("postId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");

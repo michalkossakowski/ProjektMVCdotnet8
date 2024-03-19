@@ -17,7 +17,7 @@
                 <div class="col-md-4 border-3 border-end">
                     <img src="/attachments/@element.AttachmentSource" class="card-img-top"  alt="Alternate Text" />
                 </div>
-                <div class="col-md-8">
+                <div class="col-md-8 d-flex flex-column">
                     <div class="card-header card-text d-flex flex-row sm-1">
                         <div class="sm-2">
                             <img src="/attachments/Septic_tank_PL.svg" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
@@ -30,6 +30,12 @@
                         <h5 class="card-title">@element.Title</h5>
                         <p class="card-text">@element.PostContent</p>
                     </div>
+                    <div class="card-footer">
+                        <p class="card-text  text-end">
+                            <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a>
+                            </p>
+                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -4,29 +4,24 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1 class="display-4">Zgłoś post:</h1>
 
-<h4>ReportPostEntity</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="ReportContent" class="control-label"></label>
-                <input asp-for="ReportContent" class="form-control" />
+                <label asp-for="ReportContent" class="control-label">Opis zgłoszenia:</label>
+                <textarea asp-for="ReportContent" class="form-control" rows="6" required> </textarea>
                 <span asp-validation-for="ReportContent" class="text-danger"></span>
                 <input type="hidden" name="repPost" value="@ViewBag.repPost">
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Wyślij zgłoszenie" class="btn btn-primary" />
             </div>
         </form>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

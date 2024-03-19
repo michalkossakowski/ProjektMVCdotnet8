@@ -1,13 +1,14 @@
 ﻿@model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
 @{
     ViewData["Title"] = "CategoryIndex";
-}    
+} 
+
 <div class="row g-0">
     @foreach (var element in Model)
     {
-        <div class="card mb-3" style="width:100%">
+        <div class="card border-3 mb-3 " style="width:100%">
             <div class="row g-0">
-                <div class="col-md-4">
+                <div class="col-md-4 border-3 border-end">
                     <img src="/attachments/@element.AttachmentSource" class="card-img-top" alt="Alternate Text" />
                 </div>
                 <div class="col-md-8" style="display: flex; flex-direction: column;">
@@ -16,8 +17,11 @@
                         <p class="card-text">@element.PostContent</p>
                     </div>
                     <div class="card-footer">
-                        <p class="card-text"><small class="text-muted">@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm")                             
-                            </small></p>
+                        <p class="card-text  text-end">
+                            <small class="text-muted">Autor: @element.AuthorUser.Nick</small>
+                            <small class="text-muted">
+                                @element.CreatedDate.ToString("MMMM dd, yyyy HH:mm")
+                        </small></p>
                     </div>
                 </div>
             </div>

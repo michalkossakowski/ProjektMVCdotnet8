@@ -11,16 +11,19 @@ namespace ProjektMVCdotnet8.Controllers
     public class PostController : Controller
     {
 
-        private readonly ApplicationDbContext _context;
+        private ApplicationDbContext _context;
 
-        public PostController(ApplicationDbContext context)
+        public PostController( ApplicationDbContext context)
         {
             _context = context;
         }
         public async Task<IActionResult> Index(string CategoryName)
         {
-            var posts = _context.Posts.Where(post => post.Categories.Any(category => category.CategoryName.Equals(CategoryName))).ToList();
-            posts = posts.OrderByDescending(post => post.CreatedDate).ToList();
+        
+
+            var posts = _context.Posts.Include(p => p.AuthorUser).Include(p => p.Categories)
+                .Where(post => post.Categories.Any(category => category.CategoryName.Equals(CategoryName)))
+                .OrderByDescending(post => post.CreatedDate).ToList();
             return View("Index", posts);
         }
 

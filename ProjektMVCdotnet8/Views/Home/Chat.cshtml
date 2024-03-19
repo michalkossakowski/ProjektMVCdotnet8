@@ -26,6 +26,14 @@
         flex-direction: row-reverse; /* Wyświetlanie wiadomości od prawej do lewej */
     }
 
+    .first-message-content {
+        margin-left: auto; /* Wyśrodkowanie treści wiadomości */
+        padding: 10px;
+        font-style: italic; /* Pochylenie czcionki */
+        color: #333333; /* Ciemno szary kolor */
+        text-align: center; /* Wyśrodkowanie tekstu */
+    }
+
     .message-content {
         margin-left: auto; /* Wyśrodkowanie treści wiadomości */
         padding: 10px;
@@ -81,10 +89,12 @@
                             foreach (var item in Model)
                             {
                                 if(first==true){
+                                            <div class="first-message-content">
+                                                <strong>---@item.MessageContent---</strong>
+                                            </div>
                                     first = false;
-                                    continue;
                                 }
-                                if(@item.UsingUser == ViewBag.CurrentUser)
+                                else if(@item.UsingUser == ViewBag.CurrentUser)
                                 {
                                     <div class="message-row">
                                         <div class="message-box">

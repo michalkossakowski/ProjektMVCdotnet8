@@ -249,13 +249,6 @@ namespace ProjektMVCdotnet8.Controllers
                 chatEntity2.ChattingUser2 = user22;
                 _context.Add(chatEntity2);
 
-                MessageEntity messageEntity2 = new MessageEntity();
-                messageEntity2.MessageContent = "Rozpoczęcie chatu ";
-                messageEntity2.UsedChat = chatEntity2;
-                messageEntity2.UsingUser = user21;
-                messageEntity2.SendDate = DateTime.Now;
-                _context.Add(messageEntity2);
-
                 _context.SaveChanges();
             }
         }

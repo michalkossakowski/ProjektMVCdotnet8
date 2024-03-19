@@ -2,26 +2,33 @@
 @{
     ViewData["Title"] = "CategoryIndex";
 } 
-
+<style>
+    .awatar
+    {
+        height: 60px;
+        width: 60px;
+    }
+</style>
 <div class="row g-0">
     @foreach (var element in Model)
     {
         <div class="card border-3 mb-3 " style="width:100%">
             <div class="row g-0">
                 <div class="col-md-4 border-3 border-end">
-                    <img src="/attachments/@element.AttachmentSource" class="card-img-top" alt="Alternate Text" />
+                    <img src="/attachments/@element.AttachmentSource" class="card-img-top"  alt="Alternate Text" />
                 </div>
-                <div class="col-md-8" style="display: flex; flex-direction: column;">
+                <div class="col-md-8">
+                    <div class="card-header card-text d-flex flex-row sm-1">
+                        <div class="sm-2">
+                            <img src="/attachments/Septic_tank_PL.svg" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                        </div>
+                        <div class="p-2">
+                            <small class="text-muted">Autor: @element.AuthorUser.Nick<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <h5 class="card-title">@element.Title</h5>
                         <p class="card-text">@element.PostContent</p>
-                    </div>
-                    <div class="card-footer">
-                        <p class="card-text  text-end">
-                            <small class="text-muted">Autor: @element.AuthorUser.Nick</small>
-                            <small class="text-muted">
-                                @element.CreatedDate.ToString("MMMM dd, yyyy HH:mm")
-                        </small></p>
                     </div>
                 </div>
             </div>

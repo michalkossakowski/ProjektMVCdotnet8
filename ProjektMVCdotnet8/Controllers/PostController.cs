@@ -20,6 +20,7 @@ namespace ProjektMVCdotnet8.Controllers
         public async Task<IActionResult> Index(string CategoryName)
         {
             var posts = _context.Posts.Where(post => post.Categories.Any(category => category.CategoryName.Equals(CategoryName))).ToList();
+            posts = posts.OrderByDescending(post => post.CreatedDate).ToList();
             return View("Index", posts);
         }
 

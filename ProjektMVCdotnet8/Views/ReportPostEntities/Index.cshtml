@@ -10,27 +10,29 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.ReportContent)
+                Id zgłoszonego postu:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.postId)
+                Treść zgłoszenia:
             </th>
+            <th></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ReportContent)
-            </td>
             <th>
                 @Html.DisplayFor(modelItem => item.postId)
             </th>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.ReportContent)
+            </td>
+            <td>
+                    <ul class="list-group">
+                        <li class="list-group-item"><a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> </li>
+                        <li class="list-group-item">  <a asp-action="Delete" asp-route-id="@item.Id">Pozostaw na stronie</a></li>
+                    </ul>
             </td>
         </tr>
 }

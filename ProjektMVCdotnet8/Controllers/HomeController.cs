@@ -112,6 +112,16 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.PasswordHash = hashedPassword;
                 _context.Users.Add(userEntity);
 
+
+                userEntity = new UserEntity();
+                userEntity.Email = "test3@user";
+                userEntity.UserName = "test3user";
+                userEntity.NormalizedUserName = "TEST3USER";
+                userEntity.Nick = "test3user";
+                var hashedPassword3 = has.HashPassword(userEntity, "zaq1@WSX");
+                userEntity.PasswordHash = hashedPassword3;
+                _context.Users.Add(userEntity);
+
                 _context.SaveChanges();
             }
             if (_context.Categories.IsNullOrEmpty()) //Sprawdza czy tablica jest pusta, je¿eli tak to tworzy elementy do tablicy
@@ -231,6 +241,20 @@ namespace ProjektMVCdotnet8.Controllers
                 messageEntity.UsingUser = user;
                 messageEntity.SendDate = DateTime.Now;
                 _context.Add(messageEntity);
+
+                var chatEntity2 = new ChatEntity();
+                var user21 = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
+                var user22 = _context.Users.FirstOrDefault(u => u.Email == "test3@user");// tu zmieniajcie mail
+                chatEntity2.ChattingUser1 = user21;
+                chatEntity2.ChattingUser2 = user22;
+                _context.Add(chatEntity2);
+
+                MessageEntity messageEntity2 = new MessageEntity();
+                messageEntity2.MessageContent = "Rozpoczęcie chatu ";
+                messageEntity2.UsedChat = chatEntity2;
+                messageEntity2.UsingUser = user21;
+                messageEntity2.SendDate = DateTime.Now;
+                _context.Add(messageEntity2);
 
                 _context.SaveChanges();
             }

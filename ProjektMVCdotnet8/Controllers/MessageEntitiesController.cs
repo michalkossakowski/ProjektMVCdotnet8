@@ -2,20 +2,26 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
+using Microsoft.AspNetCore.Identity; //do sprawdzenia uzytkowknika
+using Microsoft.AspNetCore.Mvc; //do sprawdzenia uzytkowknika
+using System.Drawing.Printing;
 
 namespace ProjektMVCdotnet8.Controllers
 {
     public class MessageEntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<UserEntity> _userManager;//do sprawdzenia uzytkowknika
 
-        public MessageEntitiesController(ApplicationDbContext context)
+        public MessageEntitiesController(ApplicationDbContext context, UserManager<UserEntity> userManager)
         {
+            _userManager = userManager;//do sprawdzenia uzytkowknika
             _context = context;
         }
 
@@ -57,7 +63,8 @@ namespace ProjektMVCdotnet8.Controllers
         public async Task<IActionResult> Create([Bind("Id,MessageContent")] MessageEntity messageEntity)
         {
             var chat = _context.Chats.Find(1);
-            var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
+            var user = await _userManager.GetUserAsync(User);
+            //var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
             messageEntity.UsedChat = chat;
             messageEntity.UsingUser = user;
             messageEntity.SendDate = DateTime.Now;

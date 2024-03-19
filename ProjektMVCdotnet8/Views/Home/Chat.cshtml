@@ -36,6 +36,25 @@
         color: #777;
         font-size: 12px;
     }
+
+    .message-box2 {
+        background-color: #0d6efd;
+        color: #ffffff;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .message-row2 {
+        display: flex;
+        flex-direction: row; /* Wyświetlanie wiadomości od prawej do lewej */
+    }
+
+    .message-date2 {
+        margin-left: auto; /* Wyśrodkowanie daty */
+        color: #ffffff;
+        font-size: 12px;
+    }
 </style>
 
 <div class="container-fluid flex-grow-1 chat-container">
@@ -65,16 +84,34 @@
                                     first = false;
                                     continue;
                                 }
-                            <div class="message-row">
-                                <div class="message-box">
-                                    <div class="message-content">
-                                        <strong>@item.MessageContent</strong>
+                                if(@item.UsingUser == ViewBag.CurrentUser)
+                                {
+                                    <div class="message-row">
+                                        <div class="message-box">
+                                            <div class="message-content">
+                                                <strong>@item.MessageContent</strong>
+                                            </div>
+                                            <div class="message-date">
+                                                <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="message-date">
-                                        <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
+                                }
+                                else{
+                                    <div class="message-row2">
+                                        <div class="message-box2">
+                                            <div class="message-content">
+                                                <strong>@item.MessageContent</strong>
+                                            </div>
+                                            <div class="message-date2">
+                                                <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
+                                
+                                }
+
+                           
                             }
                         }
                     </div>

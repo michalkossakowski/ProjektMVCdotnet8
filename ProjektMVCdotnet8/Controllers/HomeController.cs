@@ -9,6 +9,9 @@ using ProjektMVCdotnet8.Areas.Identity.Pages.Account;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Identity; //do sprawdzenia uzytkowknika
+using Microsoft.AspNetCore.Mvc; //do sprawdzenia uzytkowknika
+using System.Drawing.Printing; 
 
 namespace ProjektMVCdotnet8.Controllers
 {
@@ -19,9 +22,12 @@ namespace ProjektMVCdotnet8.Controllers
         private readonly ApplicationDbContext _context;
 
         private readonly ILogger<HomeController> _logger;
+        private readonly UserManager<UserEntity> _userManager;//do sprawdzenia uzytkowknika
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<UserEntity> userManager)
         {
+            _userManager = userManager;//do sprawdzenia uzytkowknika
             _logger = logger;
             _context = context;
             CreateElements();
@@ -73,6 +79,9 @@ namespace ProjektMVCdotnet8.Controllers
 
         public async Task<IActionResult> Chat()
         {
+            var user = await _userManager.GetUserAsync(User);//do sprawdzenia uzytkowknika
+            //Console.WriteLine("USER: "+user); // wypisuje usera w konsolu
+            ViewBag.CurrentUser = user;
             return View(await _context.Messages.ToListAsync());
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -217,7 +226,7 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(chatEntity);
 
                 MessageEntity messageEntity = new MessageEntity();
-                messageEntity.MessageContent = "Rozpoczęcie chatu";
+                messageEntity.MessageContent = "Rozpoczęcie chatu ";
                 messageEntity.UsedChat = chatEntity;
                 messageEntity.UsingUser = user;
                 messageEntity.SendDate = DateTime.Now;

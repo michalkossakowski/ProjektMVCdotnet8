@@ -72,6 +72,10 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View("ThxForContact", model);
         }
+        public IActionResult ThxForReport()
+        {
+            return View();
+        }
         /*        public IActionResult Chat()
                 {
                     return View();

@@ -61,7 +61,7 @@ namespace ProjektMVCdotnet8.Controllers
             reportPostEntity.postId = repPost;
             _context.Add(reportPostEntity);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("ThxForReport","Home");
             //return RedirectToAction(nameof(Index));
             /*if (ModelState.IsValid)
             {

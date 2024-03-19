@@ -240,7 +240,7 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(chatEntity);
 
                 MessageEntity messageEntity = new MessageEntity();
-                messageEntity.MessageContent = "Rozpoczęcie chatu ";
+                messageEntity.MessageContent = "Rozpoczęcie chatu";
                 messageEntity.UsedChat = chatEntity;
                 messageEntity.UsingUser = user;
                 messageEntity.SendDate = DateTime.Now;

@@ -495,6 +495,9 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<int>("ReportedPostId")
                         .HasColumnType("int");
 
+                    b.Property<int>("postId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ReportedPostId");

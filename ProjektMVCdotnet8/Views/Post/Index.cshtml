@@ -18,12 +18,13 @@
                     </div>
                     <div class="card-footer">
                         <p class="card-text  text-end">
+                            <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a>
                             <small class="text-muted">Autor: @element.AuthorUser.Nick</small>
                             <small class="text-muted">
                                 @element.CreatedDate.ToString("MMMM dd, yyyy HH:mm")
                         </small></p>
                     </div>
-                    <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a>
+                    
                 </div>
             </div>
         </div>

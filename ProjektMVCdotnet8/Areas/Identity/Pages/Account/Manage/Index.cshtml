@@ -4,12 +4,37 @@
     ViewData["Title"] = "Zarządzaj Profilem Użytkownika";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
+<style>
+    .profile-picture 
+    {
+        width: 100px;
+        height: 100px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
 
+    .profile-picture img {
+        width: 100%;
+        height: auto;
+    }
+</style>
+<div class="text-center">
 <h3>@ViewData["Title"]</h3>
+</div>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
+<div class="d-flex justify-content-center">
     <div class="col-md-6">
         <form id="profile-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="d-flex justify-content-center mb-3">
+                <div class="profile-picture" onclick="document.getElementById('avatar-input').click()">
+                    <img src="@Model.Input.Avatar" class="card-img-top" alt="Avatar" />img src="@Model.Input.Avatar" alt="Avatar" />
+                </div>
+                <input type="file" id="avatar-input" style="display:none;" accept="image/*" onchange="previewAvatar(event)" asp-for="Input.Avatar" />
+            </div>
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
@@ -34,10 +59,22 @@
             </div>
 
             <script>
-                function handleCountryChange(select) {
+                function handleCountryChange(select) 
+                {
                     if (select.value === 'Wybierz kraj') {
                         document.getElementById('@Html.IdFor(model => model.Input.Country)').value = null;
                     }
+                }
+                function previewAvatar(event) 
+                {
+                    var input = event.target;
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        var dataURL = reader.result;
+                        var output = document.querySelector('.profile-picture img');
+                        output.src = dataURL;
+                    };
+                    reader.readAsDataURL(input.files[0]);
                 }
             </script>
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Zapisz</button>

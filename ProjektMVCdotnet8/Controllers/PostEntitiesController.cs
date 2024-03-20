@@ -14,15 +14,18 @@ using System.IO;
 using System.Threading.Tasks;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using System.Runtime.ConstrainedExecution;
+using Microsoft.AspNetCore.Identity;
 
 namespace ProjektMVCdotnet8.Controllers
 {
     public class PostEntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public PostEntitiesController(ApplicationDbContext context)
+        public PostEntitiesController(ApplicationDbContext context, UserManager<UserEntity> userManager)
         {
+            _userManager = userManager;//do sprawdzenia uzytkowknika
             _context = context;
         }
 
@@ -74,8 +77,9 @@ namespace ProjektMVCdotnet8.Controllers
             //postEntity.Id = postModel.Id;
             postEntity.Title = postModel.Title;
             postEntity.PostContent = postModel.PostContent;
-            var user = _context.Users.FirstOrDefault(u => u.Email == "WERYKTEST@PL");// tu zmieniajcie mail
-            postEntity.AuthorUser = user;
+            var loggedUser = await _userManager.GetUserAsync(User);
+            //var user = _context.Users.FirstOrDefault(u => u.UserName == loggedUser);// tu zmieniajcie mail
+            postEntity.AuthorUser = loggedUser;
             postEntity.CreatedDate = DateTime.Now;
             if (postModel.AttachmentSource != null && postModel.AttachmentSource.Length > 0)
             {
@@ -88,6 +92,7 @@ namespace ProjektMVCdotnet8.Controllers
                 {
                     await postModel.AttachmentSource.CopyToAsync(fileStream);
                 }
+                Console.WriteLine(uniqueFileName);
                 postEntity.AttachmentSource = uniqueFileName;
             }
             else
@@ -105,7 +110,7 @@ namespace ProjektMVCdotnet8.Controllers
                 }
             }
             
-            Console.WriteLine(selectedCategoryIds.Count);
+            
 
 
             _context.Add(postEntity);

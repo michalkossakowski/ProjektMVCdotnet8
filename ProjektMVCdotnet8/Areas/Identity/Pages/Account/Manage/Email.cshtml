@@ -4,10 +4,12 @@
     ViewData["Title"] = "Zarządzaj Adresem Email";
     ViewData["ActivePage"] = ManageNavPages.Email;
 }
-
+<div class="text-center">
 <h3>@ViewData["Title"]</h3>
+</div>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
+    <div class="d-flex justify-content-center">
     <div class="col-md-6">
         <form id="email-form" method="post">
             <div asp-validation-summary="All" class="text-danger" role="alert"></div>
@@ -36,6 +38,7 @@
             </div>
             <button id="change-email-button" type="submit" asp-page-handler="ChangeEmail" class="w-100 btn btn-lg btn-primary">Change email</button>
         </form>
+    </div
     </div>
 </div>
 

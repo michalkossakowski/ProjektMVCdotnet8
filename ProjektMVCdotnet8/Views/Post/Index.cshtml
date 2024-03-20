@@ -1,7 +1,12 @@
-﻿@model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjektMVCdotnet8.Areas.Identity.Data
+
+@inject SignInManager<UserEntity> SignInManager
+@inject UserManager<UserEntity> UserManager
+@model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
 @{
     ViewData["Title"] = "CategoryIndex";
-} 
+}
 <style>
     .awatar
     {
@@ -10,6 +15,7 @@
     }
 </style>
 <div class="row g-0">
+
     @foreach (var element in Model)
     {
         <div class="card border-3 mb-3 " style="width:100%">
@@ -31,9 +37,12 @@
                         <p class="card-text">@element.PostContent</p>
                     </div>
                     <div class="card-footer">
-                        <p class="card-text  text-end">
-                            <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a>
-                            </p>
+                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User))) 
+                        {
+                            <p card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], BlockingUser = UserManager.GetUserId(User) })">Blokuj</a></p>
+                            <p card-text><a href="@Url.Action("Follow", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], BlockingUser = UserManager.GetUserId(User)})"> Obserwuj</a></p>
+                        }
+                        <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>
                     
                 </div>

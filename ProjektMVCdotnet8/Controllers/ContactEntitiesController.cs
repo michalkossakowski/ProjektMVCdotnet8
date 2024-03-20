@@ -13,6 +13,7 @@ namespace ProjektMVCdotnet8.Controllers
 {
 
     public class ContactEntitiesController : Controller
+
     {
         private readonly ApplicationDbContext _context;
 

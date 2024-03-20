@@ -1,23 +1,17 @@
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Areas.Identity.Data;
-using ProjektMVCdotnet8.Areas.Identity.Pages.Account;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Models;
 using System.Diagnostics;
-using Microsoft.AspNetCore.Identity; //do sprawdzenia uzytkowknika
-using Microsoft.AspNetCore.Mvc; //do sprawdzenia uzytkowknika
-using System.Drawing.Printing; 
 
 namespace ProjektMVCdotnet8.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly IPasswordHasher<UserEntity> has = new PasswordHasher<UserEntity> ();
+        private readonly IPasswordHasher<UserEntity> has = new PasswordHasher<UserEntity>();
 
         private readonly ApplicationDbContext _context;
 
@@ -99,7 +93,7 @@ namespace ProjektMVCdotnet8.Controllers
             if (_context.Users.IsNullOrEmpty())
             {
                 UserEntity userEntity = new UserEntity();
-                userEntity.Email= "test@user";
+                userEntity.Email = "test@user";
                 userEntity.UserName = "testuser";
                 userEntity.NormalizedUserName = "TESTUSER";
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
@@ -155,6 +149,9 @@ namespace ProjektMVCdotnet8.Controllers
             if (_context.Posts.IsNullOrEmpty())
             {
                 var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");
+                var user1 = _context.Users.FirstOrDefault(u => u.Email == "test2@user");
+                var user2 = _context.Users.FirstOrDefault(u => u.Email == "test3@user");
+
                 var categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie")).ToList();
                 string AttachmentSource = ("29a5ddb2-5544-4fdd-993c-5139fd04d0e4_WolfAttack5.png");
                 PostEntity posts = new PostEntity(user, "Tytul_1", "lorem ipsum w gipsum", AttachmentSource, categories);
@@ -174,10 +171,23 @@ namespace ProjektMVCdotnet8.Controllers
 
 
 
-                categories = _context.Categories.Where(x => x.CategoryName.Equals("Sieci") || x.CategoryName.Equals("Komputery")).ToList();
-                AttachmentSource = ("_dd417104-4aca-4b42-a483-d8c85bb48d3b.jfif");
-                posts = new PostEntity(user, "Lisa Al Gaib, Prince of Arrakis", "In the mystical world of Racoonia, where shifting sands whispered secrets and ancient prophecies danced on the wind, there existed a peculiar raccoon named Lisa al-Gaib. Her story was woven into the very fabric of the desert planet Arrakis, a place where sandstorms painted the skies and hidden wonders lay beneath the dunes.\r\n\r\nThe Chronicles of Lisa al-Gaib: Raccoon Messiah\r\n1. The Whispering Sands:\r\nLisa al-Gaib was no ordinary raccoon. Born under the crescent moon, her fur bore the hues of sunsets—amber, russet, and gold. The Fremen, native inhabitants of Arrakis, believed her to be the Lisan al-Gaib—the “Voice from the Outer World.”\r\nThe prophecy spoke of a savior, an outsider destined to lead the Fremen to salvation. Lisa’s masked eyes held ancient wisdom, and her paws traced constellations in the shifting sands.\r\n2. The Acorn of Destiny:\r\nOne scorching day, Lisa stumbled upon an acorn unlike any other. It glimmered with starlight, and its whispers echoed through her dreams. The Fremen gathered, chanting her name: “Lisan al-Gaib!”\r\nGuided by the acorn’s glow, Lisa embarked on a quest. She climbed dunes, crossed salt flats, and danced with mirages. Each step revealed a fragment of her purpose.\r\n3. The Trials of the Dunes:\r\nLisa faced trials that tested her raccoon heart. She outwitted sandworms, negotiated with spice traders, and brewed potions from cactus blooms. Her tail flicked like a compass, pointing toward destiny.\r\nStilgar, a grizzled Fremen leader, watched her. His eyes held reverence and doubt. “Is she truly the Lisan al-Gaib?” he wondered.\r\n4. The Bene Gesserit’s Web:\r\nThe Bene Gesserit, a sisterhood of powerful beings, wove their machinations. Lady Jessica, Lisa’s mother, whispered secrets in the wind. “Your daughter is the One,” she told Stilgar.\r\nLisa’s paws traced the ancient glyphs of the Portal Oak, the gateway between worlds. To prove her messianic status, she must perform feats: steal moonlight, balance on a single paw, and recite riddles to sandstorms.\r\n5. The Moonlit Masquerade:\r\nAt the grand Moonlit Masquerade, Lisa donned a cloak of stardust. She danced with Stilgar, who marveled at her every move. “The Lisan al-Gaib!” he exclaimed, mistaking her twirl for cosmic magic.\r\nThe stars whispered, “You are the bridge between realms, Lisa. Your raccoon heart holds the universe.”\r\n6. The Final Glyph:\r\nBeneath the Portal Oak, Lisa faced her ultimate trial. The desert winds carried riddles:\r\n“What has roots as deep as the dunes?”\r\n“What blooms when hope fades?”\r\n“What is the truest treasure?”\r\nLisa answered: “Friendship, resilience, and acorns.”\r\nThe portal shimmered. Lisa stepped through, her tail trailing stardust.\r\nAnd so, Lisa al-Gaib became the raccoon messiah—the Voice from the Outer World. Her legend echoed across Arrakis, whispered by sandstorms and etched into the hearts of Fremen. Whether she returned to her forest home or remained among the dunes, her pawprints remained—a constellation of hope.", AttachmentSource, categories);
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Spawanie") || x.CategoryName.Equals("Elektryka")).ToList();
+                AttachmentSource = ("Septic_tank_PL.svg");
+                posts = new PostEntity(user1, "Szambonourek Głebinowy", "Pewnego razu w małej wiosce o nazwie Śmierdzące Doliny, mieszkał dzielny chłopiec o imieniu Stefan. Stefan był niezwykle ciekawski i zawsze szukał przygód. Pewnego dnia, gdy słońce świeciło na całe niebo, Stefan postanowił odkryć tajemnicę, która spoczywała za wzgórzem.\r\n\r\nWędrując przez gęsty las, Stefan natknął się na coś, co wydało mu się dziwne. To była stara, zardzewiała pokrywa szamba. Stefan wiedział, że to nie jest zwykła pokrywa. Była zbyt tajemnicza, by ją zignorować.\r\n\r\nPostanowił zdjąć pokrywę i zerknąć do środka. Kiedy otworzył ją, z oczu Stefana wydobył się straszny smród. Ale to nie zniechęciło go. Wszedł do szamba i zobaczył schody prowadzące w dół.\r\n\r\nSchody były wilgotne i śliskie, ale Stefan nie bał się. Zszedł coraz niżej, aż dotarł do podziemnej krainy szamba. Tam spotkał Szamboluda, dziwną postać o zielonej skórze i śmierdzących włosach.\r\n\r\nSzambolud opowiedział Stefanowi historię swojego świata. Okazało się, że pod ziemią istniała cała społeczność szambowców. Żyli w tunelach i korytarzach, korzystając z resztek ludzkich rzeczy, które trafiały do szamba.\r\n\r\nStefan spędził wiele dni w Śmierdzących Dolinach, poznając zwyczaje i obyczaje szambowców. Dowiedział się, że ich największym skarbem były stare buty, zepsute zabawki i zapomniane książki. Szambowcy byli niezwykle pracowici i dbali o swoje podziemne królestwo.\r\n\r\nStefan stał się przyjacielem Szamboluda i pomagał mu w codziennych obowiązkach. Razem naprawiali stare rowery, czyścili zatkane rury i zbierali zapomniane monety. Stefan zrozumiał, że nawet w najbardziej nieprzyjemnych miejscach można znaleźć piękno i przyjaźń.\r\n\r\nI tak oto, dzielny Stefan i Szambolud żyli razem w Śmierdzących Dolinach, dzieląc się swoimi historiami i marzeniami. A każdy, kto przeszedł obok starej pokrywy szamba, nie mógł uwierzyć, że pod ziemią istnieje taka magiczna kraina.\r\n\r\nI tak kończę moją bajkę o szambie. Niech cię nie zniechęcają brud i smród – czasem największe przygody czekają w najmniej spodziewanych miejscach!", AttachmentSource, categories);
                 _context.Add(posts);
+
+                user = _context.Users.FirstOrDefault(u => u.Email == "test2@user");
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie") || x.CategoryName.Equals("Elektryka")).ToList();
+                AttachmentSource = ("49626137-41bc-4b33-8707-f5f6573160fc_shopOpen-Photoroom.png");
+                posts = new PostEntity(user1, "Sklepikarz", "Exegi monumentum aere perennius\r\nregalique situ pyramidum altius,\r\nquod non imber edax, non aquilo impotens\r\npossit diruere aut innumerabilis\r\nannorum series et fuga temporum.\r\nnon omnis moriar multaque pars mei\r\nvitabit Libitinam; usque ego postera\r\ncrescam laude recens, dum Capitolium\r\nscandet cum tacita virgine pontifex.\r\ndicar, qua violens obstrepit Aufidus\r\net qua pauper aquae Daunus agrestium\r\nregnavit populorum, ex humili potens,\r\nprinceps Aeolium carmen ad Italos\r\ndeduxisse modos. sume superbiam\r\nquaesitam meritis et mihi Delphica\r\nlauro cinge volens, Melpomene, comam.", AttachmentSource, categories);
+                _context.Add(posts);
+
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie") || x.CategoryName.Equals("Elektronika")).ToList();
+                AttachmentSource = ("_04983ed1-cb43-40b4-802a-55586811b99f.jfif");
+                posts = new PostEntity(user2, "I am speed, i am kebab", "Być szybkim kebabem to nie lada wyzwanie! Oto kilka wskazówek dla naszego niezwykłego kebaba, który marzy o byciu najszybszym:\r\n\r\nZwinność: Ćwicz swoje obroty! Wyobraź sobie, że jesteś na obracającej się rusztowni, a twoje mięso i warzywa muszą być gotowe w mgnieniu oka.\r\nSosy na turbo: Twoje sosy to twoje tajne bronie. Wybierz te o największym przyspieszeniu! Ostry czosnek, pikantny harissa czy pikantny kebabowy sos – to one dadzą ci przewagę.\r\nLekkość: Unikaj zbędnych dodatków. Niech twoje nadzienie będzie lekkie jak piórko. Mniej to więcej!\r\nAerodynamika: Wybierz cienkie placki na kebaba. Im mniej oporu powietrza, tym szybciej będziesz się poruszać.\r\nMotywacja: Wyobraź sobie, że jesteś na torze wyścigowym. Widzisz linię mety, a tłumy ludzi dopingują cię do przodu. To właśnie teraz jest twój moment!\r\nI pamiętaj, że być może nie osiągniesz prędkości samochodu sportowego, ale z pewnością będziesz najszybszym kebabem w okolicy! ", AttachmentSource, categories);
+                _context.Add(posts);
+
+
 
                 _context.SaveChanges();
             }

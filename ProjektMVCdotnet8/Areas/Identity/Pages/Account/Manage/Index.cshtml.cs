@@ -60,18 +60,36 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Numer telefonu")]
             public string PhoneNumber { get; set; }
+            [Display(Name = "Kraj pochodzenia")]
+            public string? Country { get; set; }
+
+            [Display(Name = "Avatar")]
+            public string? Avatar { get; set; }
+        }
+
+        private async Task<string?> GetCountryAsync(UserEntity user)
+        {
+            return user.Country ?? null;
+        }
+
+        private async Task<string?> GetAvatarAsync(UserEntity user)
+        {
+            return user.Country ?? null; //ustwia null jeśli będzie pusta
         }
 
         private async Task LoadAsync(UserEntity user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var country = await GetCountryAsync(user);
+            //var profileImage = await GetAvatarAsync(user);
 
             Username = userName;
-
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Country = country,
+                //ProfileImage = profileImage
             };
         }
 
@@ -107,10 +125,22 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
                 var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
                 if (!setPhoneResult.Succeeded)
                 {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
+                    StatusMessage = "Nieoczekiwany błąd z numerem telefonu.";
                     return RedirectToPage();
                 }
             }
+
+            if (Input.Country != user.Country)
+            {
+                user.Country = Input.Country;
+                await _userManager.UpdateAsync(user);
+            }
+
+            //if (Input.ProfileImage != user.ProfileImage)
+            //{
+            //    user.ProfileImage = Input.ProfileImage;
+            //    await _userManager.UpdateAsync(user);
+            //}
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Twój profil został zmodyfikowany.";

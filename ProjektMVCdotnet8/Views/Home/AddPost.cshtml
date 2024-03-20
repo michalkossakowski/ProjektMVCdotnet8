@@ -33,7 +33,7 @@
     </div>
     <div class="form-group">
         <label asp-for="AttachmentSource" class="control-label"></label>
-        <input type="file" id="attachment-input" class="form-control" accept="image/*" onchange="previewAttachment(event)" />
+        <input asp-for="AttachmentSource" class="form-control" accept="image/*" onchange="previewAttachment(event)" />
         <span asp-validation-for="AttachmentSource" class="text-danger"></span>
         <img id="attachment-preview" src="#" style="display:none; max-width: 100px; margin-top: 10px;" />
     </div>

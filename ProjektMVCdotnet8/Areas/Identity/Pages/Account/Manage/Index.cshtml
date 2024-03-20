@@ -20,6 +20,26 @@
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
+            <div class="form-floating mb-3">
+                <select asp-for="Input.Country" class="form-select" onchange="handleCountryChange(this)">
+                    <option value="Wybierz kraj">Wybierz kraj</option>
+                    <option value="Polska">Polska</option>
+                    <option value="USA">USA</option>
+                    <option value="Niemcy">Niemcy</option>
+                    <option value="Anglia">Anglia</option>
+                    <option value="Francja">Francja</option>
+                    <option value="Rosja">Rosja</option>
+                </select>
+                <label asp-for="Input.Country" class="form-label"></label>
+            </div>
+
+            <script>
+                function handleCountryChange(select) {
+                    if (select.value === 'Wybierz kraj') {
+                        document.getElementById('@Html.IdFor(model => model.Input.Country)').value = null;
+                    }
+                }
+            </script>
             <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Zapisz</button>
         </form>
     </div>

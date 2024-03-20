@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class _19marzec : Migration
+    public partial class backup19marczec : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

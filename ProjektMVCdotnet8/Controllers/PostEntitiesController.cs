@@ -206,5 +206,35 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return _context.Posts.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> ReviewPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var postEntity = await _context.Posts
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (postEntity == null)
+            {
+                return NotFound();
+            }
+            return View(postEntity);
+        }            
+        [HttpPost, ActionName("ReviewPost")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReviewConfirmed(int id)
+        {
+            var postEntity = await _context.Posts.FindAsync(id);
+            if (postEntity != null)
+            {
+                _context.Posts.Remove(postEntity);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index","ReportPostEntities");
+            //return RedirectToAction(nameof(Index));
+        }
     }
 }

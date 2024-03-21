@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class _20_03 : Migration
+    public partial class usuwanie_kaskadowe : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -307,7 +307,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.UsedChatId,
                         principalTable: "ChatEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -325,13 +325,13 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.CategoriesId,
                         principalTable: "CategoryEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CategoryEntityPostEntity (Dictionary<string, object>)_PostEntity_PostsId",
                         column: x => x.PostsId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -358,7 +358,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.CommentedPostId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -384,7 +384,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.ReactedPostId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -405,7 +405,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.ReportedPostId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "ModPanel";
+}
+
+
+<div class="text-center">
+    <h1 class="display-1">Panel Moderatora</h1>
+    <h2 class="display-4">Wybierz akcję:</h2>
+</div>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-sm">
+            <a class="btn btn-primary" style="font-size: 32px" asp-area="" asp-controller="ContactEntities" asp-action="Index">Próby Kontaktu</a>
+        </div>
+        <div class="col-sm">
+            <a class="btn btn-primary" style="font-size: 32px" asp-area="" asp-controller="ReportPostEntities" asp-action="Index">Zgłoszone Posty</a>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <a asp-action="Index">Powrót do strony głównej</a>
+</div>

@@ -48,10 +48,13 @@
             <td>
                     <ul class="list-group">
                         <li class="list-group-item"> <a asp-action="Details" asp-route-id="@item.Id" class="link-primary">Szczegóły</a></li>
-                        <li class="list-group-item"><a asp-action="Delete" asp-route-id="@item.Id" class="link-danger">Oznacz jako obsłużone</a></li>
+                        <li class="list-group-item"><a asp-action="Delete" asp-route-id="@item.Id" class="link-success">Oznacz jako obsłużone</a></li>
                     </ul> 
             </td>
         </tr>
 }
     </tbody>
 </table>
+<div class="text-center">
+    <a asp-controller="Home" asp-action="ModPanel">Powrót do panelu moderatora</a>
+</div>

@@ -70,10 +70,16 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
-        /*        public IActionResult Chat()
-                {
-                    return View();
-                }*/
+        public IActionResult ModPanel()
+        {
+            return View();
+        }
+        /*        
+        public IActionResult Chat()
+        {
+            return View();
+        }
+        */
 
         public async Task<IActionResult> Chat()
         {

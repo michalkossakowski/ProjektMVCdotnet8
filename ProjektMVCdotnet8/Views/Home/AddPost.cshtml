@@ -3,23 +3,23 @@
     ViewData["Title"] = "AddPost";
 }
 
-<h1>Dodaj Post</h1>
+<h1 class="display-4">Dodaj Post:</h1>
 <form asp-controller="PostEntities" asp-action="Create" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
-        <label asp-for="Title" class="control-label"></label>
+        <label asp-for="Title" class="control-label">Tytuł:</label>
         <input asp-for="Title" class="form-control" />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
+    Wybierz kategorie postu:
     <div class="form-check mb-3">
-        Wybierz kategorie postu.<br>
+
         @foreach (var category in ViewBag.nameCategory)
         {
             <label>
                 <input type="checkbox" name="SelectedCategories" value="@category.Id"> @category.CategoryName
             </label>
-
-            <br />
+            <br/>
         }
         <div class="invalid-feedback">
             proszę wybrac przynajmniej jedną kategorię.
@@ -27,19 +27,19 @@
     </div>
 
     <div class="form-group">
-        <label asp-for="PostContent" class="control-label"></label>
-        <input asp-for="PostContent" class="form-control" />
+        <label asp-for="PostContent" class="control-label">Treść postu:</label>
+        <textarea asp-for="PostContent" class="form-control" rows="6" required> </textarea>
         <span asp-validation-for="PostContent" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="AttachmentSource" class="control-label"></label>
+        <label asp-for="AttachmentSource" class="control-label">Dodaj obraz:</label>
         <input asp-for="AttachmentSource" class="form-control" accept="image/*" onchange="previewAttachment(event)" />
         <span asp-validation-for="AttachmentSource" class="text-danger"></span>
         <img id="attachment-preview" src="#" style="display:none; max-width: 100px; margin-top: 10px;" />
     </div>
 
     <div class="form-group">
-        <input type="submit" value="Create" class="btn btn-primary" />
+        <input type="submit" value="Utwórz" class="btn btn-primary" />
     </div>
 </form>
 

@@ -28,6 +28,16 @@ namespace ProjektMVCdotnet8.Controllers
         }
         public IActionResult Index()
         {
+            if (_userManager.GetUserName(User) is null)
+            {
+                ViewBag.userPoints = 0;
+            }
+            else
+            {
+                var currentUser = _context.Users.FirstOrDefault(u => u.Nick == _userManager.GetUserName(User));
+                ViewBag.userPoints = currentUser.Points;
+            }
+          
             return View();
         }
 
@@ -130,6 +140,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.NormalizedUserName = "ADMIN";
                 userEntity.Nick = "admin";
                 userEntity.PasswordHash = has.HashPassword(userEntity, "a");
+                userEntity.Points = 3116;
                 _context.Users.Add(userEntity);
 
                 _context.SaveChanges();
@@ -141,10 +152,13 @@ namespace ProjektMVCdotnet8.Controllers
                     CategoryEntity category = new CategoryEntity("Elektronika");
                     _context.Add(category);
 
-                    category = new CategoryEntity("Programowanie");
+                    category = new CategoryEntity("Elektryka");
                     _context.Add(category);
 
                     category = new CategoryEntity("Komputery");
+                    _context.Add(category);
+
+                    category = new CategoryEntity("Programowanie");
                     _context.Add(category);
 
                     category = new CategoryEntity("Sieci");
@@ -153,8 +167,6 @@ namespace ProjektMVCdotnet8.Controllers
                     category = new CategoryEntity("Spawanie");
                     _context.Add(category);
 
-                    category = new CategoryEntity("Elektryka");
-                    _context.Add(category);
                     _context.SaveChanges();
                 }
             }

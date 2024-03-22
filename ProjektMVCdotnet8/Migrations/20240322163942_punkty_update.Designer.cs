@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240321234611_usuwanie_kaskadowe")]
-    partial class usuwanie_kaskadowe
+    [Migration("20240322163942_punkty_update")]
+    partial class punkty_update
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -228,6 +228,9 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("Points")
+                        .HasColumnType("int");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");

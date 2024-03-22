@@ -17,6 +17,8 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
         [Display(Name = "Avatar")]
         public string? Avatar { get; set; }
 
+        [Display(Name = "Punkty")]
+        public int? Points { get; set; } = 0;
     }
 }
 

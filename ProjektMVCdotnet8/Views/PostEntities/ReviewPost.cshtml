@@ -4,7 +4,7 @@
     ViewData["Title"] = "ReviewPost";
 }
 
-<h1 class ="display-4">Zdecyduj co zrobić z postem</h1>
+<h1 class ="display-4">Zdecyduj czy usunąć post:</h1>
 <div>
     <hr />
     <dl class="row">
@@ -28,7 +28,7 @@
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.AttachmentSource)
-            <img src="/attachments/@Model.AttachmentSource" alt="Alternate Text" />
+            <img src="/attachments/@Model.AttachmentSource" alt="Alternate Text" class="img-thumbnail"/>
 
         </dt>
         <dd class="col-sm-10">

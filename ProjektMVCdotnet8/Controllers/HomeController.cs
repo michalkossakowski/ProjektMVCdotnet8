@@ -104,7 +104,6 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.NormalizedUserName = "TESTUSER";
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "testuser";
-
                 _context.Users.Add(userEntity);
 
                 userEntity = new UserEntity();
@@ -116,7 +115,6 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.PasswordHash = hashedPassword;
                 _context.Users.Add(userEntity);
 
-
                 userEntity = new UserEntity();
                 userEntity.Email = "test3@user";
                 userEntity.UserName = "test3user";
@@ -124,6 +122,14 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.Nick = "test3user";
                 var hashedPassword3 = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.PasswordHash = hashedPassword3;
+                _context.Users.Add(userEntity);
+
+                userEntity = new UserEntity();
+                userEntity.Email = "admin@user";
+                userEntity.UserName = "admin";
+                userEntity.NormalizedUserName = "ADMIN";
+                userEntity.Nick = "admin";
+                userEntity.PasswordHash = has.HashPassword(userEntity, "a");
                 _context.Users.Add(userEntity);
 
                 _context.SaveChanges();

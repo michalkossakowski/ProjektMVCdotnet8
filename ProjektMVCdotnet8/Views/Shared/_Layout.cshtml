@@ -51,6 +51,10 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Chat">Chat</a>
                             </li>
+                            if (UserManager.GetUserName(User) == "admin")
+                            {
+                                <a class="btn btn-warning"  asp-area="" asp-controller="Home" asp-action="ModPanel">Panel Moderatora</a>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial.cshtml" />
@@ -66,8 +70,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - ProjektMVCdotnet8 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>     
-            <a asp-area="" asp-controller="Home" asp-action="ModPanel">PanelModeratora</a> 
+            &copy; 2024 - ProjektMVCdotnet8 - 
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
 
     </footer>

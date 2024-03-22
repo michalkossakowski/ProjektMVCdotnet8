@@ -306,6 +306,14 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<string>("ChattingUser2Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("User1Nick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("User2Nick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChattingUser1Id");
@@ -420,6 +428,9 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<string>("UsingUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("currentChat")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

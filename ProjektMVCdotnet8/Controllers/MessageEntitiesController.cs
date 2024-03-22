@@ -60,17 +60,18 @@ namespace ProjektMVCdotnet8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,MessageContent")] MessageEntity messageEntity)
+        public async Task<IActionResult> Create([Bind("Id,MessageContent")] MessageEntity messageEntity,int chatId)
         {
-            var chat = _context.Chats.Find(1);
+            var chat = _context.Chats.FirstOrDefault(c => c.Id == chatId);
             var user = await _userManager.GetUserAsync(User);
-            //var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
+        
             messageEntity.UsedChat = chat;
+            messageEntity.currentChat = chatId;
             messageEntity.UsingUser = user;
             messageEntity.SendDate = DateTime.Now;
             _context.Add(messageEntity);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Chat", "Home", messageEntity);
+            return RedirectToAction("Chat", "Home", new { chatId = chatId });
             /*if (ModelState.IsValid)
             {
                 _context.Add(messageEntity);

@@ -84,18 +84,40 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
-        /*        
-        public IActionResult Chat()
+        public IActionResult ChatList()
         {
+            var user = _userManager.GetUserName(User);
+            var chatList = new List<ChatEntity>();
+
+            foreach (var ch in _context.Chats)
+            {
+                var u1 = ch.User1Nick;
+                var u2 = ch.User2Nick;
+                if (user == u1 || user == u2)
+                {
+                    chatList.Add(ch);
+                }
+            }
+            ViewBag.chatList = chatList;
+            ViewBag.currentUser = user;
             return View();
         }
-        */
 
-        public async Task<IActionResult> Chat()
+        public async Task<IActionResult> Chat(int chatId)
         {
-            var user = await _userManager.GetUserAsync(User);//do sprawdzenia uzytkowknika
-            //Console.WriteLine("USER: "+user); // wypisuje usera w konsolu
+            var chat = _context.Chats.FirstOrDefault(c => c.Id == chatId);
+            ViewBag.CurrentChat = chat.Id;
+
+            var user = await _userManager.GetUserAsync(User);
             ViewBag.CurrentUser = user;
+
+            var user2 = chat.User1Nick;
+            if (user.Nick == user2)
+            {
+                user2 = chat.User2Nick;
+            }
+            ViewBag.SecondUser = user2;
+
             return View(await _context.Messages.ToListAsync());
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -266,26 +288,39 @@ namespace ProjektMVCdotnet8.Controllers
             //chat + wiadomość init jak puste
             if (_context.Chats.IsNullOrEmpty())
             {
-                var chatEntity = new ChatEntity();
-                var user = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
-                var user2 = _context.Users.FirstOrDefault(u => u.Email == "test2@user");// tu zmieniajcie mail
-                chatEntity.ChattingUser1 = user;
-                chatEntity.ChattingUser2 = user2;
-                _context.Add(chatEntity);
+                var chatEntity1 = new ChatEntity();
+                var user11 = _context.Users.FirstOrDefault(u => u.Email == "test@user");
+                var user12 = _context.Users.FirstOrDefault(u => u.Email == "test2@user");
+                chatEntity1.ChattingUser1 = user11;
+                chatEntity1.User1Nick = user11.Nick;
+                chatEntity1.ChattingUser2 = user12;
+                chatEntity1.User2Nick = user12.Nick;
+                _context.Add(chatEntity1);
 
-                MessageEntity messageEntity = new MessageEntity();
-                messageEntity.MessageContent = "Rozpoczęcie chatu";
-                messageEntity.UsedChat = chatEntity;
-                messageEntity.UsingUser = user;
-                messageEntity.SendDate = DateTime.Now;
-                _context.Add(messageEntity);
+                MessageEntity messageEntity1 = new MessageEntity();
+                messageEntity1.MessageContent = "Rozpoczęcie chatu";
+                messageEntity1.UsedChat = chatEntity1;
+                messageEntity1.currentChat = chatEntity1.Id;
+                messageEntity1.UsingUser = user12;
+                messageEntity1.SendDate = DateTime.Now;
+                _context.Add(messageEntity1);
 
                 var chatEntity2 = new ChatEntity();
-                var user21 = _context.Users.FirstOrDefault(u => u.Email == "test@user");// tu zmieniajcie mail
-                var user22 = _context.Users.FirstOrDefault(u => u.Email == "test3@user");// tu zmieniajcie mail
+                var user21 = _context.Users.FirstOrDefault(u => u.Email == "test@user");
+                var user22 = _context.Users.FirstOrDefault(u => u.Email == "test3@user");
                 chatEntity2.ChattingUser1 = user21;
+                chatEntity2.User1Nick = user21.Nick;
                 chatEntity2.ChattingUser2 = user22;
+                chatEntity2.User2Nick = user22.Nick;
                 _context.Add(chatEntity2);
+
+                MessageEntity messageEntity2 = new MessageEntity();
+                messageEntity2.MessageContent = "Rozpoczęcie chatu";
+                messageEntity2.UsedChat = chatEntity2;
+                messageEntity1.currentChat = chatEntity2.Id;
+                messageEntity2.UsingUser = user21;
+                messageEntity2.SendDate = DateTime.Now;
+                _context.Add(messageEntity2);
 
                 _context.SaveChanges();
             }

@@ -1,4 +1,5 @@
-﻿@model IEnumerable<ProjektMVCdotnet8.Entities.MessageEntity>
+﻿@using ProjektMVCdotnet8.Entities
+@model IEnumerable<ProjektMVCdotnet8.Entities.MessageEntity>
 
 @{
     ViewData["Title"] = "Chat";
@@ -66,87 +67,71 @@
 </style>
 
 <div class="container-fluid flex-grow-1 chat-container">
-    <div class="row flex-grow-1">
-        <div class="col-md-3 bg-light border">
-            <!-- Dodana klasa border -->
-            <div class="list-group mt-3 h-100">
-                <a href="#" class="list-group-item list-group-item-action">Znajomy 1</a>
-                <a href="#" class="list-group-item list-group-item-action">Znajomy 2</a>
-                <a href="#" class="list-group-item list-group-item-action">Znajomy 3</a>
-                <!-- Lista znajomych -->
-            </div>
+    <div class="card h-80">
+        <div class="card-header bg-primary text-white">
+            Chat z @ViewBag.SecondUser
         </div>
-        <div class="col-md-9">
-            <div class="card h-80">
-                <div class="card-header bg-primary text-white">
-                    Chat z Weryk
-                </div>
-                <div class="card-footer">
-                    <div class="messages-container" id="messagesContainer">
-                        <!-- Wyswietlanie wiadomosci -->
-                        @{
-                            bool first = true;
-                            foreach (var item in Model)
+        <div class="card-footer">
+            <div class="messages-container" id="messagesContainer">
+                <!-- Wyswietlanie wiadomosci -->
+                @{
+                    foreach (var item in Model)
+                    {
+                        if (item.currentChat == ViewBag.CurrentChat)
+                        {
+                            if (@item.UsingUser == ViewBag.CurrentUser)
                             {
-                                if(first==true){
-                                            <div class="first-message-content">
-                                                <strong>---@item.MessageContent---</strong>
-                                            </div>
-                                    first = false;
-                                }
-                                else if(@item.UsingUser == ViewBag.CurrentUser)
-                                {
-                                    <div class="message-row">
-                                        <div class="message-box">
-                                            <div class="message-content">
-                                                <strong class="text-break">@item.MessageContent</strong>
-                                            </div>
-                                            <div class="message-date" >
-                                                <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
-                                            </div>
+                                <div class="message-row">
+                                    <div class="message-box">
+                                        <small style="margin-left: auto;">@ViewBag.CurrentUser</small>
+                                        <div class="message-content">
+                                            <strong class="text-break">@item.MessageContent</strong>
                                         </div>
-                                    </div>
-                                }
-                                else{
-                                    <div class="message-row2">
-                                        <div class="message-box2">
-                                            <div class="message-content">
-                                                <strong class="text-break">@item.MessageContent</strong>
-                                            </div>
-                                            <div class="message-date2">
-                                                <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
-                                            </div>
+                                        <div class="message-date">
+                                            <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
                                         </div>
-                                    </div>
-                                
-                                }
-
-                           
-                            }
-                        }
-                    </div>
-                    <div class="d-flex align-items-center justify-content-between mt-3">
-                        <!-- Wysylanie wiadomosci -->
-                        <form id="sendMessageForm" method="post" asp-controller="MessageEntities" asp-action="Create" class="d-flex flex-grow-1">
-                            <div class="form-group mb-0 flex-grow-1 mr-3">
-                                <div class="input-group mb-3">
-                                    <input asp-for="@Model.ElementAt(0).MessageContent" class="form-control" value="" placeholder="Napisz wiadomość..." required />
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary" type="submit">Wyślij</button>
                                     </div>
                                 </div>
+                            }
+                            else
+                            {
+                                <div class="message-row2">
+                                    <div class="message-box2">
+                                        <small style="margin-left: auto;">@ViewBag.SecondUser</small>
+                                        <div class="message-content">
+                                            <strong class="text-break">@item.MessageContent</strong>
+                                        </div>
+                                        <div class="message-date2">
+                                            <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        }
+                    }
+                }
+            </div>
+            <div class="d-flex align-items-center justify-content-between mt-3">
+                <!-- Wysylanie wiadomosci -->
+                <form id="sendMessageForm" method="post" asp-controller="MessageEntities" asp-action="Create" class="d-flex flex-grow-1">
+                    <input type="hidden" name="chatId" value="@ViewBag.CurrentChat">
+                    <div class="form-group mb-0 flex-grow-1 mr-3">
+                        <div class="input-group mb-3">
+                            <input asp-for="@Model.ElementAt(0).MessageContent" class="form-control" value="" placeholder="Napisz wiadomość..." required />
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" type="submit">Wyślij</button>
                             </div>
-                        </form>
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
 <script>
-    // Po załadowaniu strony
     window.onload = function () {
-        // Przewiń do dołu
         var messagesContainer = document.getElementById("messagesContainer");
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     };

@@ -1,0 +1,23 @@
+﻿@using ProjektMVCdotnet8.Entities
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<h1 class="display-4">Twoje otwarte konwersacje:</h1>
+<div class="class=" text-center" bg-light border">
+    <div class="list-group mt-3 h-100">
+        @{
+            List<ChatEntity> chList = ViewBag.chatList;
+            string uname = ViewBag.currentUser;
+            foreach (var item in chList)
+            {
+                string u2name = item.User1Nick;
+                if(uname == u2name)
+                {
+                    u2name = item.User2Nick;
+                }
+                <a href="/Home/Chat?chatId=@item.Id" class="list-group-item list-group-item-action">@u2name</a>
+            }
+        }
+    </div>
+</div>

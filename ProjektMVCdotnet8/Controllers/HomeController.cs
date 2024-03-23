@@ -209,12 +209,10 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(posts);
 
 
-
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Elektryka") || x.CategoryName.Equals("Elektronika")).ToList();
                 AttachmentSource = ("2ab0efcf-c566-4996-9220-77f2d948ddb2_OIP.jfif");
                 posts = new PostEntity(user, "Tytul_2", "Once upon a time, in a mystical realm known as Racoonia, a curious raccoon named Rolo found himself inexplicably transported from his cozy forest home to a parallel world. This world was unlike anything he had ever seen—a blend of ancient history, magic, and fantastical creatures.\r\n\r\nRolo’s Isekai Adventures: Chronicles of the Raccoon Sage\r\n\r\nThe Great Acorn Quest:\r\nRolo stumbled upon a prophecy etched into the bark of an ancient oak tree. It foretold that only a raccoon with a heart as brave as a squirrel’s would be able to retrieve the legendary Golden Acorn. This acorn, said to grant immense wisdom and power, was hidden deep within the Enchanted Forest.\r\nArmed with determination and a trusty acorn-shaped backpack, Rolo embarked on a perilous journey. Along the way, he encountered talking owls, mischievous sprites, and grumpy trolls—all of whom tested his wit and courage.\r\nThe Council of Creatures:\r\nIn the heart of Racoonia stood the majestic Tree of Ages, where representatives from various species convened. Rolo attended the Council of Creatures, where he met the wise Sage Squirrel and the elusive Fox Oracle.\r\nTogether, they discussed matters of magical balance, negotiated treaties between squirrels and chipmunks, and debated whether the neighboring Bunny Kingdom should be allowed to annex the carrot fields.\r\nThe Timeless Library:\r\nRolo discovered the Library of Lost Leaves, a place where forgotten stories and ancient scrolls resided. Here, he pored over dusty tomes, learning about the legendary raccoons of old—the ones who could transform into shadows, steal moonlight, and brew potions from dewdrops.\r\nHis favorite tale was that of Bandit the Clever, who outwitted a dragon by convincing it that shiny gems were mere pebbles.\r\nThe Moonlit Masquerade:\r\nEvery century, Racoonia hosted the grand Moonlit Masquerade, a magical ball where creatures from all corners of the realm gathered. Rolo donned a tiny tuxedo, complete with a miniature top hat, and danced with a graceful Fairy Fawn.\r\nAs the moon wove its silver threads, Rolo whispered secrets to the Starfire Beetles, who promised to light his way home.\r\nThe Portal’s Whispers:\r\nRolo’s ultimate quest was to find the", AttachmentSource, categories);
                 _context.Add(posts);
-
 
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Spawanie") || x.CategoryName.Equals("Elektryka")).ToList();
@@ -233,7 +231,16 @@ namespace ProjektMVCdotnet8.Controllers
                 posts = new PostEntity(user2, "I am speed, i am kebab", "Być szybkim kebabem to nie lada wyzwanie! Oto kilka wskazówek dla naszego niezwykłego kebaba, który marzy o byciu najszybszym:\r\n\r\nZwinność: Ćwicz swoje obroty! Wyobraź sobie, że jesteś na obracającej się rusztowni, a twoje mięso i warzywa muszą być gotowe w mgnieniu oka.\r\nSosy na turbo: Twoje sosy to twoje tajne bronie. Wybierz te o największym przyspieszeniu! Ostry czosnek, pikantny harissa czy pikantny kebabowy sos – to one dadzą ci przewagę.\r\nLekkość: Unikaj zbędnych dodatków. Niech twoje nadzienie będzie lekkie jak piórko. Mniej to więcej!\r\nAerodynamika: Wybierz cienkie placki na kebaba. Im mniej oporu powietrza, tym szybciej będziesz się poruszać.\r\nMotywacja: Wyobraź sobie, że jesteś na torze wyścigowym. Widzisz linię mety, a tłumy ludzi dopingują cię do przodu. To właśnie teraz jest twój moment!\r\nI pamiętaj, że być może nie osiągniesz prędkości samochodu sportowego, ale z pewnością będziesz najszybszym kebabem w okolicy! ", AttachmentSource, categories);
                 _context.Add(posts);
 
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery") || x.CategoryName.Equals("Sieci")).ToList();
+                AttachmentSource = ("szop_ninjago.jpg");
+                posts = new PostEntity(user,"Szop Ninjago", "Na długo zanim czas uzyskał imię, Pierwszy Mistrz Spinjitzu stworzył krainę Ninjago, używając do tego czterech magicznych Broni Spinjitzu: Kosy Wstrząsów,\r\n\r\n Nunczako Piorunów, Shurikenów Lodu, oraz Miecza Płomieni. Są tak potężne, że nikt nie może władać wszystkimi jednocześnie. \r\n\r\n Gdy Pierwszy Mistrz odszedł, jego dwaj synowie przysięgli, że będą strzec broni, jednak starszy z nich dał się zwieść ciemności i postanowił je ukraść. Doszło do ostatecznego pojedynku,\r\n\r\n młodszy z braci zwyciężył i strącił starszego do Krainy Cieni. Nastał pokój, a bronie zostały ukryte w \r\n\r\n bezpiecznym miejscu, młodszy brst wiedział jednak, że jego przeciwnik zaatakuje ponownie. Na straży broni postawił potężnego obrońcę, a prowadzącą do nich mapę powierzył człowiekowi o prawym sercu. (Koniec retrospekcji.) Tym wybrańcem był twój ojciec.\r\n\r\n A starszym bratem właśnie Lord Garmadon. Muszę odnaleźć 4 Bronie Spinjitzu, zanim jemu się to uda.", AttachmentSource, categories);
+                _context.Add(posts);
 
+                ReportPostEntity reportPost = new ReportPostEntity();
+                reportPost.postId = 7;
+                reportPost.ReportedPost = posts;
+                reportPost.ReportContent = "co? szop zielonym ninją?!";
+                _context.Add(reportPost);
 
                 _context.SaveChanges();
             }

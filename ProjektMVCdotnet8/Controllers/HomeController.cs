@@ -198,20 +198,20 @@ namespace ProjektMVCdotnet8.Controllers
                 var user1 = _context.Users.FirstOrDefault(u => u.Email == "test2@user");
                 var user2 = _context.Users.FirstOrDefault(u => u.Email == "test3@user");
 
-                var categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie")).ToList();
-                string AttachmentSource = ("29a5ddb2-5544-4fdd-993c-5139fd04d0e4_WolfAttack5.png");
-                PostEntity posts = new PostEntity(user, "Tytul_1", "lorem ipsum w gipsum", AttachmentSource, categories);
+                var categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie") || x.CategoryName.Equals("Komputery")).ToList();
+                string AttachmentSource = ("szop_toronto.jpg");
+                PostEntity posts = new PostEntity(user, "Teraz Rodzina", "Szopinic Toronto", AttachmentSource, categories);
                 _context.Add(posts);
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Spawanie") || x.CategoryName.Equals("Sieci")).ToList();
                 AttachmentSource = ("26897dea-9740-40b0-a638-24e9e77bd528_image.png");
-                posts = new PostEntity(user, "Tytul_2", "Jak to jest być skrybą, dobrze?\r\n\r\nA, wie pan, moim zdaniem to nie ma tak, że dobrze, albo że niedobrze.\r\nGdybym miał powiedzieć, co cenię w życiu najbardziej, powiedziałbym, że ludzi.\r\nLudzi, którzy podali mi pomocną dłoń, kiedy sobie nie radziłem, kiedy byłem sam,\r\ni co ciekawe, to właśnie przypadkowe spotkania wpływają na nasze życie.\r\nChodzi o to, że kiedy wyznaje się pewne wartości, nawet pozornie uniwersalne,\r\nbywa, że nie znajduje się zrozumienia, które by tak rzec, które pomaga się nam rozwijać.\r\nJa miałem szczęście, by tak rzec, ponieważ je znalazłem, i dziękuję życiu!\r\nDziękuję mu; życie to śpiew, życie to taniec, życie to miłość!\r\nWielu ludzi pyta mnie o to samo: ale jak ty to robisz, skąd czerpiesz tę radość? A ja odpowiadam, że to proste!\r\nTo umiłowanie życia. To właśnie ono sprawia, że dzisiaj na przykład buduję maszyny, a jutro – kto wie? Dlaczego by nie – oddam się pracy społecznej i będę, ot, choćby, sadzić... doć— m-marchew...\r\n\r\n", AttachmentSource, categories);
+                posts = new PostEntity(user, "Dibrze czy nie dobrze?", "Jak to jest być skrybą, dobrze?\r\n\r\nA, wie pan, moim zdaniem to nie ma tak, że dobrze, albo że niedobrze.\r\nGdybym miał powiedzieć, co cenię w życiu najbardziej, powiedziałbym, że ludzi.\r\nLudzi, którzy podali mi pomocną dłoń, kiedy sobie nie radziłem, kiedy byłem sam,\r\ni co ciekawe, to właśnie przypadkowe spotkania wpływają na nasze życie.\r\nChodzi o to, że kiedy wyznaje się pewne wartości, nawet pozornie uniwersalne,\r\nbywa, że nie znajduje się zrozumienia, które by tak rzec, które pomaga się nam rozwijać.\r\nJa miałem szczęście, by tak rzec, ponieważ je znalazłem, i dziękuję życiu!\r\nDziękuję mu; życie to śpiew, życie to taniec, życie to miłość!\r\nWielu ludzi pyta mnie o to samo: ale jak ty to robisz, skąd czerpiesz tę radość? A ja odpowiadam, że to proste!\r\nTo umiłowanie życia. To właśnie ono sprawia, że dzisiaj na przykład buduję maszyny, a jutro – kto wie? Dlaczego by nie – oddam się pracy społecznej i będę, ot, choćby, sadzić... doć— m-marchew...\r\n\r\n", AttachmentSource, categories);
                 _context.Add(posts);
 
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Elektryka") || x.CategoryName.Equals("Elektronika")).ToList();
-                AttachmentSource = ("2ab0efcf-c566-4996-9220-77f2d948ddb2_OIP.jfif");
-                posts = new PostEntity(user, "Tytul_2", "Once upon a time, in a mystical realm known as Racoonia, a curious raccoon named Rolo found himself inexplicably transported from his cozy forest home to a parallel world. This world was unlike anything he had ever seen—a blend of ancient history, magic, and fantastical creatures.\r\n\r\nRolo’s Isekai Adventures: Chronicles of the Raccoon Sage\r\n\r\nThe Great Acorn Quest:\r\nRolo stumbled upon a prophecy etched into the bark of an ancient oak tree. It foretold that only a raccoon with a heart as brave as a squirrel’s would be able to retrieve the legendary Golden Acorn. This acorn, said to grant immense wisdom and power, was hidden deep within the Enchanted Forest.\r\nArmed with determination and a trusty acorn-shaped backpack, Rolo embarked on a perilous journey. Along the way, he encountered talking owls, mischievous sprites, and grumpy trolls—all of whom tested his wit and courage.\r\nThe Council of Creatures:\r\nIn the heart of Racoonia stood the majestic Tree of Ages, where representatives from various species convened. Rolo attended the Council of Creatures, where he met the wise Sage Squirrel and the elusive Fox Oracle.\r\nTogether, they discussed matters of magical balance, negotiated treaties between squirrels and chipmunks, and debated whether the neighboring Bunny Kingdom should be allowed to annex the carrot fields.\r\nThe Timeless Library:\r\nRolo discovered the Library of Lost Leaves, a place where forgotten stories and ancient scrolls resided. Here, he pored over dusty tomes, learning about the legendary raccoons of old—the ones who could transform into shadows, steal moonlight, and brew potions from dewdrops.\r\nHis favorite tale was that of Bandit the Clever, who outwitted a dragon by convincing it that shiny gems were mere pebbles.\r\nThe Moonlit Masquerade:\r\nEvery century, Racoonia hosted the grand Moonlit Masquerade, a magical ball where creatures from all corners of the realm gathered. Rolo donned a tiny tuxedo, complete with a miniature top hat, and danced with a graceful Fairy Fawn.\r\nAs the moon wove its silver threads, Rolo whispered secrets to the Starfire Beetles, who promised to light his way home.\r\nThe Portal’s Whispers:\r\nRolo’s ultimate quest was to find the", AttachmentSource, categories);
+                AttachmentSource = ("_dd417104-4aca-4b42-a483-d8c85bb48d3b.jfif");
+                posts = new PostEntity(user, "Dune", "Once upon a time, in a mystical realm known as Racoonia, a curious raccoon named Rolo found himself inexplicably transported from his cozy forest home to a parallel world. This world was unlike anything he had ever seen—a blend of ancient history, magic, and fantastical creatures.\r\n\r\nRolo’s Isekai Adventures: Chronicles of the Raccoon Sage\r\n\r\nThe Great Acorn Quest:\r\nRolo stumbled upon a prophecy etched into the bark of an ancient oak tree. It foretold that only a raccoon with a heart as brave as a squirrel’s would be able to retrieve the legendary Golden Acorn. This acorn, said to grant immense wisdom and power, was hidden deep within the Enchanted Forest.\r\nArmed with determination and a trusty acorn-shaped backpack, Rolo embarked on a perilous journey. Along the way, he encountered talking owls, mischievous sprites, and grumpy trolls—all of whom tested his wit and courage.\r\nThe Council of Creatures:\r\nIn the heart of Racoonia stood the majestic Tree of Ages, where representatives from various species convened. Rolo attended the Council of Creatures, where he met the wise Sage Squirrel and the elusive Fox Oracle.\r\nTogether, they discussed matters of magical balance, negotiated treaties between squirrels and chipmunks, and debated whether the neighboring Bunny Kingdom should be allowed to annex the carrot fields.\r\nThe Timeless Library:\r\nRolo discovered the Library of Lost Leaves, a place where forgotten stories and ancient scrolls resided. Here, he pored over dusty tomes, learning about the legendary raccoons of old—the ones who could transform into shadows, steal moonlight, and brew potions from dewdrops.\r\nHis favorite tale was that of Bandit the Clever, who outwitted a dragon by convincing it that shiny gems were mere pebbles.\r\nThe Moonlit Masquerade:\r\nEvery century, Racoonia hosted the grand Moonlit Masquerade, a magical ball where creatures from all corners of the realm gathered. Rolo donned a tiny tuxedo, complete with a miniature top hat, and danced with a graceful Fairy Fawn.\r\nAs the moon wove its silver threads, Rolo whispered secrets to the Starfire Beetles, who promised to light his way home.\r\nThe Portal’s Whispers:\r\nRolo’s ultimate quest was to find the", AttachmentSource, categories);
                 _context.Add(posts);
 
 
@@ -242,9 +242,39 @@ namespace ProjektMVCdotnet8.Controllers
                 reportPost.ReportContent = "co? szop zielonym ninją?!";
                 _context.Add(reportPost);
 
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery")).ToList();
+                AttachmentSource = ("szop_potter.jpg");
+                posts = new PostEntity(user, "Tylko nie sliterin!!!", "szop który był wybrańcem", AttachmentSource, categories);
+                _context.Add(posts);
+
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery") || x.CategoryName.Equals("Sieci")).ToList();
+                AttachmentSource = ("szop_czarny_pan.jpg");
+                posts = new PostEntity(user, "Insygnia śmieri", "Pewnego razu byli sobie trzej bracia, którzy wędrowali razem.\r\n Doszli do niebezpiecznej rzeki, której nie mogli przejść. Byli sprawnymi czarodziejami,\r\n więc wyczarowali nad wodą most. Gdy go przechodzili, drogę zagrodziła im Śmierć, która była wściekła, że ją oszukali. Udała, że ich podziwia\r\n i zaproponowała im nagrodę. Najstarszy brat o wojowniczym usposobieniu poprosił o najpotężniejszą różdżkę. Kostucha podeszła do najstarszego,\r\n rosnącego nad brzegiem rzeki drzewa, z którego gałęzi wykonała różdżkę. Drugi, nieco młodszy brat chciał jeszcze bardziej upokorzyć Śmierć,\r\n więc zażądał mocy wskrzeszenia umarłych. Śmierć podarowała mu niewielki kamień i zapewniła, że ma moc wzywania martwych zza grobu.\r\n Najmłodszy brat, który był z tej trójki także najskromniejszy i najmądrzejszy, nie ufał kostusze. Poprosił o coś, co pomoże mu odejść, nie będąc ściganym przez Śmierć.\r\n Ofiarowano mu Pelerynę Niewidkę. Następnie bracia przeszli przez most i powędrowali dalej, wkrótce rozchodząc się w różne strony.\r\n Najstarszy przez parę tygodni wędrował do wioski, a na miejscu odnalazł czarodzieja, z którym się kiedyś pokłócił. Ze swoją potężną różdżką (nazywaną teraz Czarną Różdżką) wyzwał go na pojedynek,\r\n który bez trudu wygrał. Po zamordowaniu przeciwnika udał się do gospody, gdzie przechwalał się jej mocą.\r\n Kiedy pijany spał tej nocy w owej karczmie, inny czarodziej podkradł się do jego łoża, zabrał mu różdżkę i poderżnął gardło. Drugi brat udał się do swojego domu, gdzie mieszkał samotnie.\r\n Wziął otrzymany kamień i obrócił go trzykrotnie w dłoni. Ujrzał dziewczynę, z którą planował się ożenić, dopóki nie zmarła przedwcześnie.\r\n Nie należała jednak do tego świata, i cierpiała oddalona od świata zmarłych. Widząc to, mężczyzna popełnił z rozpaczy samobójstwo, aby się z nią połączyć.\r\n Po zabraniu dwóch starszych braci, Śmierć przez wiele lat szukała najmłodszego z rodzeństwa. Ten, dopiero gdy dożył sędziwego wieku,\r\n zdjął z siebie Pelerynę i dał ją swojemu synowi. Wówczas pozdrowił Śmierć jak starego przyjaciela,\r\n po czym oboje odeszli z tego świata.", AttachmentSource, categories);
+                _context.Add(posts);
+
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Elektryka") || x.CategoryName.Equals("Komputery")).ToList();
+                AttachmentSource = ("szop_batman.jpg");
+                posts = new PostEntity(user, "Something in the way", "zło nigdy nie śpi", AttachmentSource, categories);
+                _context.Add(posts);
+
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Elektronika") || x.CategoryName.Equals("Komputery") || x.CategoryName.Equals("Sieci")).ToList();
+                AttachmentSource = ("szop_szambo.jpg");
+                posts = new PostEntity(user, "Szambo Nurek", "zagrożony wygnięciem. Szambo nuerk najmniejszy przerzuwać świata", AttachmentSource, categories);
+                _context.Add(posts);
+
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery") || x.CategoryName.Equals("Sieci")).ToList();
+                AttachmentSource = ("szop_pracownik.jpg");
+                posts = new PostEntity(user, "My szopy", "nie mamy łatwo", AttachmentSource, categories);
+                _context.Add(posts);
+
+                categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery")).ToList();
+                AttachmentSource = ("szop_skywalker.jpg");
+                posts = new PostEntity(user, "Nowa nadzije", "Nastały czasy wojny domowej. Statki Rebeliantów, atakujące z ukrytej bazy, odniosły pierwsze zwycięstwo w walce ze złowrogim Imperium Galaktycznym.\r\n\r\nSzpiedzy wykradli tajne plany ostatecznej broni Imperium, GWIAZDY SMIERCI, stacji kosmicznej o sile rażenia zdolnej zniszczyć całą planetę.\r\n\r\nŚcigana przez agentów Imperium, Księżniczka Leia ucieka do domu, strzegąc wykradzionych planów, które mogą ocalić jej lud i przywrócić wolność galaktyce.", AttachmentSource, categories);
+                _context.Add(posts);
+
                 _context.SaveChanges();
             }
-            //contact init jak puste
+            //contact init jak puste 
             if (_context.ContactForms.IsNullOrEmpty())
             {
                 if (ModelState.IsValid)

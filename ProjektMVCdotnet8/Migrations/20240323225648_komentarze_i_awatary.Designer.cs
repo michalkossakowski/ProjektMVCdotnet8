@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240323224547_comment_postid_userNick")]
-    partial class comment_postid_userNick
+    [Migration("20240323225648_komentarze_i_awatary")]
+    partial class komentarze_i_awatary
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -309,6 +309,14 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<string>("ChattingUser2Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("User1Nick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("User2Nick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChattingUser1Id");
@@ -430,6 +438,9 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<string>("UsingUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("currentChat")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

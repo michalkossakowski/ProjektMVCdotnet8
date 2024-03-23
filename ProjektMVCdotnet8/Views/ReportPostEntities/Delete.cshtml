@@ -5,7 +5,7 @@
 }
 
 <h1 class="display-4">Usuń post ze zgłoszonych postów:</h1>
-
+<hr />
 <div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -26,7 +26,9 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Usuń ze zgłoszonych" class="btn btn-danger" /> |
-        <a asp-action="Index">Powrót do panelu</a>
+        <input type="submit" value="Usuń ze zgłoszonych postów" class="btn btn-success" /> 
     </form>
+</div>
+<div>
+    <a asp-action="Index">Powrót do zgłoszonych postów</a>
 </div>

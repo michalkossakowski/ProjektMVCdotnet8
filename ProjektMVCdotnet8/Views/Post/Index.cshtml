@@ -6,6 +6,7 @@
 @model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
 @{
     ViewData["Title"] = "CategoryIndex";
+    List<string> followedUsers = TempData["FollowedUsers"] as List<string>;
 }
 <style>
     .awatar
@@ -39,12 +40,18 @@
                     <div class="card-footer">
                         @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User))) 
                         {
-                            <p card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], BlockingUser = UserManager.GetUserId(User) })">Blokuj</a></p>
-                            <p card-text><a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], FollowingUserID = UserManager.GetUserId(User)})"> Obserwuj</a></p>
+                            <p card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Blokuj</a></p>
+                            @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
+                            {
+                                <p card-text><a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Przestań obserwować</a></p>
+                            }
+                            else 
+                            { 
+                                <p card-text><a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Obserwuj</a></p>
+                            }
                         }
                         <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>
-                    
                 </div>
             </div>
         </div>

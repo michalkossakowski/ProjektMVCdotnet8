@@ -226,6 +226,9 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<int?>("Points")
+                        .HasColumnType("int");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -302,6 +305,14 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<string>("ChattingUser2Id")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("User1Nick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("User2Nick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -418,6 +429,9 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<string>("UsingUserId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<int>("currentChat")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UsedChatId");
@@ -516,13 +530,13 @@ namespace ProjektMVCdotnet8.Migrations
                     b.HasOne("ProjektMVCdotnet8.Entities.CategoryEntity", null)
                         .WithMany()
                         .HasForeignKey("CategoriesId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProjektMVCdotnet8.Entities.PostEntity", null)
                         .WithMany()
                         .HasForeignKey("PostsId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -616,7 +630,7 @@ namespace ProjektMVCdotnet8.Migrations
                     b.HasOne("ProjektMVCdotnet8.Entities.PostEntity", "CommentedPost")
                         .WithMany()
                         .HasForeignKey("CommentedPostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("AuthorUser");
@@ -644,7 +658,7 @@ namespace ProjektMVCdotnet8.Migrations
                     b.HasOne("ProjektMVCdotnet8.Entities.ChatEntity", "UsedChat")
                         .WithMany()
                         .HasForeignKey("UsedChatId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "UsingUser")
@@ -670,7 +684,7 @@ namespace ProjektMVCdotnet8.Migrations
                     b.HasOne("ProjektMVCdotnet8.Entities.PostEntity", "ReactedPost")
                         .WithMany()
                         .HasForeignKey("ReactedPostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProjektMVCdotnet8.Areas.Identity.Data.UserEntity", "ReactingUser")
@@ -687,7 +701,7 @@ namespace ProjektMVCdotnet8.Migrations
                     b.HasOne("ProjektMVCdotnet8.Entities.PostEntity", "ReportedPost")
                         .WithMany()
                         .HasForeignKey("ReportedPostId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ReportedPost");

@@ -27,17 +27,14 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona Główna</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="text-dark nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Categories
+                                Kategorie
                             </a>
                             <ul class="dropdown-menu">
                                 @await Component.InvokeAsync("CategoryMenu")
@@ -52,8 +49,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AddPost">Dodaj Post</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Chat">Chat</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ChatList">Wiadomości</a>
                             </li>
+                            if (UserManager.GetUserName(User) == "admin")
+                            {
+                                <a class="btn btn-warning"  asp-area="" asp-controller="Home" asp-action="ModPanel">Panel Moderatora</a>
+                            }
                         }
                     </ul>
                     <partial name="_LoginPartial.cshtml" />
@@ -69,9 +70,8 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - ProjektMVCdotnet8 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>     
-            <a asp-area="" asp-controller="ContactEntities" asp-action="Index">PanelKontakt</a> 
-            <a asp-area="" asp-controller="ReportPostEntities" asp-action="Index">PanelReporty</a>
+            &copy; 2024 - ProjektMVCdotnet8 - 
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
 
     </footer>

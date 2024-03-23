@@ -1,0 +1,28 @@
+﻿@using ProjektMVCdotnet8.Entities
+
+
+<h1 class="display-4">Twoje otwarte konwersacje:</h1>
+<div class="class=" text-center" bg-light border">
+    <div class="list-group mt-3 h-100">
+        @{
+            List<ChatEntity> chList = ViewBag.chatList;
+            string uname = ViewBag.currentUser;
+            int licz = 0;
+            foreach (var item in chList)
+            {
+                licz++;
+                string u2name = item.User1Nick;
+                if(uname == u2name)
+                {
+                    u2name = item.User2Nick;
+                }
+                <a href="/Home/Chat?chatId=@item.Id" class="list-group-item list-group-item-action">@u2name</a>
+            }
+
+            if (licz == 0)
+            {
+                <p class="list-group-item list-group-item-action">Nie masz jescze żadnej rozpoczętej konwersacji</p>
+            }
+        }
+    </div>
+</div>

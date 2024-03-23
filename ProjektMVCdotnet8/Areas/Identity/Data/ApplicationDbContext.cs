@@ -29,7 +29,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
                 Entity.GetForeignKeys()
                     .Where(x => !x.IsOwnership && x.DeleteBehavior == DeleteBehavior.Cascade)
                     .ToList()
-                    .ForEach(x => x.DeleteBehavior = DeleteBehavior.Restrict);
+                    .ForEach(x => x.DeleteBehavior = DeleteBehavior.Cascade);
             }
             base.OnModelCreating(mb);
         }

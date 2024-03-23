@@ -30,11 +30,18 @@
             </td>
             <td>
                     <ul class="list-group">
-                        <li class="list-group-item"><a asp-action="Details" asp-route-id="@item.Id">Szczegóły</a> </li>
-                        <li class="list-group-item">  <a asp-action="Delete" asp-route-id="@item.Id">Usuń ze zgłoszonych</a></li>
+                        <li class="list-group-item"> <a class="link-primary" asp-action="Details" asp-route-id="@item.Id">Szczegóły zgłoszenia</a></li>
+                        @{
+                            int repPost = item.postId;
+                        }
+                        <li class="list-group-item"> <a class="link-danger" asp-controller="PostEntities" asp-action="ReviewPost" asp-route-id="@repPost">Zdecyduj czy usunąć post</a></li>
+                        <li class="list-group-item"> <a class="link-success" asp-action="Delete" asp-route-id="@item.Id">Usuń ze zgłoszonych postów</a></li>
                     </ul>
             </td>
         </tr>
 }
     </tbody>
 </table>
+<div class="text-center">
+    <a asp-controller="Home" asp-action="ModPanel">Powrót do panelu moderatora</a>
+</div>

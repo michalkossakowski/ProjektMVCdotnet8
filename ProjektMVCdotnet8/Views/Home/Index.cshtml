@@ -1,32 +1,53 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.AspNetCore.Identity
+@using ProjektMVCdotnet8.Areas.Identity.Data
 
+@inject SignInManager<UserEntity> SignInManager
+@inject UserManager<UserEntity> UserManager
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-1">Witaj na forum ProjektMVCdotnet8!</h1>
 </div>
-@* @model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity> *@
-
-@* @foreach (var item in Model)
+<br />
+<div class="text-center">
+    <h1 class="display-4">Wyszukaj interesujący cię temat:</h1>
+</div>
+<div class="container text-center w-50">
+    <form id="SearchForm" method="post" asp-controller="" asp-action="" class="d-flex flex-grow-1">
+        <div class="form-group mb-0 flex-grow-1 mr-3">
+            <div class="input-group mb-3">
+                <input class="form-control" style="font-size: 24px" placeholder="Szukam ..." required />
+                <div class="input-group-append">
+                    <button class="btn btn-primary" style="font-size: 24px" type="submit">Wyszukaj</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="container text-center">
+    <h1 class="display-4">Wybierz interesującą cię kategorię:</h1>
+    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Elektronika">Elektronika</a>
+    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Elektryka">Elektryka</a>
+    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Komputery">Komputery</a>
+    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Programowanie">Programowanie</a>
+    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Sieci">Sieci</a>
+    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Spawanie">Spawanie</a>
+</div>
+<br />
+@if(SignInManager.IsSignedIn(User))
 {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PostContent)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.CreatedDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AttachmentSource)
-        </td>
-        <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-        </td>
-    </tr>
-} *@
+    <div class="container text-center">
+        <h1 class="display-4">Witaj ponownie @UserManager.GetUserName(User) !</h1>
+        @{
+            var points = ViewBag.userPoints;
+        }
+        <h1 class="display-4">Twoje punkty: @points</h1>
+    </div>
+}
+@if(!(SignInManager.IsSignedIn(User))){
+    <div class="container text-center">
+        <h1 class="display-4">Nie masz jeszcze konta?</h1>
+        <a class="btn btn-success" style="font-size: 24px;" id="register" asp-area="Identity" asp-page="/Account/Register"><b>Zarejestruj się</b></a>
+    </div>
+}

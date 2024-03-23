@@ -1,84 +1,124 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
-using Microsoft.AspNetCore.Identity;
-using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Controllers
 {
     public class PostController : Controller
     {
 
         private ApplicationDbContext _context;
-        
+        SignInManager<UserEntity> _signInManager;
         UserManager<UserEntity> _userManager;
-        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager)
+        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
+
         }
+
+
         public async Task<IActionResult> Index(string CategoryName)
         {
+            //Przesyła informacje jakie posty będzie wyświetlał na stronie według kategorii
             TempData["CategoryName"] = CategoryName;
+
             var blockedUsers = _context.BlockedUsers
-                 .Where(entry => entry.BlockingUser.Id == _userManager.GetUserId(User))
-                 .Select(entry => entry.BlockedUser.Id)
-                 .ToList();
-            var posts = _context.Posts.
-                Include(p => p.AuthorUser)
-                .Include(p => p.Categories)
-                .Where(post => post.Categories.Any(category => category.CategoryName.Equals(CategoryName)))
-                .OrderByDescending(post => post.CreatedDate)
-                .ToList();
-            var filteredPosts = posts
-                .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
-                .ToList();
-            return View("Index", filteredPosts);
+                    .Where(entry => entry.BlockingUser.Id == _userManager.GetUserId(User))
+                    .Select(entry => entry.BlockedUser.Id)
+                    .ToList();
+
+            var posts = _context.Posts
+                    .Include(p => p.AuthorUser)
+                    .Include(p => p.Categories)
+                    .Where(post => post.Categories.Any(category => category.CategoryName.Equals(CategoryName)))
+                    .OrderByDescending(post => post.CreatedDate)
+                    .ToList();
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                var filteredPosts = posts
+                    .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
+                    .ToList();
+                var followedUsers = _context.FollowUsers
+                    .Where(user => user.FollowingUser.Id == _userManager.GetUserId(User))
+                    .Select(user => user.FollowedUser.Id)
+                    .ToList();
+                TempData["FollowedUsers"] = followedUsers;
+                return View("Index", filteredPosts);
+            }
+            else
+            {
+                TempData["FollowedUsers"] = "null";
+                return View("Index", posts);
+            }
         }
 
-        public async Task<IActionResult> Block(string BlockedUserID, string CategoryName, string BlockingUser)
+        //Blokuje danego użytkownika
+        public async Task<IActionResult> Block(string BlockedUserID, string CategoryName)
         {
             UserEntity userToBlock = _context.Users.FirstOrDefault(user => user.Id.Equals(BlockedUserID));
-            UserEntity blockingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(BlockingUser));
+            UserEntity blockingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(_userManager.GetUserId(User)));
             BlockedUserEntity blockedUser = new BlockedUserEntity(blockingUser, userToBlock);
             _context.Add(blockedUser);
-            _context.SaveChangesAsync();
-            return RedirectToAction("Index", new { CategoryName });
+            await _context.SaveChangesAsync();
+            string FollowedUserID = BlockedUserID;
+            //Po zablokowaniu użytkownika także go przestaje obserwować
+            return RedirectToAction("UnFollow", new { FollowedUserID, CategoryName });
         }
-        public async Task<IActionResult> Follow(string FollowedUserID, string CategoryName, string FollowingUserID)
+
+        //Obserowanie dane użytkownika
+        public async Task<IActionResult> Follow(string FollowedUserID, string CategoryName)
         {
             UserEntity userToFollow = _context.Users.FirstOrDefault(user => user.Id.Equals(FollowedUserID));
-            UserEntity followingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(FollowingUserID));
+            UserEntity followingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(_userManager.GetUserId(User)));
             FollowUserEntity followedUser = new FollowUserEntity(followingUser, userToFollow);
             _context.Add(followedUser);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", new { CategoryName });
         }
 
-        public async Task<IActionResult> UnFollow(string FollowedUserID, string CategoryName, string FollowingUserID)
+
+        //Zaprzestanie obserwowania danego użytkownika
+        public async Task<IActionResult> UnFollow(string FollowedUserID, string CategoryName)
         {
-
-            return RedirectToAction("Index", new { CategoryName });
+            var userToUnfollow = _context.FollowUsers
+                .Include(user => user.FollowedUser)
+                .Include(user => user.FollowingUser)
+                .Where(user => user.FollowedUser.Id.Equals(FollowedUserID) && user.FollowingUser.Id.Equals(_userManager.GetUserId(User)))
+                .FirstOrDefault();
+            _context.FollowUsers.Remove(userToUnfollow);
+            await _context.SaveChangesAsync();
+            if (CategoryName is null)
+            {
+                return RedirectToAction("Followed");
+            }
+            else
+            {
+                return RedirectToAction("Index", new { CategoryName });
+            }
         }
 
+        //Wyświetla strone z postami obserwowanych użytkowników
         public async Task<IActionResult> Followed()
         {
             var followedUsers = _context.FollowUsers
-                 .Where(entry => entry.FollowingUser.Id == _userManager.GetUserId(User))
-                 .Select(entry => entry.FollowedUser.Id)
-                 .ToList();
-            var posts = _context.Posts.
-                Include(p => p.AuthorUser)
+                .Where(entry => entry.FollowingUser.Id == _userManager.GetUserId(User))
+                .Select(entry => entry.FollowedUser.Id)
+                .ToList();
+            var posts = _context.Posts
+                .Include(p => p.AuthorUser)
                 .Include(p => p.Categories)
                 .OrderByDescending(post => post.CreatedDate)
                 .ToList();
             var filteredPosts = posts
                 .Where(post => followedUsers.Contains(post.AuthorUser.Id))
                 .ToList();
+            TempData["FollowedUsers"] = followedUsers;
             return View("Index", filteredPosts);
         }
-
-
     }
 }

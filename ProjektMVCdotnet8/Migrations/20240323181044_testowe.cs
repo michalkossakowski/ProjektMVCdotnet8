@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class test1234 : Migration
+    public partial class testowe : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,6 +33,7 @@ namespace ProjektMVCdotnet8.Migrations
                     Nick = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Points = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -220,7 +221,9 @@ namespace ProjektMVCdotnet8.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChattingUser1Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ChattingUser2Id = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    User1Nick = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChattingUser2Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    User2Nick = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -291,6 +294,7 @@ namespace ProjektMVCdotnet8.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsingUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UsedChatId = table.Column<int>(type: "int", nullable: false),
+                    currentChat = table.Column<int>(type: "int", nullable: false),
                     MessageContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -307,7 +311,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.UsedChatId,
                         principalTable: "ChatEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -325,13 +329,13 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.CategoriesId,
                         principalTable: "CategoryEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CategoryEntityPostEntity (Dictionary<string, object>)_PostEntity_PostsId",
                         column: x => x.PostsId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -358,7 +362,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.CommentedPostId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -384,7 +388,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.ReactedPostId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -405,7 +409,7 @@ namespace ProjektMVCdotnet8.Migrations
                         column: x => x.ReportedPostId,
                         principalTable: "PostEntity",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

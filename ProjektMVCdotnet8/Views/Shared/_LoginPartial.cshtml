@@ -9,7 +9,6 @@
 {
     UserEntity user = await UserManager.GetUserAsync(User);
     string str = "/attachments/"+ user.Avatar;
-
     <li class="nav-item">
             <img style="height: 40px; width: 40px;" src=@str class="rounded-circle img-fluid border border-2" alt="Alternate Text" />
     </li>

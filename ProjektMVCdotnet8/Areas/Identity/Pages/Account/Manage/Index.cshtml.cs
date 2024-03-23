@@ -17,13 +17,16 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<UserEntity> _userManager;
         private readonly SignInManager<UserEntity> _signInManager;
+        private readonly IWebHostEnvironment _hostingEnvironment;
 
         public IndexModel(
             UserManager<UserEntity> userManager,
-            SignInManager<UserEntity> signInManager)
+            SignInManager<UserEntity> signInManager,
+            IWebHostEnvironment hostingEnvironment)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         /// <summary>
@@ -65,6 +68,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Avatar")]
             public string? Avatar { get; set; }
+            public IFormFile? AttachmentSource { get; set; }
         }
 
         private async Task<string?> GetCountryAsync(UserEntity user)
@@ -157,11 +161,25 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
                 await _userManager.UpdateAsync(user);
             }
 
-            if (Input.Avatar != user.Avatar)
+            if (Input.AttachmentSource != null && Input.AttachmentSource.Length > 0)
             {
-                user.Avatar= Input.Avatar;
+                string uploadsFolder = Path.Combine(_hostingEnvironment.WebRootPath, "attachments");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + Input.AttachmentSource.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await Input.AttachmentSource.CopyToAsync(fileStream);
+                }
+                user.Avatar = uniqueFileName;
                 await _userManager.UpdateAsync(user);
             }
+            else
+            {
+                user.Avatar = null;
+            }
+
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Twój profil został zmodyfikowany.";

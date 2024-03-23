@@ -1,0 +1,41 @@
+﻿@using ProjektMVCdotnet8.Areas.Identity.Data
+@using ProjektMVCdotnet8.Entities
+
+<style>
+    .awatar {
+        height: 60px;
+        width: 60px;
+    }
+</style>
+
+<h1 class="display-4">Twoje otwarte konwersacje:</h1>
+<div class="class=" text-center" bg-light border">
+    <div class="list-group mt-3 h-100">
+        @{
+            List<ChatEntity> chList = ViewBag.chatList;
+            List<string> avatar = ViewBag.secondUserAvatar;
+            string uname = ViewBag.currentUser;
+            int i = 0;
+            foreach (var item in chList)
+            {
+                string u2name = item.User1Nick;
+                if(uname == u2name)
+                {
+                    u2name = item.User2Nick;
+                }
+                string str = "/attachments/"+avatar[i];
+
+                <div class ="list-group-item list-group-item-action">
+                    <img src=@str class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                    <a href="/Home/Chat?chatId=@item.Id" class="text-muted" style="font-size: 24px;">@u2name</a>
+                </div>
+                i++;
+            }
+
+            if (i == 0)
+            {
+                <p class="list-group-item list-group-item-action">Nie masz jescze żadnej rozpoczętej konwersacji</p>
+            }
+        }
+    </div>
+</div>

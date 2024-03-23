@@ -108,6 +108,7 @@ namespace ProjektMVCdotnet8.Controllers
             }
 
 
+            loggedUser.Points += 1000;
             _context.Add(postEntity);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

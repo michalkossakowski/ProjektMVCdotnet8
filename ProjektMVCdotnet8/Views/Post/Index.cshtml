@@ -28,7 +28,10 @@
                 <div class="col-md-8 d-flex flex-column">
                     <div class="card-header card-text d-flex flex-row sm-1">
                         <div class="sm-2">
-                            <img src="/attachments/Septic_tank_PL.svg" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                            @{
+                                string str = "/attachments/" + element.AuthorUser.Avatar;
+                            }
+                            <img src=@str class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
                         </div>
                         <div class="p-2">
                             <small class="text-muted">Autor: @element.AuthorUser.Nick<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>

@@ -7,6 +7,12 @@
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
+    UserEntity user = await UserManager.GetUserAsync(User);
+    string str = "/attachments/"+ user.Avatar;
+
+    <li class="nav-item">
+            <img style="height: 40px; width: 40px;" src=@str class="rounded-circle img-fluid border border-2" alt="Alternate Text" />
+    </li>
     <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><b>Witaj @UserManager.GetUserName(User)!</b></a>
     </li>

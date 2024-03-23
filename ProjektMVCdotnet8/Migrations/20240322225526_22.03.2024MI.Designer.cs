@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 
@@ -11,9 +12,11 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240322225526_22.03.2024MI")]
+    partial class _22032024MI
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -306,14 +309,6 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<string>("ChattingUser2Id")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("User1Nick")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("User2Nick")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ChattingUser1Id");
@@ -343,13 +338,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("postId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("userNick")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -435,9 +423,6 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<string>("UsingUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("currentChat")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

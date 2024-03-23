@@ -64,6 +64,11 @@
         color: #ffffff;
         font-size: 12px;
     }
+
+    .awatar {
+        height: 30px;
+        width: 30px;
+    }
 </style>
 
 <div class="container-fluid flex-grow-1 chat-container">
@@ -83,6 +88,10 @@
                             {
                                 <div class="message-row">
                                     <div class="message-box">
+                                        @{
+                                            string str1 = "/attachments/"+ViewBag.CurrentUser.Avatar;
+                                        }
+                                        <img src=@str1 class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
                                         <small style="margin-left: auto;">@ViewBag.CurrentUser</small>
                                         <div class="message-content">
                                             <strong class="text-break">@item.MessageContent</strong>
@@ -97,6 +106,10 @@
                             {
                                 <div class="message-row2">
                                     <div class="message-box2">
+                                        @{
+                                            string str2 = "/attachments/" + ViewBag.SecondAvatar;
+                                        }
+                                        <img src=@str2 class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
                                         <small style="margin-left: auto;">@ViewBag.SecondUser</small>
                                         <div class="message-content">
                                             <strong class="text-break">@item.MessageContent</strong>

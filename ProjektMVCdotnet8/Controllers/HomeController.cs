@@ -88,18 +88,30 @@ namespace ProjektMVCdotnet8.Controllers
         {
             var user = _userManager.GetUserName(User);
             var chatList = new List<ChatEntity>();
+            List <string> secondUserAvatar = new List<string>();
 
             foreach (var ch in _context.Chats)
             {
                 var u1 = ch.User1Nick;
                 var u2 = ch.User2Nick;
+                UserEntity secondUser = new UserEntity();
                 if (user == u1 || user == u2)
                 {
+                    if(user == u1)
+                    {
+                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u2);
+                    }
+                    else
+                    {
+                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u1);
+                    }
                     chatList.Add(ch);
+                    secondUserAvatar.Add(secondUser.Avatar);
                 }
             }
             ViewBag.chatList = chatList;
             ViewBag.currentUser = user;
+            ViewBag.secondUserAvatar = secondUserAvatar;
             return View();
         }
 
@@ -117,7 +129,8 @@ namespace ProjektMVCdotnet8.Controllers
                 user2 = chat.User2Nick;
             }
             ViewBag.SecondUser = user2;
-
+            string avatar2 = _context.Users.FirstOrDefault(u => u.Nick == user2).Avatar;
+            ViewBag.SecondAvatar = avatar2;
             return View(await _context.Messages.ToListAsync());
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -136,7 +149,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.NormalizedUserName = "TESTUSER";
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "testuser";
-                userEntity.Avatar= "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
+                userEntity.Avatar = "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
                 _context.Users.Add(userEntity);
 
                 userEntity = new UserEntity();
@@ -144,6 +157,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "test2user";
                 userEntity.NormalizedUserName = "TEST2USER";
                 userEntity.Nick = "test2user";
+                userEntity.Avatar = "szop_czarny_pan.jpg";
                 var hashedPassword = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.PasswordHash = hashedPassword;
                 _context.Users.Add(userEntity);
@@ -153,6 +167,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "test3user";
                 userEntity.NormalizedUserName = "TEST3USER";
                 userEntity.Nick = "test3user";
+                userEntity.Avatar = "szop_skywalker.jpg";
                 var hashedPassword3 = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.PasswordHash = hashedPassword3;
                 _context.Users.Add(userEntity);
@@ -162,6 +177,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "admin";
                 userEntity.NormalizedUserName = "ADMIN";
                 userEntity.Nick = "admin";
+                userEntity.Avatar = "szop_toronto.jpg";
                 userEntity.PasswordHash = has.HashPassword(userEntity, "a");
                 userEntity.Points = 3116;
                 _context.Users.Add(userEntity);
@@ -245,7 +261,7 @@ namespace ProjektMVCdotnet8.Controllers
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery")).ToList();
                 AttachmentSource = ("szopdzilla.jpg");
-                posts = new PostEntity(user, "Ratuj się kto może", "Świeże drożdże ocieplić w temperaturze pokojowej. Przygotować rozczyn: drożdże rozpuścić w ciepłej wodzie, dodać 2 łyżki mąki oraz cukier, dokładnie wymieszać i odstawić na ok. 10 minut do wyrośnięcia (rozczyn ze świeżych drożdży zwiększa objętość o ok. 3 razy - jeśli tak się nie stanie proces przygotowania rozczynu trzeba powtórzyć od nowa, natomiast rozczyn z drożdży instant może się tylko trochę spienić).\r\nMąkę przesiać do miski, wymieszać z solą, zrobić wgłębienie w środku i wlać w nie rozczyn. Sukcesywnie zagarniać łyżką mąkę do środka i przez 2 - 3 minuty mieszać składniki, pod koniec dodając jeszcze oliwę.\r\nPołączone składniki wyłożyć na stolnicę oprószoną mąką. Wyrabiać przez ok. 15 minut aż ciasto będzie elastyczne i gładkie (ciasto można też zagnieść mikserem planetarnym).\r\nWyrobione ciasto włożyć do dużej miski, przykryć ściereczką i odstawić na ok. 1 godzinę do wyrośnięcia.\r\nWyrośnięte ciasto wyjąć na stolnicę i chwilę pozagniatać. Podzielić na 2 części, uformować z nich kulki i odłożyć na ok. 7 minut pod ściereczką.\r\nBlaszki (tortownice) posmarować oliwą. Włożyć na środek kulkę ciasta, delikatnie spłaszczyć i rozciągać, rozprowadzając palcami po całej powierzchni dna, zaczynając od środka i zostawiając niewielki \"wałeczek\" na brzegu (zob. zdjęcia poniżej). UWAGA: najlepiej robić to kilkoma etapami, ciasto na początku sprężynuje i \"cofa się\" ale jeśli odczekamy chwilę będziemy mogli je dalej rozciągać.\r\nWyłożyć cienką warstwę SOSU POMIDOROWEGO, ser* oraz ulubione dodatki. Odczekać ok. 15 minut aż ciasto podrośnie, następnie piec w maksymalnie nagrzanym piekarniku (min. 250 st. C) przez ok. 10 minut.", AttachmentSource, categories);
+                posts = new PostEntity(user1, "Ratuj się kto może", "Świeże drożdże ocieplić w temperaturze pokojowej. Przygotować rozczyn: drożdże rozpuścić w ciepłej wodzie, dodać 2 łyżki mąki oraz cukier, dokładnie wymieszać i odstawić na ok. 10 minut do wyrośnięcia (rozczyn ze świeżych drożdży zwiększa objętość o ok. 3 razy - jeśli tak się nie stanie proces przygotowania rozczynu trzeba powtórzyć od nowa, natomiast rozczyn z drożdży instant może się tylko trochę spienić).\r\nMąkę przesiać do miski, wymieszać z solą, zrobić wgłębienie w środku i wlać w nie rozczyn. Sukcesywnie zagarniać łyżką mąkę do środka i przez 2 - 3 minuty mieszać składniki, pod koniec dodając jeszcze oliwę.\r\nPołączone składniki wyłożyć na stolnicę oprószoną mąką. Wyrabiać przez ok. 15 minut aż ciasto będzie elastyczne i gładkie (ciasto można też zagnieść mikserem planetarnym).\r\nWyrobione ciasto włożyć do dużej miski, przykryć ściereczką i odstawić na ok. 1 godzinę do wyrośnięcia.\r\nWyrośnięte ciasto wyjąć na stolnicę i chwilę pozagniatać. Podzielić na 2 części, uformować z nich kulki i odłożyć na ok. 7 minut pod ściereczką.\r\nBlaszki (tortownice) posmarować oliwą. Włożyć na środek kulkę ciasta, delikatnie spłaszczyć i rozciągać, rozprowadzając palcami po całej powierzchni dna, zaczynając od środka i zostawiając niewielki \"wałeczek\" na brzegu (zob. zdjęcia poniżej). UWAGA: najlepiej robić to kilkoma etapami, ciasto na początku sprężynuje i \"cofa się\" ale jeśli odczekamy chwilę będziemy mogli je dalej rozciągać.\r\nWyłożyć cienką warstwę SOSU POMIDOROWEGO, ser* oraz ulubione dodatki. Odczekać ok. 15 minut aż ciasto podrośnie, następnie piec w maksymalnie nagrzanym piekarniku (min. 250 st. C) przez ok. 10 minut.", AttachmentSource, categories);
                 _context.Add(posts);
 
                 ReportPostEntity reportPost2 = new ReportPostEntity();
@@ -256,7 +272,7 @@ namespace ProjektMVCdotnet8.Controllers
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery")).ToList();
                 AttachmentSource = ("szop_potter.jpg");
-                posts = new PostEntity(user, "Tylko nie sliterin!!!", "szop który był wybrańcem", AttachmentSource, categories);
+                posts = new PostEntity(user2, "Tylko nie sliterin!!!", "szop który był wybrańcem", AttachmentSource, categories);
                 _context.Add(posts);
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery") || x.CategoryName.Equals("Sieci")).ToList();
@@ -266,12 +282,12 @@ namespace ProjektMVCdotnet8.Controllers
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Elektryka") || x.CategoryName.Equals("Komputery")).ToList();
                 AttachmentSource = ("szop_batman.jpg");
-                posts = new PostEntity(user, "Something in the way", "zło nigdy nie śpi", AttachmentSource, categories);
+                posts = new PostEntity(user1, "Something in the way", "zło nigdy nie śpi", AttachmentSource, categories);
                 _context.Add(posts);
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Elektronika") || x.CategoryName.Equals("Komputery") || x.CategoryName.Equals("Sieci")).ToList();
                 AttachmentSource = ("szop_szambo.jpg");
-                posts = new PostEntity(user, "Szambo Nurek", "zagrożony wygnięciem. Szambo nuerk najmniejszy przerzuwać świata", AttachmentSource, categories);
+                posts = new PostEntity(user2, "Szambo Nurek", "zagrożony wygnięciem. Szambo nuerk najmniejszy przerzuwać świata", AttachmentSource, categories);
                 _context.Add(posts);
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery") || x.CategoryName.Equals("Sieci")).ToList();
@@ -281,7 +297,7 @@ namespace ProjektMVCdotnet8.Controllers
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Komputery")).ToList();
                 AttachmentSource = ("szop_skywalker.jpg");
-                posts = new PostEntity(user, "Nowa nadzije", "Nastały czasy wojny domowej. Statki Rebeliantów, atakujące z ukrytej bazy, odniosły pierwsze zwycięstwo w walce ze złowrogim Imperium Galaktycznym.\r\n\r\nSzpiedzy wykradli tajne plany ostatecznej broni Imperium, GWIAZDY SMIERCI, stacji kosmicznej o sile rażenia zdolnej zniszczyć całą planetę.\r\n\r\nŚcigana przez agentów Imperium, Księżniczka Leia ucieka do domu, strzegąc wykradzionych planów, które mogą ocalić jej lud i przywrócić wolność galaktyce.", AttachmentSource, categories);
+                posts = new PostEntity(user1, "Nowa nadzije", "Nastały czasy wojny domowej. Statki Rebeliantów, atakujące z ukrytej bazy, odniosły pierwsze zwycięstwo w walce ze złowrogim Imperium Galaktycznym.\r\n\r\nSzpiedzy wykradli tajne plany ostatecznej broni Imperium, GWIAZDY SMIERCI, stacji kosmicznej o sile rażenia zdolnej zniszczyć całą planetę.\r\n\r\nŚcigana przez agentów Imperium, Księżniczka Leia ucieka do domu, strzegąc wykradzionych planów, które mogą ocalić jej lud i przywrócić wolność galaktyce.", AttachmentSource, categories);
                 _context.Add(posts);
 
                 _context.SaveChanges();

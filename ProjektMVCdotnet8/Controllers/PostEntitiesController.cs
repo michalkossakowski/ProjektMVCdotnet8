@@ -65,22 +65,14 @@ namespace ProjektMVCdotnet8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Title,PostContent,AttachmentSource,Categories")] PostModel postModel)
         {
-            /*if (ModelState.IsValid)
-            {
-                _context.Add(postEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(postEntity);*/
-            PostEntity postEntity = new PostEntity();
-
-            //postEntity.Id = postModel.Id;
-            postEntity.Title = postModel.Title;
-            postEntity.PostContent = postModel.PostContent;
             var loggedUser = await _userManager.GetUserAsync(User);
-            //var user = _context.Users.FirstOrDefault(u => u.UserName == loggedUser);// tu zmieniajcie mail
+
+            PostEntity postEntity = new PostEntity();
+            postEntity.Title = postModel.Title;
+            postEntity.PostContent = postModel.PostContent;    
             postEntity.AuthorUser = loggedUser;
             postEntity.CreatedDate = DateTime.Now;
+
             if (postModel.AttachmentSource != null && postModel.AttachmentSource.Length > 0)
             {
                 string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "attachments");
@@ -109,6 +101,12 @@ namespace ProjektMVCdotnet8.Controllers
                     postEntity.Categories.Add(category);
                 }
             }
+
+            if (postEntity.Categories.Count==0)
+            {
+                return RedirectToAction("AddPost","Home", postModel);
+            }
+
 
             loggedUser.Points += 1000;
             _context.Add(postEntity);

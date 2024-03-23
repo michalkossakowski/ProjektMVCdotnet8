@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240323181044_testowe")]
-    partial class testowe
+    [Migration("20240324000105_test123")]
+    partial class test123
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -346,6 +346,13 @@ namespace ProjektMVCdotnet8.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("postId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("userNick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

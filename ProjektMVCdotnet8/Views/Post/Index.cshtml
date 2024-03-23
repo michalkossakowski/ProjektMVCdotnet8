@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using ProjektMVCdotnet8.Areas.Identity.Data
+@using ProjektMVCdotnet8.Entities
 
 @inject SignInManager<UserEntity> SignInManager
 @inject UserManager<UserEntity> UserManager
+
 @model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
 @{
     ViewData["Title"] = "CategoryIndex";
@@ -27,7 +29,10 @@
                 <div class="col-md-8 d-flex flex-column">
                     <div class="card-header card-text d-flex flex-row sm-1">
                         <div class="sm-2">
-                            <img src="/attachments/Septic_tank_PL.svg" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                            @{
+                                string str = "/attachments/" + element.AuthorUser.Avatar;
+                            }
+                            <img src=@str class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
                         </div>
                         <div class="p-2">
                             <small class="text-muted">Autor: @element.AuthorUser.Nick<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
@@ -52,6 +57,67 @@
                         }
                         <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>
+
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                        Launch static backdrop modal
+                    </button>
+                    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    @{
+                                        if (ViewBag.Comments != null)
+                                        {
+                                            foreach (var comment in ViewBag.Comments)
+                                            {
+                                                if (comment.postId == element.Id)
+                                                {
+                                                    <div class="container" style="border:outset">
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <div class="sm-2">
+                                                                    <img src="/attachments/Septic_tank_PL.svg" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                                                                </div>
+                                                                <div class="p-2">
+                                                                    <small class="text-muted">Autor: @comment.userNick</small>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <div>@comment.CommentContent</div>
+                                                                <small><br>@comment.CreatedDate.ToString("MMMM dd, yyyy HH:mm")</small>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+
+                    
+@*                     <div>
+                        <form asp-action="AddComment" method="post">
+                            Dodaj komentarz
+                            <input type="text" name="commentContent" value="" required/>
+                            <input type="hidden" name="postId" value="@element.Id" />
+                            <input type="hidden" name="category" value="@TempData["CategoryName"]" />
+                            <input type="submit" name="submit" value="Dodaj" />
+                        </form>
+                    </div> *@
+                    
+                    
                 </div>
             </div>
         </div>

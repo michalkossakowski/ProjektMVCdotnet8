@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.Extensions;
+﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -38,6 +38,10 @@ namespace ProjektMVCdotnet8.Controllers
                     .OrderByDescending(post => post.CreatedDate)
                     .ToList();
 
+            List<CommentEntity> comments = new List<CommentEntity>();
+            comments = _context.Comments.ToList();
+            ViewBag.Comments = comments;
+            
             if (_signInManager.IsSignedIn(User))
             {
                 var filteredPosts = posts
@@ -56,6 +60,7 @@ namespace ProjektMVCdotnet8.Controllers
                 return View("Index", posts);
             }
         }
+
 
         //Blokuje danego użytkownika
         public async Task<IActionResult> Block(string BlockedUserID, string CategoryName)
@@ -119,6 +124,24 @@ namespace ProjektMVCdotnet8.Controllers
                 .ToList();
             TempData["FollowedUsers"] = followedUsers;
             return View("Index", filteredPosts);
+        }
+
+        public async Task<IActionResult> AddComment()
+        {
+            CommentEntity comment = new CommentEntity();
+            comment.CommentContent = Request.Form["commentContent"];
+            var user = await _userManager.GetUserAsync(User);
+            comment.userNick = _userManager.GetUserName(User);
+            comment.AuthorUser = user;
+            comment.CreatedDate = DateTime.Now;
+            var post = _context.Posts.FirstOrDefault(c => c.Id == int.Parse(Request.Form["postId"]));
+            comment.CommentedPost = post;
+
+            comment.postId = post.Id;
+            _context.Comments.Add(comment);
+            await _context.SaveChangesAsync();
+            string CategoryName = Request.Form["category"];
+            return RedirectToAction("Index", new { CategoryName });
         }
     }
 }

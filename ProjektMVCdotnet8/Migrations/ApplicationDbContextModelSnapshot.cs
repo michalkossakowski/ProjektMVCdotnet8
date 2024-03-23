@@ -344,6 +344,13 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("postId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("userNick")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorUserId");

@@ -14,11 +14,15 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
         [Display(Name = "Kraj pochodzenia")]
         public string? Country { get; set; }
 
+        [Display(Name = "Miasto")]
+        public string? City { get; set; }
+
         [Display(Name = "Avatar")]
         public string? Avatar { get; set; } = "default-avatar.jpg";
 
         [Display(Name = "Punkty")]
         public int? Points { get; set; } = 0;
+ 
     }
 }
 

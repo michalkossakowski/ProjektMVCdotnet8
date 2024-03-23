@@ -15,7 +15,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
         public string? Country { get; set; }
 
         [Display(Name = "Avatar")]
-        public string? Avatar { get; set; }
+        public string? Avatar { get; set; } = "default-avatar.jpg";
 
         [Display(Name = "Punkty")]
         public int? Points { get; set; } = 0;

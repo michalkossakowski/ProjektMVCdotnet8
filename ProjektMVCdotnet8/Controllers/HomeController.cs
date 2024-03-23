@@ -136,7 +136,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.NormalizedUserName = "TESTUSER";
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "testuser";
-                userEntity.Avatar= "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
+                userEntity.Avatar = "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
                 _context.Users.Add(userEntity);
 
                 userEntity = new UserEntity();
@@ -144,6 +144,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "test2user";
                 userEntity.NormalizedUserName = "TEST2USER";
                 userEntity.Nick = "test2user";
+                userEntity.Avatar = "szop_czarny_pan.jpg";
                 var hashedPassword = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.PasswordHash = hashedPassword;
                 _context.Users.Add(userEntity);
@@ -153,6 +154,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "test3user";
                 userEntity.NormalizedUserName = "TEST3USER";
                 userEntity.Nick = "test3user";
+                userEntity.Avatar = "szop_skywalker.jpg";
                 var hashedPassword3 = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.PasswordHash = hashedPassword3;
                 _context.Users.Add(userEntity);
@@ -162,6 +164,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "admin";
                 userEntity.NormalizedUserName = "ADMIN";
                 userEntity.Nick = "admin";
+                userEntity.Avatar = "szop_toronto.jpg";
                 userEntity.PasswordHash = has.HashPassword(userEntity, "a");
                 userEntity.Points = 3116;
                 _context.Users.Add(userEntity);

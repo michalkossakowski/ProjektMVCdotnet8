@@ -88,18 +88,30 @@ namespace ProjektMVCdotnet8.Controllers
         {
             var user = _userManager.GetUserName(User);
             var chatList = new List<ChatEntity>();
+            List <string> secondUserAvatar = new List<string>();
 
             foreach (var ch in _context.Chats)
             {
                 var u1 = ch.User1Nick;
                 var u2 = ch.User2Nick;
+                UserEntity secondUser = new UserEntity();
                 if (user == u1 || user == u2)
                 {
+                    if(user == u1)
+                    {
+                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u2);
+                    }
+                    else
+                    {
+                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u1);
+                    }
                     chatList.Add(ch);
+                    secondUserAvatar.Add(secondUser.Avatar);
                 }
             }
             ViewBag.chatList = chatList;
             ViewBag.currentUser = user;
+            ViewBag.secondUserAvatar = secondUserAvatar;
             return View();
         }
 
@@ -117,7 +129,8 @@ namespace ProjektMVCdotnet8.Controllers
                 user2 = chat.User2Nick;
             }
             ViewBag.SecondUser = user2;
-
+            string avatar2 = _context.Users.FirstOrDefault(u => u.Nick == user2).Avatar;
+            ViewBag.SecondAvatar = avatar2;
             return View(await _context.Messages.ToListAsync());
         }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

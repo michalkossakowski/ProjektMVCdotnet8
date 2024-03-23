@@ -244,7 +244,7 @@ namespace ProjektMVCdotnet8.Controllers
 
                 _context.SaveChanges();
             }
-            //contact init jak puste
+            //contact init jak puste 
             if (_context.ContactForms.IsNullOrEmpty())
             {
                 if (ModelState.IsValid)

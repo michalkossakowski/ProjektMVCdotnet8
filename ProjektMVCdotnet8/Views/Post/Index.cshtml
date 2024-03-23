@@ -40,7 +40,7 @@
                         @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User))) 
                         {
                             <p card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], BlockingUser = UserManager.GetUserId(User) })">Blokuj</a></p>
-                            <p card-text><a href="@Url.Action("Follow", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], BlockingUser = UserManager.GetUserId(User)})"> Obserwuj</a></p>
+                            <p card-text><a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], FollowingUserID = UserManager.GetUserId(User)})"> Obserwuj</a></p>
                         }
                         <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>

@@ -12,8 +12,8 @@ using ProjektMVCdotnet8.Areas.Identity.Data;
 namespace ProjektMVCdotnet8.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240320175247_20_03")]
-    partial class _20_03
+    [Migration("20240320203435_test1234")]
+    partial class test1234
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

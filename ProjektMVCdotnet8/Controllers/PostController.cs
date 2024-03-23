@@ -21,9 +21,6 @@ namespace ProjektMVCdotnet8.Controllers
         public async Task<IActionResult> Index(string CategoryName)
         {
             TempData["CategoryName"] = CategoryName;
-            /* var blockedUsers = _context.BlockedUsers.Where(blockUser => blockUser.BlockingUser.Id.Equals(usermanager.GetUserId(User)))
-                 ;*/
-
             var blockedUsers = _context.BlockedUsers
                  .Where(entry => entry.BlockingUser.Id == _userManager.GetUserId(User))
                  .Select(entry => entry.BlockedUser.Id)
@@ -49,9 +46,39 @@ namespace ProjektMVCdotnet8.Controllers
             _context.SaveChangesAsync();
             return RedirectToAction("Index", new { CategoryName });
         }
-        public async Task<IActionResult> Follow(int id, string CategoryName)
+        public async Task<IActionResult> Follow(string FollowedUserID, string CategoryName, string FollowingUserID)
         {
+            UserEntity userToFollow = _context.Users.FirstOrDefault(user => user.Id.Equals(FollowedUserID));
+            UserEntity followingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(FollowingUserID));
+            FollowUserEntity followedUser = new FollowUserEntity(followingUser, userToFollow);
+            _context.Add(followedUser);
+            _context.SaveChangesAsync();
             return RedirectToAction("Index", new { CategoryName });
         }
+
+        public async Task<IActionResult> UnFollow(string FollowedUserID, string CategoryName, string FollowingUserID)
+        {
+
+            return RedirectToAction("Index", new { CategoryName });
+        }
+
+        public async Task<IActionResult> Followed()
+        {
+            var followedUsers = _context.FollowUsers
+                 .Where(entry => entry.FollowingUser.Id == _userManager.GetUserId(User))
+                 .Select(entry => entry.FollowedUser.Id)
+                 .ToList();
+            var posts = _context.Posts.
+                Include(p => p.AuthorUser)
+                .Include(p => p.Categories)
+                .OrderByDescending(post => post.CreatedDate)
+                .ToList();
+            var filteredPosts = posts
+                .Where(post => followedUsers.Contains(post.AuthorUser.Id))
+                .ToList();
+            return View("Index", filteredPosts);
+        }
+
+
     }
 }

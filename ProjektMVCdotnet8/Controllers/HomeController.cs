@@ -136,6 +136,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.NormalizedUserName = "TESTUSER";
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "testuser";
+                userEntity.Avatar= "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
                 _context.Users.Add(userEntity);
 
                 userEntity = new UserEntity();

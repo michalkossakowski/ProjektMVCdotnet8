@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class comment_postid_userNick : Migration
+    public partial class komentarze_i_awatary : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,8 @@ namespace ProjektMVCdotnet8.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Nick = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Country = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Country = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    City = table.Column<string>(type: "nvarchar(50)", nullable: true),
                     Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Points = table.Column<int>(type: "int", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -221,7 +222,9 @@ namespace ProjektMVCdotnet8.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChattingUser1Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    ChattingUser2Id = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    User1Nick = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ChattingUser2Id = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    User2Nick = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -292,6 +295,7 @@ namespace ProjektMVCdotnet8.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UsingUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UsedChatId = table.Column<int>(type: "int", nullable: false),
+                    currentChat = table.Column<int>(type: "int", nullable: false),
                     MessageContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SendDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

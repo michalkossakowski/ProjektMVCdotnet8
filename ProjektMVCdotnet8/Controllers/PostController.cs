@@ -68,6 +68,7 @@ namespace ProjektMVCdotnet8.Controllers
             comment.CommentedPost = post;
 
             comment.postId = post.Id;
+
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
             string CategoryName = Request.Form["category"];

@@ -65,6 +65,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
 
             [Display(Name = "Avatar")]
             public string? Avatar { get; set; }
+            public IFormFile? AttachmentSource { get; set; }
         }
 
         private async Task<string?> GetCountryAsync(UserEntity user)

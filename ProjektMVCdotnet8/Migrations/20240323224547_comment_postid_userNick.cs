@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ProjektMVCdotnet8.Migrations
 {
     /// <inheritdoc />
-    public partial class punkty_update : Migration
+    public partial class comment_postid_userNick : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -342,7 +342,9 @@ namespace ProjektMVCdotnet8.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AuthorUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    userNick = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommentedPostId = table.Column<int>(type: "int", nullable: false),
+                    postId = table.Column<int>(type: "int", nullable: false),
                     CommentContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },

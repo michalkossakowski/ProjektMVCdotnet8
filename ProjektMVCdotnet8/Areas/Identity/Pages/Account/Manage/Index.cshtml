@@ -35,6 +35,9 @@
                 </div>
                 <input type="file" id="avatar-input" style="display:none;" accept="image/*" onchange="previewAvatar(event)" asp-for="Input.AttachmentSource" />
             </div>
+                <div class="text-center">
+                    <p class="fw-bold fs-2">Masz @Model.Input.Points Punktów!</p>
+                </div>
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />

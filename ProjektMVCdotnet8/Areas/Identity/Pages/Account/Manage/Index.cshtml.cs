@@ -61,9 +61,9 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Numer telefonu")]
+            [Display(Name = "Numer Telefonu")]
             public string PhoneNumber { get; set; }
-            [Display(Name = "Kraj pochodzenia")]
+            [Display(Name = "Kraj Pochodzenia")]
             public string? Country { get; set; }
 
             [Display(Name = "Miasto")]
@@ -71,6 +71,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Avatar")]
             public string? Avatar { get; set; }
             public IFormFile? AttachmentSource { get; set; }
+            public int? Points { get; set; }
         }
 
         private async Task<string?> GetCountryAsync(UserEntity user)
@@ -85,6 +86,10 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
         {
             return user.Avatar ?? null; //ustwia null jeśli będzie pusta
         }
+        private async Task<int?> GetPointsAsync(UserEntity user)
+        {
+            return user.Points ?? null; //ustwia null jeśli będzie pusta
+        }
 
         private async Task LoadAsync(UserEntity user)
         {
@@ -93,14 +98,15 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             var country = await GetCountryAsync(user);
             var city = await GetCityAsync(user);
             var avatar = await GetAvatarAsync(user);
-
+            var points = await GetPointsAsync(user);
             Username = userName;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
                 Country = country,
                 City = city,
-                Avatar = avatar
+                Avatar = avatar,
+                Points = points
             };
         }
 

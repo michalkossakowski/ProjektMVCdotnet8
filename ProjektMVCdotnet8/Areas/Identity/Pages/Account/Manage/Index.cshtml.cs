@@ -72,6 +72,9 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             public string? Avatar { get; set; }
             public IFormFile? AttachmentSource { get; set; }
             public int? Points { get; set; }
+            [Display(Name = "O Mnie")]
+            [StringLength(250, ErrorMessage = "Opis nie może być dłuższy niż 250 znaków.")]
+            public string? Description { get; set; }
         }
 
         private async Task<string?> GetCountryAsync(UserEntity user)
@@ -81,6 +84,10 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
         private async Task<string?> GetCityAsync(UserEntity user)
         {
             return user.City ?? null; //ustwia null jeśli będzie pusta
+        }
+        private async Task<string?> GetDescriptionAsync(UserEntity user)
+        {
+            return user.Description ?? null; //ustwia null jeśli będzie pusta
         }
         private async Task<string?> GetAvatarAsync(UserEntity user)
         {
@@ -99,6 +106,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             var city = await GetCityAsync(user);
             var avatar = await GetAvatarAsync(user);
             var points = await GetPointsAsync(user);
+            var description = await GetDescriptionAsync(user);
             Username = userName;
             Input = new InputModel
             {
@@ -106,7 +114,8 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
                 Country = country,
                 City = city,
                 Avatar = avatar,
-                Points = points
+                Points = points,
+                Description = description
             };
         }
 
@@ -135,7 +144,11 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
-
+            if (Input.Description != user.Description)
+            {
+                user.Description = Input.Description;
+                await _userManager.UpdateAsync(user);
+            }
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {

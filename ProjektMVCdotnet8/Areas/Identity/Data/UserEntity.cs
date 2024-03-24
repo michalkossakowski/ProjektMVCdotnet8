@@ -22,7 +22,10 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
 
         [Display(Name = "Punkty")]
         public int? Points { get; set; } = 0;
- 
+
+        [Display(Name = "O Mnie")]
+        public string? Description { get; set; }
+
     }
 }
 

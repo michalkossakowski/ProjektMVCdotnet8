@@ -41,7 +41,12 @@
                 <div class="text-center">
                     <p class="fs-4">Masz @Model.Input.Points Punktów!</p>
                 </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="mb-3">
+                    <label asp-for="Input.Description" class="form-label mb-6 fw-bold">O Mnie</label>
+                    <textarea asp-for="Input.Description" class="form-control" rows="6" style="resize: none;" placeholder="Napisz kilka słów o sobie..."></textarea>
+                    <span asp-validation-for="Input.Description" class="text-danger"></span>
+                </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Podaj swój numer telefonu."/>
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>

@@ -84,6 +84,17 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
+        public IActionResult Ranking()
+        {
+            List<(string, int)> lista = new List<(string, int)>();
+            foreach (var user in _context.Users)
+            {
+                lista.Add((user.UserName, (int)user.Points));
+            }
+            lista.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+            ViewBag.UserList = lista;
+            return View();
+        }
         public IActionResult ChatList()
         {
             var user = _userManager.GetUserName(User);

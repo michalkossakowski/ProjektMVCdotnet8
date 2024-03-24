@@ -36,13 +36,12 @@
                 <input type="file" id="avatar-input" style="display:none;" accept="image/*" onchange="previewAvatar(event)" asp-for="Input.AttachmentSource" />
             </div>
                 <div class="text-center">
+                    <p class="fs-3 fw-bold">@Model.Username</p>
+                </div>
+                <div class="text-center">
                     <p class="fs-4">Masz @Model.Input.Points Punktów!</p>
                 </div>
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
-            <div class="form-floating mb-3">
-                <input asp-for="Username" class="form-control" placeholder="Please choose your username." disabled />
-                <label asp-for="Username" class="form-label"></label>
-            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Podaj swój numer telefonu."/>
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>

@@ -57,37 +57,41 @@
                 </select>
                 <label asp-for="Input.Country" class="form-label"></label>
             </div>
-                <div class="form-floating mb-3">
-                    <select asp-for="Input.City" class="form-select" onchange="handleCityChange(this)">
-                        <option value="Wybierz miasto">Wybierz miasto</option>
-                        <option value="Warszawa">Warszawa</option>
-                        <option value="Kraków">Kraków</option>
-                        <option value="Łódź">Łódź</option>
-                        <option value="Wrocław">Wrocław</option>
-                        <option value="Poznań">Poznań</option>
-                        <option value="Gdańsk">Gdańsk</option>
-                        <option value="Szczecin">Szczecin</option>
-                        <option value="Bydgoszcz">Bydgoszcz</option>
-                        <option value="Lublin">Lublin</option>
-                        <option value="Białystok">Białystok</option>
-                        <option value="Katowice">Katowice</option>
-                        <option value="Gdynia">Gdynia</option>
-                        <option value="Częstochowa">Częstochowa</option>
-                        <option value="Radom">Radom</option>
-                        <option value="Sosnowiec">Sosnowiec</option>
-                        <option value="Toruń">Toruń</option>
-                        <option value="Kielce">Kielce</option>
-                        <option value="Rzeszów">Rzeszów</option>
-                        <option value="Gliwice">Gliwice</option>
-                        <option value="Zabrze">Zabrze</option>
-                        <option value="Olsztyn">Olsztyn</option>
-                        <option value="Bielsko-Biała">Bielsko-Biała</option>
-                        <option value="Siedlce">Siedlce</option>
-                        <option value="Zielona Góra">Zielona Góra</option>
-                    </select>
-                    <label asp-for="Input.City" class="form-label"></label>
-                </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Zapisz</button>
+                    <div class="form-floating mb-3" id="citySelect">
+                    @if (Model.Input.Country == "Polska")
+                    {
+                        <select asp-for="Input.City" class="form-select">
+                            <option value="Wybierz miasto">Wybierz miasto</option>
+                            <option value="Warszawa">Warszawa</option>
+                            <option value="Kraków">Kraków</option>
+                            <option value="Łódź">Łódź</option>
+                            <option value="Wrocław">Wrocław</option>
+                            <option value="Poznań">Poznań</option>
+                            <option value="Gdańsk">Gdańsk</option>
+                            <option value="Szczecin">Szczecin</option>
+                            <option value="Bydgoszcz">Bydgoszcz</option>
+                            <option value="Lublin">Lublin</option>
+                            <option value="Białystok">Białystok</option>
+                            <option value="Katowice">Katowice</option>
+                            <option value="Gdynia">Gdynia</option>
+                            <option value="Częstochowa">Częstochowa</option>
+                            <option value="Radom">Radom</option>
+                            <option value="Sosnowiec">Sosnowiec</option>
+                            <option value="Toruń">Toruń</option>
+                            <option value="Kielce">Kielce</option>
+                            <option value="Rzeszów">Rzeszów</option>
+                            <option value="Gliwice">Gliwice</option>
+                            <option value="Zabrze">Zabrze</option>
+                            <option value="Olsztyn">Olsztyn</option>
+                            <option value="Bielsko-Biała">Bielsko-Biała</option>
+                            <option value="Siedlce">Siedlce</option>
+                            <option value="Zielona Góra">Zielona Góra</option>
+                        </select>
+                        <label asp-for="Input.City" class="form-label"></label>
+                    }
+                    </div>
+                
+                <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Zapisz</button>
         </form>
     </div>
 </div>
@@ -97,13 +101,25 @@
 
         <script>
             function handleCountryChange(select) {
-                if (select.value == 'Wybierz kraj') 
+                var citySelect = document.getElementById('citySelect');
+                var cityInput = document.getElementById('@Html.IdFor(model => model.Input.City)'); // Pobierz pole wyboru miasta
+                if (select.value === 'Polska') 
                 {
+                    citySelect.style.display = 'block';
+                }
+                else 
+                {
+                    cityInput.value = null;
+                    citySelect.style.display = 'none';
+                }
+                if (select.value === 'Wybierz kraj') {
                     document.getElementById('@Html.IdFor(model => model.Input.Country)').value = null;
                 }
             }
-            function handleCityChange(select) {
-                if (select.value == 'Wybierz miasto') {
+            function handleCityChange(select) 
+            {
+                if (select.value === 'Wybierz miasto') 
+                {
                     document.getElementById('@Html.IdFor(model => model.Input.City)').value = null;
                 }
             }

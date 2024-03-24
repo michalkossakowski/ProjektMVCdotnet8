@@ -34,8 +34,8 @@
                 </select>
                 <label asp-for="Input.Country" class="form-label"></label>
             </div>
-            <div class="form-floating mb-3">
-                <select asp-for="Input.City" class="form-select" onchange="handleCityChange(this)">
+            <div class="form-floating mb-3" id="citySelect" style="display:none;">
+                <select asp-for="Input.City" class="form-select">
                     <option value="Wybierz miasto">Wybierz miasto</option>
                     <option value="Warszawa">Warszawa</option>
                     <option value="Kraków">Kraków</option>
@@ -110,4 +110,35 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        function handleCountryChange(select) {
+            var citySelect = document.getElementById('citySelect');
+            var cityInput = document.getElementById('@Html.IdFor(model => model.Input.City)'); // Pobierz pole wyboru miasta
+            if (select.value === 'Polska') {
+                citySelect.style.display = 'block';
+            }
+            else {
+                citySelect.style.display = 'none';
+                cityInput.value = null; // Czyszczę jeszcze wybrane miasto, aby ktoś nie zmienił z Polski na Niemcy i, aby miasto nie zostało
+            }
+            if (select.value === 'Wybierz kraj') {
+                document.getElementById('@Html.IdFor(model => model.Input.Country)').value = null;
+            }
+        }
+        function handleCityChange(select) {
+            if (select.value === 'Wybierz miasto') {
+                document.getElementById('@Html.IdFor(model => model.Input.City)').value = null;
+            }
+        }
+        function previewAvatar(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var dataURL = reader.result;
+                var output = document.querySelector('.profile-picture img');
+                output.src = dataURL;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    </script>
 }

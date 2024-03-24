@@ -113,6 +113,13 @@ namespace ProjektMVCdotnet8.Controllers
         //Wyświetla strone z postami obserwowanych użytkowników
         public async Task<IActionResult> Followed()
         {
+
+            List<CommentEntity> comments = new List<CommentEntity>();
+            comments = _context.Comments
+                    .Include(comment => comment.AuthorUser)
+                    .Include(comment => comment.CommentedPost)
+                    .ToList();
+            ViewBag.Comments = comments;
             var followedUsers = _context.FollowUsers
                 .Where(entry => entry.FollowingUser.Id == _userManager.GetUserId(User))
                 .Select(entry => entry.FollowedUser.Id)
@@ -145,7 +152,15 @@ namespace ProjektMVCdotnet8.Controllers
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
             string CategoryName = Request.Form["category"];
-            return RedirectToAction("Index", new { CategoryName });
+            if (CategoryName == "")
+            {
+                return RedirectToAction("Followed");
+            }
+            else 
+            {
+                return RedirectToAction("Index", new { CategoryName });
+
+            }
         }
     }
 }

@@ -9,7 +9,7 @@ namespace ProjektMVCdotnet8.Controllers
     public class PostController : Controller
     {
 
-        private ApplicationDbContext _context;
+        public ApplicationDbContext _context;
         SignInManager<UserEntity> _signInManager;
         UserManager<UserEntity> _userManager;
         public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager)
@@ -162,20 +162,18 @@ namespace ProjektMVCdotnet8.Controllers
 
             }
         }
-
-        public  ActionResult LivePostSearch(string search)
+        public async Task<IActionResult> LivePostSearch(string search)
         {
             List<PostEntity> res =  _context.Posts
                .Where(p => p.Title.Contains(search))
                .ToList();
-            _context.Dispose();
             return PartialView("LivePostSearch", res);
         }
 
-        public async Task<IActionResult> ShowPost(string Id)
+        public async Task<IActionResult> ShowPost(int Id)
         {
             var post = _context.Posts
-                .Where(x => x.Id.Equals(Id))
+                .Where(x => x.Id == Id)
                 .FirstOrDefault();
             if (post == null) ;
             return View("ShowPost", post);

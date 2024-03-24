@@ -8,6 +8,7 @@
 @model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
 @{
     ViewData["Title"] = "CategoryIndex";
+    List<string> followedUsers = TempData["FollowedUsers"] as List<string>;
 }
 <style>
     .awatar
@@ -44,57 +45,66 @@
                     <div class="card-footer">
                         @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User))) 
                         {
-                            <p card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], BlockingUser = UserManager.GetUserId(User) })">Blokuj</a></p>
-                            <p card-text><a href="@Url.Action("Follow", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"], BlockingUser = UserManager.GetUserId(User)})"> Obserwuj</a></p>
-                        }
-                        <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
-                    </div>
-                                    @{
-                                        if (ViewBag.Comments != null)
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <span card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Blokuj</a></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
                                         {
-                                            foreach (var comment in ViewBag.Comments)
-                                            {
-                                                if (comment.CommentedPost == element)
-                                                {
-                                                    <div class="container" style="border:outset">
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <div class="sm-2">
-                                                                    <img src="/attachments/@comment.AuthorUser.Avatar" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
-                                                                </div>
-                                                                <div class="p-2">
-                                                                    <small class="text-muted">Autor: @comment.userNick</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <div>@comment.CommentContent</div>
-                                                                <small><br>@comment.CreatedDate.ToString("MMMM dd, yyyy HH:mm")</small>
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
+                                            <span card-text><a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Przestań obserwować</a></span>
                                         }
-                                        
-                                    }
-                    <div>
-                        <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
-                            Dodaj komentarz
-                           
-                            <input type="hidden" name="postId" value="@element.Id" />
-                            <input type="hidden" name="category" value="@TempData["CategoryName"]" />     
-                            <div class="form-group mb-0 flex-grow-1 mr-3">
-                                <div class="input-group mb-3">
-                                    <input class="form-control" type="text" name="commentContent" value="" required />
-                                    <div class="input-group-append">
-                                        <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
+                                        else
+                                        {
+                                            <span card-text><a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Obserwuj</a></span>
+                                        }
+                                    </div>
+                                    <div class="col-sm">
+                                        <a class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></a>
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        }
                     </div>
-                    
+                    <hr />
+                    <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
+                        @if (ViewBag.Comments != null)
+                        {
+                            foreach (var comment in ViewBag.Comments)
+                            {
+                                if (comment.CommentedPost == element) 
+                                {
+                                    <div class=" mb-2">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
+                                                <small class="text-muted">@comment.userNick</small>
+                                                <small class="text-muted"><br>@comment.CreatedDate.ToString("dd.MM.yyyy HH:mm")</small>
+                                            </div>
+                                            <div class="col-8">
+                                                @comment.CommentContent
+                                            </div>
+                                        </div>
+                                    </div>
+                                 }
+                             }
+                        }
+                        <div>
+                            <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
+                                <input type="hidden" name="postId" value="@element.Id" />
+                                <input type="hidden" name="category" value="@TempData["CategoryName"]" />     
+                                <div class="form-group mb-0 flex-grow-1 mr-3">
+                                    <div class="input-group mb-3">
+                                        <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />
+                                        <div class="input-group-append">
+                                            <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                     
                 </div>
             </div>

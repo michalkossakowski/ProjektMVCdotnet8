@@ -4,19 +4,17 @@
 @inject SignInManager<UserEntity> SignInManager
 @inject UserManager<UserEntity> UserManager
 
-<ul class="navbar-nav">
- @if (SignInManager.IsSignedIn(User))
-{
-    UserEntity user = await UserManager.GetUserAsync(User);
-        if (user is not null)
-        {
+<ul class="navbar-nav d-flex justify-content-center">
+    @if (SignInManager.IsSignedIn(User))
+    {
+     UserEntity user = await UserManager.GetUserAsync(User);
+     if (user is not null)
+     {
             string str = "/attachments/" + user.Avatar;
             <li class="nav-item">
-                <img style="height: 40px; width: 40px;" src=@str class="rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                <img style="height: 40px; width: 40px;" src=@str class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" />
             </li>
-
-        }
-
+     }
     <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><b>Witaj @UserManager.GetUserName(User)!</b></a>
     </li>
@@ -25,14 +23,17 @@
                 <button id="logout" type="submit" class="nav-link btn btn-link text-dark border-0"><b>Wyloguj</b></button>
         </form>
     </li>
-} 
-else
-{
+    } 
+    else
+    {
     <li class="nav-item">
         <a class="nav-link text-dark" id="login" asp-area="Identity" asp-page="/Account/Login"><b>Zaloguj</b></a>
     </li>
     <li class="nav-item">
         <a class="nav-link text-dark" id="register" asp-area="Identity" asp-page="/Account/Register"><b>Zarejestruj</b></a>
     </li>
-}
-</ul>
+    }
+    </div>
+    </div>
+    </ul>
+

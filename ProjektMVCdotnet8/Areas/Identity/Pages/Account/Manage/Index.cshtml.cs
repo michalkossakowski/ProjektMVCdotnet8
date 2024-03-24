@@ -66,36 +66,21 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Kraj pochodzenia")]
             public string? Country { get; set; }
 
+            [Display(Name = "Miasto")]
+            public string? City { get; set; }
             [Display(Name = "Avatar")]
             public string? Avatar { get; set; }
             public IFormFile? AttachmentSource { get; set; }
+
         }
 
         private async Task<string?> GetCountryAsync(UserEntity user)
         {
             return user.Country ?? null; //ustwia null jeśli będzie pusta
         }
-        public async Task<IActionResult> OnPostAvatarAsync()
+        private async Task<string?> GetCityAsync(UserEntity user)
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (Request.Form.Files.Count > 0)
-            {
-                var avatarFile = Request.Form.Files[0];
-                using (var memoryStream = new MemoryStream())
-                {
-                    await avatarFile.CopyToAsync(memoryStream);
-                    user.Avatar = $"data:{avatarFile.ContentType};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
-                }
-
-                await _userManager.UpdateAsync(user);
-            }
-
-            return RedirectToPage();
+            return user.City ?? null; //ustwia null jeśli będzie pusta
         }
         private async Task<string?> GetAvatarAsync(UserEntity user)
         {
@@ -107,6 +92,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             var country = await GetCountryAsync(user);
+            var city = await GetCityAsync(user);
             var avatar = await GetAvatarAsync(user);
 
             Username = userName;
@@ -114,6 +100,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             {
                 PhoneNumber = phoneNumber,
                 Country = country,
+                City = city,
                 Avatar = avatar
             };
         }
@@ -158,6 +145,12 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             if (Input.Country != user.Country)
             {
                 user.Country = Input.Country;
+                await _userManager.UpdateAsync(user);
+            }
+
+            if (Input.City != user.City)
+            {
+                user.City = Input.City;
                 await _userManager.UpdateAsync(user);
             }
 

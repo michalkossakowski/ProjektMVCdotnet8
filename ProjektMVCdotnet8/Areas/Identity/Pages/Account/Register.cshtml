@@ -14,22 +14,64 @@
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                <label asp-for="Input.Email">Email</label>
+                <label asp-for="Input.Email">*Email</label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.UserName" class="form-control" aria-required="true" placeholder="Twoja nazwa" />
-                <label asp-for="Input.UserName">Nazwa użytkownika</label>
+                <label asp-for="Input.UserName">*Nazwa użytkownika</label>
                 <span asp-validation-for="Input.UserName" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
+                <select asp-for="Input.Country" class="form-select" onchange="handleCountryChange(this)">
+                    <option value="Wybierz kraj">Wybierz kraj</option>
+                    <option value="Polska">Polska</option>
+                    <option value="USA">USA</option>
+                    <option value="Niemcy">Niemcy</option>
+                    <option value="Anglia">Anglia</option>
+                    <option value="Francja">Francja</option>
+                    <option value="Rosja">Rosja</option>
+                </select>
+                <label asp-for="Input.Country" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
+                <select asp-for="Input.City" class="form-select" onchange="handleCityChange(this)">
+                    <option value="Wybierz miasto">Wybierz miasto</option>
+                    <option value="Warszawa">Warszawa</option>
+                    <option value="Kraków">Kraków</option>
+                    <option value="Łódź">Łódź</option>
+                    <option value="Wrocław">Wrocław</option>
+                    <option value="Poznań">Poznań</option>
+                    <option value="Gdańsk">Gdańsk</option>
+                    <option value="Szczecin">Szczecin</option>
+                    <option value="Bydgoszcz">Bydgoszcz</option>
+                    <option value="Lublin">Lublin</option>
+                    <option value="Białystok">Białystok</option>
+                    <option value="Katowice">Katowice</option>
+                    <option value="Gdynia">Gdynia</option>
+                    <option value="Częstochowa">Częstochowa</option>
+                    <option value="Radom">Radom</option>
+                    <option value="Sosnowiec">Sosnowiec</option>
+                    <option value="Toruń">Toruń</option>
+                    <option value="Kielce">Kielce</option>
+                    <option value="Rzeszów">Rzeszów</option>
+                    <option value="Gliwice">Gliwice</option>
+                    <option value="Zabrze">Zabrze</option>
+                    <option value="Olsztyn">Olsztyn</option>
+                    <option value="Bielsko-Biała">Bielsko-Biała</option>
+                    <option value="Siedlce">Siedlce</option>
+                    <option value="Zielona Góra">Zielona Góra</option>
+                </select>
+                <label asp-for="Input.City" class="form-label"></label>
+            </div>
+            <div class="form-floating mb-3">
                 <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.Password">Hasło</label>
+                <label asp-for="Input.Password">*Hasło</label>
                 <span asp-validation-for="Input.Password" class="text-danger"></span>
             </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
-                <label asp-for="Input.ConfirmPassword">Potwierdź hasło</label>
+                <label asp-for="Input.ConfirmPassword">*Potwierdź hasło</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Zarejestruj się</button>

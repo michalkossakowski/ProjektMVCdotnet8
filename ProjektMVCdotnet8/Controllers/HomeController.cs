@@ -157,7 +157,6 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "test2user";
                 userEntity.NormalizedUserName = "TEST2USER";
                 userEntity.Nick = "test2user";
-                userEntity.Avatar = "szop_czarny_pan.jpg";
                 var hashedPassword = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.PasswordHash = hashedPassword;
                 _context.Users.Add(userEntity);

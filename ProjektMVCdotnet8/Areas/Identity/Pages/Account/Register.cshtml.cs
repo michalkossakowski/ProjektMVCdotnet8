@@ -75,20 +75,27 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "Pole Email jest wymagane.")]
+            [EmailAddress(ErrorMessage = "To pole przeznaczone na adres email w formacie nazwa@domena.com.")]
             [Display(Name = "Email")]
             public string Email { get; set; }
 
             [Required(ErrorMessage = "Pole Nick jest wymagane.")]
             [StringLength(20, ErrorMessage = "Nick musi mieć od {2} do {1} znaków.", MinimumLength = 3)]
+            [Display(Name = "Nazwa Użytkownika")]
             public string UserName { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "{0} musi mieć między {2}, a {1} znaków długości.", MinimumLength = 6)]
+            [Display(Name = "Kraj pochodzenia")]
+            public string? Country { get; set; }
+
+            [Display(Name = "Miasto")]
+            public string? City { get; set; }
+            [Required(ErrorMessage = "Pole Hasło jest wymagane.")]
+            [StringLength(100, ErrorMessage = "{0} musi mieć między {2} a {1} znaków długości.", MinimumLength = 6)]
+            [RegularExpression(@"^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z0-9]).{6,}$", ErrorMessage = "Hasło musi zawierać co najmniej jedną małą literę, jedną dużą literę, jedną cyfrę i jedny znak specjalny.")]
             [DataType(DataType.Password)]
             [Display(Name = "Hasło")]
             public string Password { get; set; }
@@ -118,6 +125,8 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
                 user.Nick = Input.UserName;
+                user.Country = Input.Country;
+                user.City = Input.City;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

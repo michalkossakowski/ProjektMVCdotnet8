@@ -133,6 +133,7 @@ namespace ProjektMVCdotnet8.Controllers
             ViewBag.SecondAvatar = avatar2;
             return View(await _context.Messages.ToListAsync());
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

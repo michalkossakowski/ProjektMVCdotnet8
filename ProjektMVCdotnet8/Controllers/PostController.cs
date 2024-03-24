@@ -9,7 +9,7 @@ namespace ProjektMVCdotnet8.Controllers
     public class PostController : Controller
     {
 
-        private ApplicationDbContext _context;
+        public ApplicationDbContext _context;
         SignInManager<UserEntity> _signInManager;
         UserManager<UserEntity> _userManager;
         public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager)
@@ -161,6 +161,22 @@ namespace ProjektMVCdotnet8.Controllers
                 return RedirectToAction("Index", new { CategoryName });
 
             }
+        }
+        public async Task<IActionResult> ShowPost(int Id)
+        {
+            var gsdsa = _context.Posts;
+            var post = _context.Posts
+                .Where(x => x.Id == Id)
+                .FirstOrDefault();
+            if (post == null) ;
+            return View("ShowPost", post);
+        }
+        public async Task<IActionResult> LivePostSearch(string search)
+        {
+            List<PostEntity> res =  _context.Posts
+               .Where(p => p.Title.Contains(search))
+               .ToList();
+            return PartialView("LivePostSearch", res);
         }
     }
 }

@@ -1,0 +1,11 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjektMVCdotnet8.Areas.Identity.Data
+@using ProjektMVCdotnet8.Entities
+@model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
+
+@foreach (var item in Model)
+{
+    <div class="col-sm-8 p-0">
+        @Html.ActionLink(item.Title, "ShowPost", "Post", new { Id = item.Id }, new { @class = "list-group-item list-group-item-action" })
+    </div>
+}

@@ -39,7 +39,10 @@ namespace ProjektMVCdotnet8.Controllers
                     .ToList();
 
             List<CommentEntity> comments = new List<CommentEntity>();
-            comments = _context.Comments.ToList();
+            comments = _context.Comments
+                    .Include(comment => comment.AuthorUser)
+                    .Include(comment => comment.CommentedPost)
+                    .ToList();
             ViewBag.Comments = comments;
             
             if (_signInManager.IsSignedIn(User))

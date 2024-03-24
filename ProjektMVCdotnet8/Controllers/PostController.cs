@@ -178,5 +178,23 @@ namespace ProjektMVCdotnet8.Controllers
                .ToList();
             return PartialView("LivePostSearch", res);
         }
+
+        public  ActionResult LivePostSearch(string search)
+        {
+            List<PostEntity> res =  _context.Posts
+               .Where(p => p.Title.Contains(search))
+               .ToList();
+            _context.Dispose();
+            return PartialView("LivePostSearch", res);
+        }
+
+        public async Task<IActionResult> ShowPost(string Id)
+        {
+            var post = _context.Posts
+                .Where(x => x.Id.Equals(Id))
+                .FirstOrDefault();
+            if (post == null) ;
+            return View("ShowPost", post);
+        }
     }
 }

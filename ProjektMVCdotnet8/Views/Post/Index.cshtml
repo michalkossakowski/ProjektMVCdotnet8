@@ -57,51 +57,44 @@
                         }
                         <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>
-
-                    @if (ViewBag.Comments != null)
-                    {
-                        foreach (var comment in ViewBag.Comments)
+                    <hr />
+                    <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
+                        @if (ViewBag.Comments != null)
                         {
-                            if (comment.CommentedPost == element) 
+                            foreach (var comment in ViewBag.Comments)
                             {
-                                <div class="container" style="border:outset">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="sm-2">
-                                                <img src="/attachments/@comment.AuthorUser.Avatar" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                                if (comment.CommentedPost == element) 
+                                {
+                                    <div class=" mb-2">
+                                        <div class="row">
+                                            <div class="col-2">
+                                                <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
+                                                <small class="text-muted">@comment.userNick</small>
+                                                <small class="text-muted"><br>@comment.CreatedDate.ToString("dd.MM.yyyy HH:mm")</small>
                                             </div>
-                                            <div class="p-2">
-                                                <small class="text-muted">Autor: @comment.userNick</small>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div>
+                                            <div class="col-8">
                                                 @comment.CommentContent
                                             </div>
-                                                <small><br>@comment.CreatedDate.ToString("MMMM dd, yyyy HH:mm")</small>
+                                        </div>
+                                    </div>
+                                 }
+                             }
+                        }
+                        <div>
+                            <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
+                                <input type="hidden" name="postId" value="@element.Id" />
+                                <input type="hidden" name="category" value="@TempData["CategoryName"]" />     
+                                <div class="form-group mb-0 flex-grow-1 mr-3">
+                                    <div class="input-group mb-3">
+                                        <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />
+                                        <div class="input-group-append">
+                                            <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
                                         </div>
                                     </div>
                                 </div>
-                             }
-                         }
-                    }
-                    <div>
-                        <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
-                            Dodaj komentarz
-                           
-                            <input type="hidden" name="postId" value="@element.Id" />
-                            <input type="hidden" name="category" value="@TempData["CategoryName"]" />     
-                            <div class="form-group mb-0 flex-grow-1 mr-3">
-                                <div class="input-group mb-3">
-                                    <input class="form-control" type="text" name="commentContent" value="" required />
-                                    <div class="input-group-append">
-                                        <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
-                    
                     
                 </div>
             </div>

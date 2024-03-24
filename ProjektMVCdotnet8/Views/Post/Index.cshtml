@@ -49,12 +49,14 @@
                         }
                         <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>
-                    <!-- Button trigger modal -->
+                    
                     
                     <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
+                        <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
-                            Launch demo modal
-                        </button><br></br>
+                            Komentarze
+                        </button>
+                        <br>
                         <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
                             <input type="hidden" name="postId" value="@element.Id" />
                             <input type="hidden" name="category" value="@TempData["CategoryName"]" />
@@ -73,8 +75,8 @@
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="postModalLabel@(element.Id)">Modal title</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <h1 class="modal-title fs-5" id="postModalLabel@(element.Id)">Komentarze:</h1>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
                                 </div>
                                 <div class="modal-body">
                                     @{

@@ -45,17 +45,27 @@
                     <div class="card-footer">
                         @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User))) 
                         {
-                            <p card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Blokuj</a></p>
-                            @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
-                            {
-                                <p card-text><a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Przestań obserwować</a></p>
-                            }
-                            else 
-                            { 
-                                <p card-text><a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Obserwuj</a></p>
-                            }
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <span card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Blokuj</a></span>
+                                    </div>
+                                    <div class="col-sm">
+                                        @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
+                                        {
+                                            <span card-text><a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Przestań obserwować</a></span>
+                                        }
+                                        else
+                                        {
+                                            <span card-text><a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), CategoryName = TempData["CategoryName"]})">Obserwuj</a></span>
+                                        }
+                                    </div>
+                                    <div class="col-sm">
+                                        <a class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></a>
+                                    </div>
+                                </div>
+                            </div>
                         }
-                        <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>
                     <hr />
                     <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">

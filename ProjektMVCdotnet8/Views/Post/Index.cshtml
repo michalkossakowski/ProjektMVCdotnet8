@@ -57,34 +57,34 @@
                         }
                         <p class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></p>
                     </div>
-                                    @{
-                                        if (ViewBag.Comments != null)
-                                        {
-                                            foreach (var comment in ViewBag.Comments)
-                                            {
-                                                if (comment.CommentedPost == element)
-                                                {
-                                                    <div class="container" style="border:outset">
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <div class="sm-2">
-                                                                    <img src="/attachments/@comment.AuthorUser.Avatar" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
-                                                                </div>
-                                                                <div class="p-2">
-                                                                    <small class="text-muted">Autor: @comment.userNick</small>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-6">
-                                                                <div>@comment.CommentContent</div>
-                                                                <small><br>@comment.CreatedDate.ToString("MMMM dd, yyyy HH:mm")</small>
-                                                            </div>
 
-                                                        </div>
-                                                    </div>
-                                                }
-                                            }
-                                        }
-                                    }
+                    @if (ViewBag.Comments != null)
+                    {
+                        foreach (var comment in ViewBag.Comments)
+                        {
+                            if (comment.CommentedPost == element) 
+                            {
+                                <div class="container" style="border:outset">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="sm-2">
+                                                <img src="/attachments/@comment.AuthorUser.Avatar" class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                                            </div>
+                                            <div class="p-2">
+                                                <small class="text-muted">Autor: @comment.userNick</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div>
+                                                @comment.CommentContent
+                                            </div>
+                                                <small><br>@comment.CreatedDate.ToString("MMMM dd, yyyy HH:mm")</small>
+                                        </div>
+                                    </div>
+                                </div>
+                             }
+                         }
+                    }
                     <div>
                         <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
                             Dodaj komentarz

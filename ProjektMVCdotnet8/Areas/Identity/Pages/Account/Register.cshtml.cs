@@ -80,8 +80,8 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required(ErrorMessage = "Pole Nick jest wymagane.")]
-            [StringLength(20, ErrorMessage = "Nick musi mieć od {2} do {1} znaków.", MinimumLength = 3)]
+            [Required(ErrorMessage = "Pole Nazwa Użytkownika jest wymagane.")]
+            [StringLength(20, ErrorMessage = "Nazwa Użytkownika musi mieć od {2} do {1} znaków.", MinimumLength = 3)]
             [Display(Name = "Nazwa Użytkownika")]
             public string UserName { get; set; }
             /// <summary>

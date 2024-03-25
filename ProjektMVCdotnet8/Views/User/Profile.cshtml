@@ -1,0 +1,30 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjektMVCdotnet8.Areas.Identity.Data
+@using ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
+@using ProjektMVCdotnet8.Entities
+
+@inject SignInManager<UserEntity> SignInManager
+@inject UserManager<UserEntity> UserManager
+
+@model ProjektMVCdotnet8.Controllers.UserController.InputModel
+@{
+    ViewData["Title"] = "Profil";
+}
+
+<div>
+    <h2>Profil użytkownika: @Model.UserName </h2>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Kraj pochodzenia:</dt>
+        <dd class="col-sm-9">@Model.Country</dd>
+
+        <dt class="col-sm-3">Miasto:</dt>
+        <dd class="col-sm-9">@Model.City</dd>
+
+        <dt class="col-sm-3">Punkty:</dt>
+        <dd class="col-sm-9">@Model.Points</dd>
+
+        <dt class="col-sm-3">O mnie:</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+    </dl>
+</div>

@@ -29,13 +29,15 @@
                 <div class="col-md-8 d-flex flex-column">
                     <div class="card-header card-text d-flex flex-row sm-1">
                         <div class="sm-2">
-                            @{
+                            @{ 
                                 string str = "/attachments/" + element.AuthorUser.Avatar;
                             }
-                            <img src=@str class=" awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                            <a href="@Url.Action("Profile", "User", new { username = element.AuthorUser.UserName })">
+                                <img src=@str class=" awatar rounded-circle img-fluid border border-2 img-link" alt="Alternate Text" />
+                            </a>
                         </div>
                         <div class="p-2">
-                            <small class="text-muted">Autor: @element.AuthorUser.Nick<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
+                            <small class="text-muted">Autor: @element.AuthorUser.UserName<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
                         </div>
                     </div>
                     <div class="card-body">

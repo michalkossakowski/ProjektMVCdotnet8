@@ -10,21 +10,50 @@
 @{
     ViewData["Title"] = "Profil";
 }
+<style>
+    .profile-picture {
+        width: 150px;
+        height: 150px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
 
+        .profile-picture img {
+            width: 100%;
+            height: auto;
+        }
+</style>
+<div class="row">
+<div class="d-flex justify-content-center">
+    <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="d-flex justify-content-center mb-3">
+                <div class="profile-picture border border-3 border border-primary">
+                    <img src="@Url.Content("~/attachments/" + Model.Avatar)" class="card-img-top" alt="Avatar" />
+                </div>
+            </div>
+                <div class="text-center">
+                    <p class="fs-3 fw-bold">@Model.UserName</p>
+                </div>
+                <div class="text-center">
+                <p class="fs-4">Liczba punktów: @Model.Points</p>
+                </div>
+    </div>
 <div>
     <h2>Profil użytkownika: @Model.UserName </h2>
     <hr />
     <dl class="row">
+        <dt class="col-sm-3">Opis:</dt>
+        <dd class="col-sm-9">@Model.Description</dd>
+
         <dt class="col-sm-3">Kraj pochodzenia:</dt>
         <dd class="col-sm-9">@Model.Country</dd>
 
         <dt class="col-sm-3">Miasto:</dt>
         <dd class="col-sm-9">@Model.City</dd>
-
-        <dt class="col-sm-3">Punkty:</dt>
-        <dd class="col-sm-9">@Model.Points</dd>
-
-        <dt class="col-sm-3">O mnie:</dt>
-        <dd class="col-sm-9">@Model.Description</dd>
     </dl>
+</div>
+</div>
 </div>

@@ -44,6 +44,7 @@ namespace ProjektMVCdotnet8.Controllers
             var userProfileModel = new InputModel
             {
                 UserName = user.UserName,
+                Avatar = user.Avatar,
                 Country = user.Country,
                 City = user.City,
                 Points = user.Points,

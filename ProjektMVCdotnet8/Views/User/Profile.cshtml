@@ -28,8 +28,12 @@
     .profile-container {
         margin-top: 15vh; 
     }
+
+    .profile-container-empty {
+        margin-top: 5vh;
+    }
 </style>
-</style>
+
 <div class="text-center">
     <h1 class ="display-4">@ViewData["Title"]</h1>
     <hr />
@@ -54,6 +58,12 @@
     <h2>Profil użytkownika: @Model.UserName </h2>
     <hr />
             <dl class="row">
+                @if(Model.Country==null && Model.City==null && Model.Description==null)
+                {
+                     <div class="d-flex justify-content-center profile-container-empty">
+                    <dt class="h4">Trochę tu pusto :(</dt>
+                    </div>
+                }
                 @if(Model.Country!=null)
                 {
                 <dt class="col-sm-3 h4">Kraj:</dt>

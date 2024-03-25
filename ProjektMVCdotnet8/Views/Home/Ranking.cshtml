@@ -1,0 +1,14 @@
+﻿@{
+    ViewData["Title"] = "Ranking";
+}
+
+@{
+    List<(string, int)> lista = new List<(string, int)>();
+    lista = ViewBag.UserList;
+
+    foreach(var user in lista)
+    {
+        <p>Użytkownik: @user.Item1  Punkty: @user.Item2</p>
+
+    }
+}

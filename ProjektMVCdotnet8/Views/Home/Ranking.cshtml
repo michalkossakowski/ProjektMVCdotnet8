@@ -2,13 +2,80 @@
     ViewData["Title"] = "Ranking";
 }
 
-@{
-    List<(string, int)> lista = new List<(string, int)>();
-    lista = ViewBag.UserList;
-
-    foreach(var user in lista)
-    {
-        <p>Użytkownik: @user.Item1  Punkty: @user.Item2</p>
-
-    }
-}
+<div class="container">
+    <h1 class="mt-5 text-center">Rankingi Użytkowników</h1>
+    <div class="row mt-3 justify-content-center">
+        <div class="col-md-4">
+            <h2 class="text-center">Ranking według ilości punktów</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Użytkownik</th>
+                        <th scope="col">Punkty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var usersByPoints = ((List<(string, int, int, int, string)>)ViewBag.UserList).OrderByDescending(u => u.Item2);
+                        var topUserByPoints = usersByPoints.FirstOrDefault();
+                    }
+                    @foreach (var user in usersByPoints)
+                    {
+                        <tr class="@(user.Equals(topUserByPoints) ? "table-warning" : "")">
+                            <td><img src=@user.Item5 class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;"/> @user.Item1</td>
+                            <td>@user.Item2</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Ranking według ilości postów</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Użytkownik</th>
+                        <th scope="col">Liczba postów</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var usersByPosts = ((List<(string, int, int, int, string)>)ViewBag.UserList).OrderByDescending(u => u.Item3);
+                        var topUserByPosts = usersByPosts.FirstOrDefault();
+                    }
+                    @foreach (var user in usersByPosts)
+                    {
+                        <tr class="@(user.Equals(topUserByPosts) ? "table-warning" : "")">
+                            <td><img src=@user.Item5 class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;"/> @user.Item1</td>
+                            <td>@user.Item3</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <h2 class="text-center">Ranking według ilości komentarzy</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Użytkownik</th>
+                        <th scope="col">Liczba komentarzy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var usersByComments = ((List<(string, int, int, int, string)>)ViewBag.UserList).OrderByDescending(u => u.Item4);
+                        var topUserByComments = usersByComments.FirstOrDefault();
+                    }
+                    @foreach (var user in usersByComments)
+                    {
+                        <tr class="@(user.Equals(topUserByComments) ? "table-warning" : "")">
+                            <td><img src=@user.Item5 class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;"/> @user.Item1</td>
+                            <td>@user.Item4</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

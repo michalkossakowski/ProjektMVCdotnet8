@@ -110,11 +110,11 @@ namespace ProjektMVCdotnet8.Controllers
                 {
                     if(user == u1)
                     {
-                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u2);
+                        secondUser = _context.Users.FirstOrDefault(n => n.UserName == u2);
                     }
                     else
                     {
-                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u1);
+                        secondUser = _context.Users.FirstOrDefault(n => n.UserName == u1);
                     }
                     chatList.Add(ch);
                     secondUserAvatar.Add(secondUser.Avatar);

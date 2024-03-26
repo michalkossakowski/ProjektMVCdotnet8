@@ -123,7 +123,8 @@
                         {
                             <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
                                 <input type="hidden" name="postId" value="@element.Id" />
-                                <input type="hidden" name="category" value="@TempData["CategoryName"]" />
+                                <input type="hidden" name="Information" value="@TempData["Information"]" />
+                                <input type="hidden" name="Site" value="@TempData["Site"]" />
                                 <div class="form-group mb-0 flex-grow-1 mr-3">
                                     <div class="input-group mb-3">
                                         <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />

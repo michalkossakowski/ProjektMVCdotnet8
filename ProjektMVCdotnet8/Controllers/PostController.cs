@@ -70,8 +70,8 @@ namespace ProjektMVCdotnet8.Controllers
             var followedToString = followedUsers.Select(user => user.Id).ToList();
             TempData["FollowedUsers"] = followedToString;
 
-            var posts = await _postRepository.GetAll();
-            var filteredPosts = posts
+            var posts =  _postRepository.GetAll();
+            var filteredPosts = (await posts)
                 .Where(post => followedToString.Contains(post.AuthorUser.Id))
                 .ToList();
             return View("Index", filteredPosts);
@@ -95,11 +95,12 @@ namespace ProjektMVCdotnet8.Controllers
         {
             TempData["Information"] = liveSearchTitle;
             TempData["Site"] = "FindedPosts";
-
-            var comments = GetAllComments();
+            
+            IEnumerable<CommentEntity> comments = await GetAllComments();
             ViewBag.Comments = comments;
 
-            var posts = await _postRepository.GetByContain(liveSearchTitle);
+
+            var posts = await _postRepository.GetByContain(liveSearchTitle).ConfigureAwait(false);
 
             if (_signInManager.IsSignedIn(User))
             {
@@ -175,8 +176,8 @@ namespace ProjektMVCdotnet8.Controllers
             user.Points += 500;
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
-            string Site = Request.Form["site"];
-            string Information = Request.Form["information"];
+            string Site = Request.Form["Site"];
+            string Information = Request.Form["Information"];
             return RedirectToAction("Redirecting", new { Information, Site });
         }
 

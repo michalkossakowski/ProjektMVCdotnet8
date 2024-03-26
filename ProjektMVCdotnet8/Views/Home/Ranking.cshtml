@@ -23,7 +23,11 @@
                     @foreach (var user in usersByPoints)
                     {
                         <tr class="@(user.Equals(topUserByPoints) ? "table-warning" : "")">
-                            <td><img src=@user.Item5 class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;"/> @user.Item1</td>
+                            <td>
+                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
+                                    <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
+                                </a>
+                            </td>
                             <td>@user.Item2</td>
                         </tr>
                     }
@@ -47,7 +51,11 @@
                     @foreach (var user in usersByPosts)
                     {
                         <tr class="@(user.Equals(topUserByPosts) ? "table-warning" : "")">
-                            <td><img src=@user.Item5 class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;"/> @user.Item1</td>
+                            <td>
+                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
+                                    <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
+                                </a>
+                            </td>
                             <td>@user.Item3</td>
                         </tr>
                     }
@@ -71,7 +79,11 @@
                     @foreach (var user in usersByComments)
                     {
                         <tr class="@(user.Equals(topUserByComments) ? "table-warning" : "")">
-                            <td><img src=@user.Item5 class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;"/> @user.Item1</td>
+                            <td>
+                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
+                                    <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
+                                </a>
+                            </td>
                             <td>@user.Item4</td>
                         </tr>
                     }

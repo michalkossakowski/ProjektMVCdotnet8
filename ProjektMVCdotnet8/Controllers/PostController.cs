@@ -175,8 +175,8 @@ namespace ProjektMVCdotnet8.Controllers
             user.Points += 500;
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
-            string Site = Request.Form["site"];
-            string Information = Request.Form["information"];
+            string Site = Request.Form["Site"];
+            string Information = Request.Form["Information"];
             return RedirectToAction("Redirecting", new { Information, Site });
         }
 

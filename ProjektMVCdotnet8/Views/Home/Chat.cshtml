@@ -7,12 +7,12 @@
 
 <style>
     .chat-container {
-        height: calc(81vh - 56px); /* 100% wysokości ekranu minus wysokość nagłówka */
+        height: calc(81vh - 56px);
     }
 
     .messages-container {
-        height: calc(81vh - 150px); /* Ustawienie wysokości na 100% wysokości okna minus 150px (wysokość nagłówka, stopki itp.) */
-        overflow-y: auto; /* Dodanie przewijania, jeśli zawartość przekracza wysokość */
+        height: calc(81vh - 150px);
+        overflow-y: auto;
     }
 
     .message-box {
@@ -24,24 +24,24 @@
 
     .message-row {
         display: flex;
-        flex-direction: row-reverse; /* Wyświetlanie wiadomości od prawej do lewej */
+        flex-direction: row-reverse;
     }
 
     .first-message-content {
-        margin-left: auto; /* Wyśrodkowanie treści wiadomości */
+        margin-left: auto;
         padding: 10px;
-        font-style: italic; /* Pochylenie czcionki */
-        color: #333333; /* Ciemno szary kolor */
-        text-align: center; /* Wyśrodkowanie tekstu */
+        font-style: italic;
+        color: #333333;
+        text-align: center;
     }
 
     .message-content {
-        margin-left: auto; /* Wyśrodkowanie treści wiadomości */
+        margin-left: auto;
         padding: 10px;
     }
 
     .message-date {
-        margin-left: auto; /* Wyśrodkowanie daty */
+        margin-left: auto;
         color: #777;
         font-size: 12px;
     }
@@ -56,11 +56,11 @@
 
     .message-row2 {
         display: flex;
-        flex-direction: row; /* Wyświetlanie wiadomości od prawej do lewej */
+        flex-direction: row;
     }
 
     .message-date2 {
-        margin-left: auto; /* Wyśrodkowanie daty */
+        margin-left: auto;
         color: #ffffff;
         font-size: 12px;
     }
@@ -91,7 +91,9 @@
                                         @{
                                             string str1 = "/attachments/"+ViewBag.CurrentUser.Avatar;
                                         }
+                                        <a href="@Url.Action("Profile", "User", new { username = ViewBag.CurrentUser.UserName })">
                                         <img src=@str1 class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                                        </a>
                                         <small style="margin-left: auto;">@ViewBag.CurrentUser</small>
                                         <div class="message-content">
                                             <strong class="text-break">@item.MessageContent</strong>
@@ -109,7 +111,9 @@
                                         @{
                                             string str2 = "/attachments/" + ViewBag.SecondAvatar;
                                         }
+                                        <a href="@Url.Action("Profile", "User", new { username = ViewBag.SecondUser })">
                                         <img src=@str2 class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
+                                        </a>
                                         <small style="margin-left: auto;">@ViewBag.SecondUser</small>
                                         <div class="message-content">
                                             <strong class="text-break">@item.MessageContent</strong>

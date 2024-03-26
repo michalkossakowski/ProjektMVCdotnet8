@@ -61,9 +61,9 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Phone]
-            [Display(Name = "Numer telefonu")]
+            [Display(Name = "Numer Telefonu")]
             public string PhoneNumber { get; set; }
-            [Display(Name = "Kraj pochodzenia")]
+            [Display(Name = "Kraj Pochodzenia")]
             public string? Country { get; set; }
 
             [Display(Name = "Miasto")]
@@ -71,6 +71,10 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Avatar")]
             public string? Avatar { get; set; }
             public IFormFile? AttachmentSource { get; set; }
+            public int? Points { get; set; }
+            [Display(Name = "O Mnie")]
+            [StringLength(250, ErrorMessage = "Opis nie może być dłuższy niż 250 znaków.")]
+            public string? Description { get; set; }
         }
 
         private async Task<string?> GetCountryAsync(UserEntity user)
@@ -81,9 +85,17 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
         {
             return user.City ?? null; //ustwia null jeśli będzie pusta
         }
+        private async Task<string?> GetDescriptionAsync(UserEntity user)
+        {
+            return user.Description ?? null; //ustwia null jeśli będzie pusta
+        }
         private async Task<string?> GetAvatarAsync(UserEntity user)
         {
             return user.Avatar ?? null; //ustwia null jeśli będzie pusta
+        }
+        private async Task<int?> GetPointsAsync(UserEntity user)
+        {
+            return user.Points ?? null; //ustwia null jeśli będzie pusta
         }
 
         private async Task LoadAsync(UserEntity user)
@@ -93,14 +105,17 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
             var country = await GetCountryAsync(user);
             var city = await GetCityAsync(user);
             var avatar = await GetAvatarAsync(user);
-
+            var points = await GetPointsAsync(user);
+            var description = await GetDescriptionAsync(user);
             Username = userName;
             Input = new InputModel
             {
                 PhoneNumber = phoneNumber,
                 Country = country,
                 City = city,
-                Avatar = avatar
+                Avatar = avatar,
+                Points = points,
+                Description = description
             };
         }
 
@@ -129,7 +144,11 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
                 await LoadAsync(user);
                 return Page();
             }
-
+            if (Input.Description != user.Description)
+            {
+                user.Description = Input.Description;
+                await _userManager.UpdateAsync(user);
+            }
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {

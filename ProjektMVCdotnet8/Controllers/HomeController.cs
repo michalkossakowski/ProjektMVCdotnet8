@@ -84,6 +84,28 @@ namespace ProjektMVCdotnet8.Controllers
         {
             return View();
         }
+        public IActionResult Ranking()
+        {
+            List<(string, int, int, int, string)> userList = new List<(string, int, int, int, string)>();
+
+            foreach (var user in _context.Users)
+            {
+                int points = (int)user.Points;
+                int postCount = _context.Posts.Count(p => p.AuthorUser == user);
+                int commentCount = _context.Comments.Count(p => p.AuthorUser == user);
+                string avatar = "/attachments/" + user.Avatar;
+                userList.Add((user.UserName, points, postCount, commentCount, avatar));
+            }
+
+            userList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+
+            ViewBag.UserList = userList;
+
+            return View();
+        }
+
+
+
         public IActionResult ChatList()
         {
             var user = _userManager.GetUserName(User);
@@ -99,11 +121,11 @@ namespace ProjektMVCdotnet8.Controllers
                 {
                     if(user == u1)
                     {
-                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u2);
+                        secondUser = _context.Users.FirstOrDefault(n => n.UserName == u2);
                     }
                     else
                     {
-                        secondUser = _context.Users.FirstOrDefault(n => n.Nick == u1);
+                        secondUser = _context.Users.FirstOrDefault(n => n.UserName == u1);
                     }
                     chatList.Add(ch);
                     secondUserAvatar.Add(secondUser.Avatar);
@@ -133,6 +155,7 @@ namespace ProjektMVCdotnet8.Controllers
             ViewBag.SecondAvatar = avatar2;
             return View(await _context.Messages.ToListAsync());
         }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

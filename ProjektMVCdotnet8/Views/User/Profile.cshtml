@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using ProjektMVCdotnet8.Areas.Identity.Data
+@using ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
+@using ProjektMVCdotnet8.Entities
+
+@inject SignInManager<UserEntity> SignInManager
+@inject UserManager<UserEntity> UserManager
+
+@model ProjektMVCdotnet8.Controllers.UserController.InputModel
+@{
+    ViewData["Title"] = "Przeglądaj Profil";
+}
+<style>
+    .profile-picture {
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        border-radius: 50%;
+        margin-bottom: 8px;
+        cursor: pointer;
+    }
+
+        .profile-picture img {
+            width: 100%;
+            height: auto;
+        }
+
+    .profile-container {
+        margin-top: 10vh; 
+    }
+
+    .profile-container-empty {
+        margin-top: 5vh;
+    }
+</style>
+
+<div class="text-center">
+    <h1 class ="display-4">@ViewData["Title"]</h1>
+    <hr />
+</div>
+<div class="row">
+    <div class="d-flex justify-content-center profile-container">
+        <div class="col-md-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+            <div class="d-flex justify-content-center mb-3">
+                <div class="profile-picture border border-3 border border-primary">
+                    <img src="@Url.Content("~/attachments/" + Model.Avatar)" class="card-img-top" alt="Avatar" />
+                </div>
+            </div>
+                <div class="text-center">
+                    <p class="fs-3 fw-bold">@Model.UserName</p>
+                </div>
+                <div class="text-center">
+                <p class="fs-4">Liczba punktów: @Model.Points</p>
+                </div>
+    </div>
+<div>
+    <h2>Profil użytkownika: @Model.UserName </h2>
+    <hr />
+            <dl class="row">
+                @if(Model.Country==null && Model.City==null && Model.Description==null)
+                {
+                     <div class="d-flex justify-content-center profile-container-empty">
+                    <dt class="h4">Trochę tu pusto :(</dt>
+                    </div>
+                }
+                @if(Model.Country!=null)
+                {
+                <dt class="col-sm-3 h4">Kraj:</dt>
+                <dd class="col-sm-9 fs-4 lead">@Model.Country</dd>
+                }
+                @if(Model.City!=null)
+                {
+                <dt class="col-sm-3 h4">Miasto:</dt>
+                <dd class="col-sm-9 fs-4 lead">@Model.City</dd>
+                }
+            </dl>
+            @if (Model.Description != null)
+            {
+                <dt class="col-sm-3 h4">O mnie:</dt>
+                <dd class="col-sm-9">
+                    <div class="d-flex">
+                        <div class="rounded bg-light p-3">
+                            <p class="fs-4">@Model.Description</p>
+                        </div>
+                </dd>
+            }
+
+</div>
+</div>
+</div>

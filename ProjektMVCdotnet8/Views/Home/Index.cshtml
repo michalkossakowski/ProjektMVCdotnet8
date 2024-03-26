@@ -7,47 +7,47 @@
 @inject SignInManager<UserEntity> SignInManager
 @inject UserManager<UserEntity> UserManager
 <div class="text-center">
-    <h1 class="display-1">Witaj na forum ProjektMVCdotnet8!</h1>
+    <h1 class="display-4">Witaj na forum ProjektMVCdotnet8!</h1>
 </div>
 <br />
 <div class="text-center">
-    <h1 class="display-4">Wyszukaj interesujący cię temat:</h1>
+    <h1 class="display-4" style="font-size: 32px" >Wyszukaj interesujący cię temat:</h1>
 </div>
     <form id="SearchForm" method="post" asp-controller="Post" asp-action="FindedPosts" class="container text-center w-50">
     <div class="row justify-content-center">
             <div class="col-sm-8 p-0">
-                <input class="form-control fs-2" id="liveSearchTitle" name="liveSearchTitle" placeholder="Szukam ..." required />
+                <input class="form-control" id="liveSearchTitle" name="liveSearchTitle" placeholder="Szukam ..." required />
             </div>
-        <button class="col-sm-4 p-0 btn btn-primary fs-2" type="submit">Wyszukaj</button>
+        <button class="col-sm-4 p-0 btn btn-primary" type="submit">Wyszukaj</button>
         </div>
 
         <div id="result" class="row justify-content-start">
         </div>
     </form>
 <div class="container text-center">
-    <h1 class="display-4">Wybierz interesującą cię kategorię:</h1>
-    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Elektronika">Elektronika</a>
-    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Elektryka">Elektryka</a>
-    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Komputery">Komputery</a>
-    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Programowanie">Programowanie</a>
-    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Sieci">Sieci</a>
-    <a class="btn btn-primary" style="font-size: 24px" href="/Post?CategoryName=Spawanie">Spawanie</a>
+    <h1 class="display-4" style="font-size: 32px">Wybierz interesującą cię kategorię:</h1>
+    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Elektronika&Site=Index">Elektronika</a>
+    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Elektryka&Site=Index">Elektryka</a>
+    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Komputery&Site=Index">Komputery</a>
+    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Programowanie&Site=Index">Programowanie</a>
+    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Sieci&Site=Index">Sieci</a>
+    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Spawanie&Site=Index">Spawanie</a>
 </div>
 <br />
 @if(SignInManager.IsSignedIn(User))
 {
     <div class="container text-center">
-        <h1 class="display-4">Witaj ponownie @UserManager.GetUserName(User) !</h1>
+        <h1 class="display-4" style="font-size: 32px" >Witaj ponownie @UserManager.GetUserName(User) !</h1>
         @{
             var points = ViewBag.userPoints;
         }
-        <h1 class="display-4">Twoje punkty: @points</h1>
+        <h1 class="display-4" style="font-size: 32px">Twoje punkty: @points</h1>
     </div>
 }
 @if(!(SignInManager.IsSignedIn(User))){
     <div class="container text-center">
-        <h1 class="display-4">Nie masz jeszcze konta?</h1>
-        <a class="btn btn-success" style="font-size: 24px;" id="register" asp-area="Identity" asp-page="/Account/Register"><b>Zarejestruj się</b></a>
+        <h1 class="display-4" style="font-size: 24px">Nie masz jeszcze konta?</h1>
+        <a class="btn btn-success" style="font-size: 16px;" id="register" asp-area="Identity" asp-page="/Account/Register"><b>Zarejestruj się</b></a>
     </div>
 }
 <script src="~/js/DynamicSearch.js" asp-append-version="true"></script>

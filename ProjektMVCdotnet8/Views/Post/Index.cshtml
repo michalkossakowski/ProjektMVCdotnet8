@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="modal-body">
                                     @{
-                                        int comms = 0;
+                                        int publishedComments = 0;
                                         if (ViewBag.Comments != null)
                                         {
                                             foreach (var comment in ViewBag.Comments)
@@ -97,7 +97,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    comms += 1;
+                                                    publishedComments += 1;
                                                 }
                                             }
                                         }
@@ -113,7 +113,7 @@
                     <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
-                            Komentarze(@comms)
+                            Komentarze(@publishedComments)
                         </button>
                         <br>
                         @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))

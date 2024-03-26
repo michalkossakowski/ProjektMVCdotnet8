@@ -70,27 +70,6 @@
                         }
                     </div>
                     <hr />
-                    <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
-                            Komentarze
-                        </button>
-                        <br>
-                        <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
-                            <input type="hidden" name="postId" value="@element.Id" />
-                            <input type="hidden" name="information" value="@TempData["Information"]" />
-                            <input type="hidden" name="site" value="@TempData["Site"]" />
-
-                            <div class="form-group mb-0 flex-grow-1 mr-3">
-                                <div class="input-group mb-3">
-                                    <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />
-                                    <div class="input-group-append">
-                                        <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
                     <!-- Modal -->
                     <div class="modal fade" id="postModal@(element.Id)" tabindex="-1" aria-labelledby="postModalLabel@(element.Id)" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
@@ -101,6 +80,7 @@
                                 </div>
                                 <div class="modal-body">
                                     @{
+                                        int publishedComments = 0;
                                         if (ViewBag.Comments != null)
                                         {
                                             foreach (var comment in ViewBag.Comments)
@@ -121,6 +101,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
+                                                    publishedComments += 1;
                                                 }
                                             }
                                         }
@@ -131,6 +112,29 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
+                            Komentarze(@publishedComments)
+                        </button>
+                        <br>
+                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
+                        {
+                            <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
+                                <input type="hidden" name="postId" value="@element.Id" />
+                                <input type="hidden" name="category" value="@TempData["CategoryName"]" />
+                                <div class="form-group mb-0 flex-grow-1 mr-3">
+                                    <div class="input-group mb-3">
+                                        <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />
+                                        <div class="input-group-append">
+                                            <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+
                     </div>
                 </div>
             </div>

@@ -56,17 +56,20 @@
     </div>
 <div>
     <h2>Profil użytkownika: @Model.UserName </h2>
-    @{
-        UserEntity loggedUser = await UserManager.GetUserAsync(User);
-        if (loggedUser.UserName != @Model.UserName)
-        {
-            <div>
-                <form asp-action="AddChat" method="post" class="d-flex flex-grow-1">
-                    <input type="hidden" name="uname" value="@Model.UserName" />
-                    <input class="btn btn-primary" type="submit" name="submit" value="Wyślij wiadomość" />
-                </form>
-            </div>
-        }
+            @{
+                UserEntity loggedUser = await UserManager.GetUserAsync(User);
+                if (loggedUser != null)
+                {
+                    if (loggedUser.UserName != @Model.UserName)
+                    {
+                        <div>
+                            <form asp-action="AddChat" method="post" class="d-flex flex-grow-1">
+                                <input type="hidden" name="uname" value="@Model.UserName" />
+                                <input class="btn btn-primary" type="submit" name="submit" value="Wyślij wiadomość" />
+                            </form>
+                        </div>
+                    }
+                }
     }
 
     <hr />

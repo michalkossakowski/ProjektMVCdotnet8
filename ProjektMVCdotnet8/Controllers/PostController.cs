@@ -172,7 +172,7 @@ namespace ProjektMVCdotnet8.Controllers
             var post = _context.Posts.FirstOrDefault(c => c.Id == int.Parse(Request.Form["postId"]));
             comment.CommentedPost = post;
             comment.postId = post.Id;
-
+            user.Points += 500;
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
             string Site = Request.Form["site"];

@@ -4,20 +4,28 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Repository;
+using System.Collections;
+using System.Collections.Generic;
 using System.Security.Policy;
 namespace ProjektMVCdotnet8.Controllers
 {
     public class PostController : Controller
     {
 
-        public ApplicationDbContext _context;
-        SignInManager<UserEntity> _signInManager;
-        UserManager<UserEntity> _userManager;
-        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager)
+        private readonly ApplicationDbContext _context;
+        private readonly IPostRepository _postRepository;
+        private readonly SignInManager<UserEntity> _signInManager;
+        private readonly IFollowUserRepository _followUserRepository;
+        private readonly UserManager<UserEntity> _userManager;
+        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository)
         {
+            _postRepository = postRepository;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
+            _followUserRepository = followUserRepository;
         }
 
 
@@ -27,9 +35,9 @@ namespace ProjektMVCdotnet8.Controllers
             TempData["Information"] = Information;
             TempData["Site"] = "Index";
 
-            var posts = PostsByCategories(Information);
+            IEnumerable<PostEntity> posts = await _postRepository.GetByCategory(Information);
 
-            List<CommentEntity> comments = GetAllComments();
+            IEnumerable<CommentEntity> comments =await GetAllComments();
             ViewBag.Comments = comments;
 
             if (_signInManager.IsSignedIn(User))
@@ -38,11 +46,9 @@ namespace ProjektMVCdotnet8.Controllers
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
-                var followedUsers = _context.FollowUsers
-                    .Where(user => user.FollowingUser.Id == _userManager.GetUserId(User))
-                    .Select(user => user.FollowedUser.Id)
-                    .ToList();
-                TempData["FollowedUsers"] = followedUsers;
+
+                var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+                TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
                 return View("Index", filteredPosts);
             }
             else
@@ -56,25 +62,18 @@ namespace ProjektMVCdotnet8.Controllers
         public async Task<IActionResult> Followed()
         {
             TempData["Site"] = "Followed";
-            List<CommentEntity> comments = new List<CommentEntity>();
-            comments = _context.Comments
-                    .Include(comment => comment.AuthorUser)
-                    .Include(comment => comment.CommentedPost)
-                    .ToList();
+
+            IEnumerable<CommentEntity> comments = await GetAllComments();
             ViewBag.Comments = comments;
-            var followedUsers = _context.FollowUsers
-                .Where(entry => entry.FollowingUser.Id == _userManager.GetUserId(User))
-                .Select(entry => entry.FollowedUser.Id)
-                .ToList();
-            var posts = _context.Posts
-                .Include(p => p.AuthorUser)
-                .Include(p => p.Categories)
-                .OrderByDescending(post => post.CreatedDate)
-                .ToList();
+
+            var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+            var followedToString = followedUsers.Select(user => user.Id).ToList();
+            TempData["FollowedUsers"] = followedToString;
+
+            var posts = await _postRepository.GetAll();
             var filteredPosts = posts
-                .Where(post => followedUsers.Contains(post.AuthorUser.Id))
+                .Where(post => followedToString.Contains(post.AuthorUser.Id))
                 .ToList();
-            TempData["FollowedUsers"] = followedUsers;
             return View("Index", filteredPosts);
         }
 
@@ -96,10 +95,11 @@ namespace ProjektMVCdotnet8.Controllers
         {
             TempData["Information"] = liveSearchTitle;
             TempData["Site"] = "FindedPosts";
-            var posts = PostsByContain(liveSearchTitle);
 
-            List<CommentEntity> comments = GetAllComments();
+            var comments = GetAllComments();
             ViewBag.Comments = comments;
+
+            var posts = await _postRepository.GetByContain(liveSearchTitle);
 
             if (_signInManager.IsSignedIn(User))
             {
@@ -107,11 +107,9 @@ namespace ProjektMVCdotnet8.Controllers
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
-                var followedUsers = _context.FollowUsers
-                    .Where(user => user.FollowingUser.Id == _userManager.GetUserId(User))
-                    .Select(user => user.FollowedUser.Id)
-                    .ToList();
-                TempData["FollowedUsers"] = followedUsers;
+
+                var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+                TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
                 return View("Index", filteredPosts);
             }
             else
@@ -228,37 +226,15 @@ namespace ProjektMVCdotnet8.Controllers
             return blockedUsers;
         }
 
-        //Wyszukuje posty poprzez kategorie
-        public List<PostEntity> PostsByCategories(string CategoryName)
-        {
-            var posts = _context.Posts
-               .Include(p => p.AuthorUser)
-               .Include(p => p.Categories)
-               .Where(post => post.Categories.Any(category => category.CategoryName.Equals(CategoryName)))
-               .OrderByDescending(post => post.CreatedDate)
-               .ToList();
-            return posts;
-        }
-
-        //Wyszukuje posty poprzez szukany tytuł
-        public List<PostEntity> PostsByContain(string search)
-        {
-            List<PostEntity> posts = _context.Posts
-                .Include(p => p.AuthorUser)
-                .Where(p => p.Title.Contains(search))
-                .ToList();
-            return posts;
-        }
-
         //Zwraca wszystkie komentarze
 
-        public List<CommentEntity> GetAllComments()
+        public  async Task<IEnumerable<CommentEntity>> GetAllComments()
         {
-            List<CommentEntity> comments = _context.Comments
+            var comments = _context.Comments
                 .Include(comment => comment.AuthorUser)
                 .Include(comment => comment.CommentedPost)
-                .ToList();
-            return comments;
+                .ToListAsync();
+            return await comments;
         }
     }
 }

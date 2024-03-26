@@ -152,7 +152,10 @@ namespace ProjektMVCdotnet8.Controllers
                 .Include(user => user.FollowingUser)
                 .Where(user => user.FollowedUser.Id.Equals(FollowedUserID) && user.FollowingUser.Id.Equals(_userManager.GetUserId(User)))
                 .FirstOrDefault();
-            _context.FollowUsers.Remove(userToUnfollow);
+            if (userToUnfollow is not null)
+            {
+                _context.FollowUsers.Remove(userToUnfollow);
+            }
             await _context.SaveChangesAsync();
             return RedirectToAction("Redirecting", new { Information, Site });
         }

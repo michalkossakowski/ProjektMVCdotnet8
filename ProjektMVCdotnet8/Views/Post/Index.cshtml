@@ -32,7 +32,7 @@
                             @{ 
                                 string str = "/attachments/" + element.AuthorUser.Avatar;
                             }
-                            <a href="@Url.Action("Profile", "User", new { username = element.AuthorUser.UserName })">
+                            <a href="@Url.Action("Profile", "User", new { username = element.AuthorUser.UserName })" style="text-decoration: none;">
                                 <img src=@str class=" awatar rounded-circle img-fluid border border-2 img-link" alt="Alternate Text" />
                             </a>
                         </div>
@@ -90,7 +90,7 @@
                                                     <div class=" mb-2">
                                                         <div class="row">
                                                             <div class="col-2">
-                                                                <a href="@Url.Action("Profile", "User", new { username = comment.userNick })">
+                                                                <a href="@Url.Action("Profile", "User", new { username = comment.userNick })" style="text-decoration: none;">
                                                                 <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
                                                                 </a>
                                                                 <small class="text-muted">@comment.userNick</small>

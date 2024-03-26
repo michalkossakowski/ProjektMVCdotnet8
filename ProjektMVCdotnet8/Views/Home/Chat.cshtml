@@ -111,7 +111,7 @@
                                         @{
                                             string str2 = "/attachments/" + ViewBag.SecondAvatar;
                                         }
-                                        <a href="@Url.Action("Profile", "User", new { username = ViewBag.SecondUser })">
+                                        <a href="@Url.Action("Profile", "User", new { username = ViewBag.SecondUser })" style="text-decoration: none;">
                                         <img src=@str2 class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
                                         </a>
                                         <small style="margin-left: auto;">@ViewBag.SecondUser</small>

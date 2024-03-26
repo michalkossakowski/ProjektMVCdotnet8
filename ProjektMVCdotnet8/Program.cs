@@ -1,6 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using ProjektMVCdotnet8.Areas.Identity.Data;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using SendGrid;
+using static SmtpEmailSender;
+using System.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ProjektMVCdotnet8
 {
@@ -16,10 +21,11 @@ namespace ProjektMVCdotnet8
             builder.Services.AddDefaultIdentity<UserEntity>(options => options.SignIn.RequireConfirmedAccount = false).AddEntityFrameworkStores<ApplicationDbContext>(); // na ten moment false, bo jeszcze nie ma potwierdzenia
             
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-            
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             builder.Services.AddRazorPages();
+            builder.Services.Configure<SmtpSettings>(builder.Configuration.GetSection("SmtpSettings"));
+            builder.Services.AddTransient<IEmailSender, SmtpEmailSender>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

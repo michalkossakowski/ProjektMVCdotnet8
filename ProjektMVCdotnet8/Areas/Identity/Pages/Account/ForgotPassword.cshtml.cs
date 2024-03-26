@@ -54,11 +54,18 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
+                if (string.IsNullOrEmpty(Input.Email))
+                {
+                    ModelState.AddModelError(string.Empty, "Adres e-mail jest wymagany.");
+                    return Page();
+                }
+
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (user == null /*|| !(await _userManager.IsEmailConfirmedAsync(user))*/)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
-                    return RedirectToPage("./ForgotPasswordConfirmation");
+                    ModelState.AddModelError(string.Empty, "Podany adres e-mail nie istnieje w naszej bazie danych.");
+                    return Page();
                 }
 
                 // For more information on how to enable account confirmation and password reset please
@@ -73,8 +80,8 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Reset hasła",
+                    $"Link do resetu hasła <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }

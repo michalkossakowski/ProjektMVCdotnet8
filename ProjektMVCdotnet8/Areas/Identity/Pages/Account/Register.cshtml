@@ -73,6 +73,10 @@
                 <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
                 <label asp-for="Input.ConfirmPassword">*Potwierdź hasło</label>
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                <div class="form-check mt-2">
+                    <input class="form-check-input" type="checkbox" id="showPasswordCheckbox">
+                    <label class="form-check-label" for="showPasswordCheckbox">Pokaż hasło</label>
+                </div>
             </div>
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Zarejestruj się</button>
             <p class="text-muted mt-2">* Pola oznaczone gwiazdką są wymagane.</p>
@@ -131,15 +135,21 @@
                 document.getElementById('@Html.IdFor(model => model.Input.City)').value = null;
             }
         }
-        function previewAvatar(event) {
-            var input = event.target;
-            var reader = new FileReader();
-            reader.onload = function () {
-                var dataURL = reader.result;
-                var output = document.querySelector('.profile-picture img');
-                output.src = dataURL;
-            };
-            reader.readAsDataURL(input.files[0]);
-        }
+        $(document).ready(function () {
+            $('#showPasswordCheckbox').change(function () {
+                var passwordInput = $('#Input_Password');
+                var confirmPasswordInput = $('#Input_ConfirmPassword');
+                if ($(this).is(':checked')) 
+                {
+                    passwordInput.attr('type', 'text');
+                    confirmPasswordInput.attr('type', 'text');
+                } 
+                else 
+                {
+                    passwordInput.attr('type', 'password');
+                    confirmPasswordInput.attr('type', 'password');
+                }
+            });
+        });
     </script>
 }

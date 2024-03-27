@@ -11,6 +11,8 @@ namespace ProjektMVCdotnet8.Models
         public string PostContent { get; set; }
         public DateTime CreatedDate { get; set; }
         public IFormFile AttachmentSource { get; set; }
-        public List<CategoryEntity> Categories = new List<CategoryEntity>();
+        public string? Location { get; set; }
+
+        public List<CategoryEntity>? Categories = new List<CategoryEntity>();
     }
 }

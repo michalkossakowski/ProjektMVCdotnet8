@@ -276,7 +276,8 @@ namespace ProjektMVCdotnet8.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PostContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    AttachmentSource = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    AttachmentSource = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Location = table.Column<string>(type:"nvarchar(100)", nullable: true)
                 },
                 constraints: table =>
                 {

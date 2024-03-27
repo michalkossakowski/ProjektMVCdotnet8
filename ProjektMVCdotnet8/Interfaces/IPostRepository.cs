@@ -8,6 +8,7 @@ namespace ProjektMVCdotnet8.Interfaces
         Task<IEnumerable<PostEntity>> GetAll();
         Task<PostEntity> GetByIdAsync(int id);
         Task<IEnumerable<PostEntity>> GetByCategory(string category);
+        Task<IEnumerable<PostEntity>> GetByCity(string city);
         Task<IEnumerable<PostEntity>> GetByContain(string search);
         bool Add(PostEntity post);
         bool Delete(PostEntity post);

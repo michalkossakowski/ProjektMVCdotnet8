@@ -40,7 +40,13 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Local">Lokalnie</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Followed">Obserwowane</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Followed">Lokalnie</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AddPost">Dodaj Post</a>

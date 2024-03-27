@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using System.Runtime.ConstrainedExecution;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualBasic;
 
 namespace ProjektMVCdotnet8.Controllers
 {
@@ -112,7 +113,9 @@ namespace ProjektMVCdotnet8.Controllers
             loggedUser.Points += 1000;
             _context.Add(postEntity);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            string Information = _context.Categories.FirstOrDefault(c => c.Id == int.Parse(selectedCategoryIds[0])).CategoryName;
+            string site = "Index";
+            return RedirectToAction("Index","Post", new { Information, site });
         }
 
         // GET: PostEntities/Edit/5

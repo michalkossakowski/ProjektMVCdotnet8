@@ -53,14 +53,20 @@ namespace ProjektMVCdotnet8.Repository
         public async Task<IEnumerable<PostEntity>> GetByCity(string city, UserEntity loginUser)
         {
             var allPosts = await GetAll();
-            
+
+            if (loginUser != null && loginUser.City != null)
+            {
                 var postsByCity = allPosts
-                    .Where(p => p.Location.Equals(loginUser.City))
+                    .Where(p => p.AuthorUser != null && p.AuthorUser.City != null && p.AuthorUser.City.Equals(loginUser.City))
                     .OrderByDescending(p => p.CreatedDate)
                     .ToList();
                 return postsByCity;
-            
-        
+            }
+            else
+            {
+                // Jeżeli loginUser lub jego właściwość City są nullami, możesz zwrócić pustą kolekcję
+                return Enumerable.Empty<PostEntity>();
+            }
         }
 
         public async Task<IEnumerable<PostEntity>> GetByContain(string search)

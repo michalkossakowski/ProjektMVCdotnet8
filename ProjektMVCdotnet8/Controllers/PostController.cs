@@ -78,7 +78,6 @@ namespace ProjektMVCdotnet8.Controllers
         }
         public async Task<IActionResult> Local(string? Information, string site)
         {
-            //Przesyła informacje jakie posty będzie wyświetlał na stronie według kategorii
             TempData["Information"] = Information;
             TempData["Site"] = "Local";
 

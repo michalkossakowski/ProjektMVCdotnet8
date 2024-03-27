@@ -17,7 +17,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ProjektMVCdotnet8</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -27,10 +27,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Strona Główna</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Strona Główna</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="text-dark nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Kategorie
                             </a>
                             <ul class="dropdown-menu">
@@ -40,13 +40,13 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Followed">Obserwowane</a>
+                                <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Followed">Obserwowane</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="AddPost">Dodaj Post</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="AddPost">Dodaj Post</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="ChatList">Wiadomości</a>
+                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="ChatList">Wiadomości</a>
                             </li>
                             if (UserManager.GetUserName(User) == "admin")
                             {
@@ -54,10 +54,10 @@
                             }
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Ranking">Ranking</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Kontakt</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial.cshtml" />

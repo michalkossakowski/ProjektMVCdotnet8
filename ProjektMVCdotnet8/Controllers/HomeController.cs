@@ -97,6 +97,7 @@ namespace ProjektMVCdotnet8.Controllers
         }
         public IActionResult Ranking()
         {
+            var currentuser = _userManager.GetUserName(User);
             List<(string, int, int, int, string)> userList = new List<(string, int, int, int, string)>();
 
             foreach (var user in _context.Users)
@@ -111,7 +112,7 @@ namespace ProjektMVCdotnet8.Controllers
             userList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
 
             ViewBag.UserList = userList;
-
+            ViewBag.currentUser = currentuser;
             return View();
         }
 

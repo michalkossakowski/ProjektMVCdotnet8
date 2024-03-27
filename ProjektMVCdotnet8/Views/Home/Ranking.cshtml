@@ -19,10 +19,11 @@
                     @{
                         var usersByPoints = ((List<(string, int, int, int, string)>)ViewBag.UserList).OrderByDescending(u => u.Item2);
                         var topUserByPoints = usersByPoints.FirstOrDefault();
+                        var loggedInUsername = @ViewBag.CurrentUser;
                     }
                     @foreach (var user in usersByPoints)
                     {
-                        <tr class="@(user.Equals(topUserByPoints) ? "table-warning" : "")">
+                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning" : (user.Item1 == loggedInUsername) ? "table-primary" : (user.Equals(topUserByPoints)) ? "table-warning" : "")">
                             <td>
                                 <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
@@ -50,7 +51,7 @@
                     }
                     @foreach (var user in usersByPosts)
                     {
-                        <tr class="@(user.Equals(topUserByPosts) ? "table-warning" : "")">
+                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning" : (user.Item1 == loggedInUsername) ? "table-primary" : (user.Equals(topUserByPoints)) ? "table-warning" : "")">
                             <td>
                                 <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
@@ -78,7 +79,7 @@
                     }
                     @foreach (var user in usersByComments)
                     {
-                        <tr class="@(user.Equals(topUserByComments) ? "table-warning" : "")">
+                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning" : (user.Item1 == loggedInUsername) ? "table-primary" : (user.Equals(topUserByPoints)) ? "table-warning" : "")">
                             <td>
                                 <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1

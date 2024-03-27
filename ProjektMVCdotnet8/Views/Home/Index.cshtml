@@ -44,6 +44,18 @@
                     <a class="btn btn-success" style="font-size: 16px;" id="register" asp-area="Identity" asp-page="/Account/Register"><b>Zarejestruj się</b></a>
                 </div>
             }
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="container text-center">
+                    <h1 class="display-4" style="font-size: 32px">Witaj ponownie @UserManager.GetUserName(User) !</h1>
+                    @{
+                        var points = ViewBag.userPoints;
+                    }
+                    <h1 class="display-4" style="font-size: 32px">Twoje punkty: @points</h1>
+                </div>
+            }
+
+            <script src="~/js/DynamicSearch.js" asp-append-version="true"></script>
         </div>
         <div class="col-md-3">
             <br />
@@ -58,12 +70,13 @@
                 <tbody>
                     @{
                         var usersByPoints = (List<(string, int, string)>)ViewBag.UserList;
+                        var loggedInUsername = @UserManager.GetUserName(User);
                         if (usersByPoints != null)
                         {
                             var topUserByPoints = usersByPoints.OrderByDescending(u => u.Item2).FirstOrDefault();
                             foreach (var user in usersByPoints)
                             {
-                                <tr class="@(user.Equals(topUserByPoints) ? "table-warning" : "")">
+                                <tr class="@(user.Equals(topUserByPoints) ? "table-warning" : "") @(user.Item1 == loggedInUsername ? "table-primary" : "")">
                                     <td>
                                         <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
                                             <img src="@user.Item3" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
@@ -80,15 +93,4 @@
     </div>
 </div>
 <br />
-@if (SignInManager.IsSignedIn(User))
-{
-    <div class="container text-center">
-        <h1 class="display-4" style="font-size: 32px">Witaj ponownie @UserManager.GetUserName(User) !</h1>
-        @{
-            var points = ViewBag.userPoints;
-        }
-        <h1 class="display-4" style="font-size: 32px">Twoje punkty: @points</h1>
-    </div>
-}
 
-<script src="~/js/DynamicSearch.js" asp-append-version="true"></script>

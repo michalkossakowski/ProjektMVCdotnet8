@@ -26,6 +26,9 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
         [Display(Name = "O Mnie")]
         public string? Description { get; set; }
 
+        [Display(Name = "Darkmode")]
+        public bool Darkmode { get; set; } = false;
+
     }
 }
 

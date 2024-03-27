@@ -226,7 +226,7 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 return RedirectToAction("Followed");
             }
-            if (Site == "Local")
+            else if (Site == "Local")
             {
                 return RedirectToAction("Local");
             }

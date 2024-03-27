@@ -277,7 +277,7 @@ namespace ProjektMVCdotnet8.Migrations
                     PostContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AttachmentSource = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Location = table.Column<string>(type:"nvarchar(100)", nullable: true)
+                    isLocal = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

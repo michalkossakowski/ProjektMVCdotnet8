@@ -83,6 +83,9 @@ namespace ProjektMVCdotnet8.Controllers
 
             IEnumerable<PostEntity> posts = await _postRepository.GetByCity(Information, await _userManager.GetUserAsync(User));
 
+            // dodatkowy filtr biorący tylko te, które są oznaczone jako Lokalne posty :D
+            posts = posts.Where(post => post.isLocal).ToList();
+
             IEnumerable<CommentEntity> comments = await GetAllComments();
             ViewBag.Comments = comments;
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 namespace ProjektMVCdotnet8.Interfaces
-{
+{ 
     public interface IPostRepository
     {
         Task<IEnumerable<PostEntity>> GetAll();

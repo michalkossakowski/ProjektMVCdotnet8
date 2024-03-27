@@ -98,12 +98,12 @@ namespace ProjektMVCdotnet8.Controllers
 
                 var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
                 TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
-                return View("Index", filteredPosts);
+                return View("Local", filteredPosts);
             }
             else
             {
                 TempData["FollowedUsers"] = "null";
-                return View("Index", posts);
+                return View("Local", posts);
             }
         }
         //Zwraca widok z pojędyńczym postem

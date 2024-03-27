@@ -841,7 +841,10 @@ $.validator.addMethod( "iban", function( value, element ) {
 			leadingZeroes = false;
 		}
 		if ( !leadingZeroes ) {
-			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf( charAt );
+			ibancheckdigits += "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".
+
+
+				Of(charAt);
 		}
 	}
 

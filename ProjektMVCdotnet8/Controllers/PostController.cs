@@ -80,9 +80,9 @@ namespace ProjektMVCdotnet8.Controllers
         {
             //Przesyła informacje jakie posty będzie wyświetlał na stronie według kategorii
             TempData["Information"] = Information;
-            TempData["Site"] = "Index";
+            TempData["Site"] = "Local";
 
-            IEnumerable<PostEntity> posts = await _postRepository.GetByCity(Information);
+            IEnumerable<PostEntity> posts = await _postRepository.GetByCity(Information, await _userManager.GetUserAsync(User));
 
             IEnumerable<CommentEntity> comments = await GetAllComments();
             ViewBag.Comments = comments;
@@ -223,6 +223,10 @@ namespace ProjektMVCdotnet8.Controllers
             if (Site == "Followed")
             {
                 return RedirectToAction("Followed");
+            }
+            if (Site == "Local")
+            {
+                return RedirectToAction("Local");
             }
             else if (Site == "Index")
             {

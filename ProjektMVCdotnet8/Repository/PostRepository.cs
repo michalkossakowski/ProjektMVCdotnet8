@@ -53,15 +53,14 @@ namespace ProjektMVCdotnet8.Repository
         public async Task<IEnumerable<PostEntity>> GetByCity(string city, UserEntity loginUser)
         {
             var allPosts = await GetAll();
-            var postsByCity = allPosts
-                .Where(p => p.Location.Equals(loginUser.City))
-                .OrderByDescending(p => p.CreatedDate);
-            return postsByCity;
-        }
-
-        public Task<IEnumerable<PostEntity>> GetByCity(string city)
-        {
-            throw new NotImplementedException();
+            
+                var postsByCity = allPosts
+                    .Where(p => p.Location.Equals(loginUser.City))
+                    .OrderByDescending(p => p.CreatedDate)
+                    .ToList();
+                return postsByCity;
+            
+        
         }
 
         public async Task<IEnumerable<PostEntity>> GetByContain(string search)

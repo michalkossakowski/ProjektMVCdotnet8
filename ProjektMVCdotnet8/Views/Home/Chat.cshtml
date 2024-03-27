@@ -91,15 +91,15 @@
                                         @{
                                             string str1 = "/attachments/"+ViewBag.CurrentUser.Avatar;
                                         }
-                                        <a href="@Url.Action("Profile", "User", new { username = ViewBag.CurrentUser.UserName })" style="color: #f0f0f0;">
+                                        <a  href="@Url.Action("Profile", "User", new { username = ViewBag.CurrentUser.UserName })" style="color: #f0f0f0;">
                                         <img src=@str1 class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
                                         </a>
-                                        <small>@ViewBag.CurrentUser</small>
+                                        <small class="text-dark">@ViewBag.CurrentUser</small>
                                         <div class="message-content">
-                                            <strong class="text-break">@item.MessageContent</strong>
+                                            <strong class="text-break text-dark">@item.MessageContent</strong>
                                         </div>
                                         <div class="message-date">
-                                            <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
+                                            <small class="text-dark">@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
                                         </div>
                                     </div>
                                 </div>

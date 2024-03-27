@@ -76,7 +76,7 @@ namespace ProjektMVCdotnet8.Controllers
                 .ToList();
             return View("Index", filteredPosts);
         }
-        public async Task<IActionResult> Local(string Information, string site)
+        public async Task<IActionResult> Local(string? Information, string site)
         {
             //Przesyła informacje jakie posty będzie wyświetlał na stronie według kategorii
             TempData["Information"] = Information;

@@ -162,6 +162,17 @@ namespace ProjektMVCdotnet8.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public async Task<IActionResult> ChangeMode()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if(user.Darkmode == false)
+                user.Darkmode = true;
+            else
+                user.Darkmode = false;
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Home");
+        }
+
         public async void CreateElements()
         {
             if (_context.Users.IsNullOrEmpty())

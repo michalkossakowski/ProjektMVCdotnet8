@@ -195,6 +195,9 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Darkmode")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
@@ -290,7 +293,6 @@ namespace ProjektMVCdotnet8.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("CategoryName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -478,6 +480,9 @@ namespace ProjektMVCdotnet8.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("isLocal")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

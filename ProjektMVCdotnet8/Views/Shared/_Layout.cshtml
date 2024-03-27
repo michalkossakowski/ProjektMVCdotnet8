@@ -5,12 +5,22 @@
 @inject UserManager<UserEntity> UserManager
 @{
     var loggedInUser = await UserManager.GetUserAsync(User);
+
+    string theme = "light";
+    if (loggedInUser != null)
+    {
+        if (loggedInUser.Darkmode == true)
+        {
+            theme = "dark";
+        }
+    }
+
 }
 
 <!do obsługi!/>
 
 <!DOCTYPE html>
-<html lang="en" data-bs-theme="light">
+<html lang="en" data-bs-theme=@theme>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -72,11 +82,14 @@
                         </li>
                     </ul>
                     <partial name="_LoginPartial.cshtml" />
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="switch">
-                        <label class="form-check-label" for="switch"></label>
-                    </div>
+                    @{
+                        if (@loggedInUser != null)
+                        {
+                            <form asp-controller="Home" asp-action="ChangeMode" method="post" style="padding:0px; margin: 0px;">
+                                <input class="btn btn-primary" type="submit" name="submit" value="Motyw" style="padding:2px; margin: 0px;" />
+                            </form>
+                        }
+                    }
                 </div>
             </div>
         </nav>
@@ -93,16 +106,6 @@
         </div>
 
     </footer>
-
-    <script type="text/javascript">
-        document.getElementById('switch').addEventListener('click', () => {
-            if (document.documentElement.getAttribute('data-bs-theme') === 'dark') {
-                document.documentElement.setAttribute('data-bs-theme', 'light');
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', 'dark');
-            }
-        });
-    </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

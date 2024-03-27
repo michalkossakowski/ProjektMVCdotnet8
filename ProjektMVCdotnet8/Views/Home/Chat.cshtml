@@ -11,7 +11,7 @@
     }
 
     .messages-container {
-        height: calc(81vh - 150px);
+        height: calc(81vh - 160px);
         overflow-y: auto;
     }
 
@@ -131,10 +131,10 @@
             </div>
             <div class="d-flex align-items-center justify-content-between mt-3">
                 <!-- Wysylanie wiadomosci -->
-                <form id="sendMessageForm" method="post" asp-controller="MessageEntities" asp-action="Create" class="d-flex flex-grow-1">
+                <form id="sendMessageForm" method="post" asp-controller="MessageEntities" asp-action="Create" class="flex-grow-1">
                     <input type="hidden" name="chatId" value="@ViewBag.CurrentChat">
-                    <div class="form-group mb-0 flex-grow-1 mr-3">
-                        <div class="input-group mb-3">
+                    <div class="form-group bottom-0 mb-0 flex-grow-1 mr-2">
+                        <div class="input-group bottom-0 mb-0 flex-grow-1 mr-2">
                             <input asp-for="@Model.ElementAt(0).MessageContent" class="form-control" value="" placeholder="Napisz wiadomość..." required />
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">Wyślij</button>

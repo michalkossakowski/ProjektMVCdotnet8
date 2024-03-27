@@ -37,7 +37,18 @@ namespace ProjektMVCdotnet8.Controllers
                 var currentUser = _context.Users.FirstOrDefault(u => u.Nick == _userManager.GetUserName(User));
                 ViewBag.userPoints = currentUser.Points;
             }
-          
+            List<(string, int, string)> userList = new List<(string, int, string)>();
+
+            foreach (var user in _context.Users)
+            {
+                int points = (int)user.Points;   
+                string avatar = "/attachments/" + user.Avatar;
+                userList.Add((user.UserName, points, avatar));
+            }
+
+            userList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+
+            ViewBag.UserList = userList;
             return View();
         }
 

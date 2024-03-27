@@ -63,7 +63,7 @@ namespace ProjektMVCdotnet8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,PostContent,AttachmentSource,Categories")] PostModel postModel)
+        public async Task<IActionResult> Create([Bind("Id,Title,PostContent,AttachmentSource,Categories,isLocal")] PostModel postModel)
         {
             var loggedUser = await _userManager.GetUserAsync(User);
 
@@ -72,6 +72,7 @@ namespace ProjektMVCdotnet8.Controllers
             postEntity.PostContent = postModel.PostContent;    
             postEntity.AuthorUser = loggedUser;
             postEntity.CreatedDate = DateTime.Now;
+            postEntity.isLocal = postModel.isLocal;
 
             if (postModel.AttachmentSource != null && postModel.AttachmentSource.Length > 0)
             {

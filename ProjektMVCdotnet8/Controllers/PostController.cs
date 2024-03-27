@@ -76,7 +76,36 @@ namespace ProjektMVCdotnet8.Controllers
                 .ToList();
             return View("Index", filteredPosts);
         }
+        public async Task<IActionResult> Local(string? Information, string site)
+        {
+            TempData["Information"] = Information;
+            TempData["Site"] = "Local";
 
+            IEnumerable<PostEntity> posts = await _postRepository.GetByCity(Information, await _userManager.GetUserAsync(User));
+
+            // dodatkowy filtr biorący tylko te, które są oznaczone jako Lokalne posty :D
+            posts = posts.Where(post => post.isLocal).ToList();
+
+            IEnumerable<CommentEntity> comments = await GetAllComments();
+            ViewBag.Comments = comments;
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                var blockedUsers = BlockedEntities();
+                var filteredPosts = posts
+                    .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
+                    .ToList();
+
+                var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+                TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
+                return View("Local", filteredPosts);
+            }
+            else
+            {
+                TempData["FollowedUsers"] = "null";
+                return View("Local", posts);
+            }
+        }
         //Zwraca widok z pojędyńczym postem
         public async Task<IActionResult> ShowPost(int Id)
         {
@@ -196,6 +225,10 @@ namespace ProjektMVCdotnet8.Controllers
             if (Site == "Followed")
             {
                 return RedirectToAction("Followed");
+            }
+            if (Site == "Local")
+            {
+                return RedirectToAction("Local");
             }
             else if (Site == "Index")
             {

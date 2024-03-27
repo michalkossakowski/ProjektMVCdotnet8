@@ -1,6 +1,11 @@
-﻿@model ProjektMVCdotnet8.Models.PostModel
+﻿@using Microsoft.AspNetCore.Identity;
+@using ProjektMVCdotnet8.Areas.Identity.Data;
+@model ProjektMVCdotnet8.Models.PostModel
 @{
     ViewData["Title"] = "AddPost";
+
+    var SignInManager = Context.RequestServices.GetService(typeof(SignInManager<UserEntity>)) as SignInManager<UserEntity>;
+    var loggedInUser = await SignInManager.UserManager.GetUserAsync(User);
 }
 
 <h1 class="display-4">Dodaj Post:</h1>
@@ -8,22 +13,31 @@
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="form-group">
         <label asp-for="Title" class="control-label">Tytuł:</label>
-        <input asp-for="Title" class="form-control" required/>
+        <input asp-for="Title" class="form-control" required />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
+    @if (!string.IsNullOrEmpty(loggedInUser?.City))
+    {
+        <div class="form-group">
+            <label>
+                <input type="checkbox" name="isLocal" value="true"> Lokalnie
+            </label>
+        </div>
+    }
     Wybierz kategorie postu:
     <div class="form-check mb-3">
 
         @foreach (var category in ViewBag.nameCategory)
         {
             <label>
-                <input type="checkbox" name="SelectedCategories" value="@category.Id" > @category.CategoryName
+                <input type="checkbox" name="SelectedCategories" value="@category.Id"> @category.CategoryName
             </label>
-            <br/>
+            <br />
         }
         <div class="invalid-feedback">
             proszę wybrac przynajmniej jedną kategorię.
         </div>
+
     </div>
 
     <div class="form-group">

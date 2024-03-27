@@ -7,12 +7,12 @@
 
 @model IEnumerable<ProjektMVCdotnet8.Entities.PostEntity>
 @{
-    ViewData["Title"] = "Przeglądaj Posty";
+    ViewData["Title"] = "Przeglądaj Posty Lokalne";
+    var loggedInUser = await UserManager.GetUserAsync(User);
     List<string> followedUsers = TempData["FollowedUsers"] as List<string>;
 }
 <style>
-    .awatar
-    {
+    .awatar {
         height: 60px;
         width: 60px;
     }
@@ -20,6 +20,7 @@
 <div class="row g-0">
     <div class="text-center">
         <h1 class="display-4">@ViewData["Title"]</h1>
+        <h3>Miasto: @(loggedInUser?.City ?? "Brak informacji o mieście")</h3> <!-- Na wszelki wypadek, aby nie zdetonowało strony. -->
         <hr />
     </div>
     @foreach (var element in Model)
@@ -27,12 +28,12 @@
         <div class="card border-3 mb-3 " style="width:100%">
             <div class="row g-0">
                 <div class="col-md-4 border-3 border-end">
-                    <img src="/attachments/@element.AttachmentSource" class="card-img-top"  alt="Alternate Text" />
+                    <img src="/attachments/@element.AttachmentSource" class="card-img-top" alt="Alternate Text" />
                 </div>
                 <div class="col-md-8 d-flex flex-column">
                     <div class="card-header card-text d-flex flex-row sm-1">
                         <div class="sm-2">
-                            @{ 
+                            @{
                                 string str = "/attachments/" + element.AuthorUser.Avatar;
                             }
                             <a href="@Url.Action("Profile", "User", new { username = element.AuthorUser.UserName })" style="text-decoration: none;">
@@ -48,7 +49,7 @@
                         <p class="card-text">@element.PostContent</p>
                     </div>
                     <div class="card-footer">
-                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User))) 
+                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
                         {
                             <div class="container">
                                 <div class="row">
@@ -94,7 +95,7 @@
                                                         <div class="row">
                                                             <div class="col-2">
                                                                 <a href="@Url.Action("Profile", "User", new { username = comment.userNick })" style="text-decoration: none;">
-                                                                <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
+                                                                    <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
                                                                 </a>
                                                                 <small class="text-muted">@comment.userNick</small>
                                                                 <small class="text-muted"><br>@comment.CreatedDate.ToString("dd.MM.yyyy HH:mm")</small>
@@ -145,5 +146,3 @@
         </div>
     }
 </div>
-
-

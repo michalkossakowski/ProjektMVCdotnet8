@@ -173,6 +173,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
                 userEntity.Nick = "testuser";
                 userEntity.Avatar = "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
+                userEntity.Points = 3000;
                 _context.Users.Add(userEntity);
 
                 userEntity = new UserEntity();
@@ -180,8 +181,8 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "test2user";
                 userEntity.NormalizedUserName = "TEST2USER";
                 userEntity.Nick = "test2user";
-                var hashedPassword = has.HashPassword(userEntity, "zaq1@WSX");
-                userEntity.PasswordHash = hashedPassword;
+                userEntity.PasswordHash = has.HashPassword(userEntity, "zaq1@WSX");
+                userEntity.Points = 8000;
                 _context.Users.Add(userEntity);
 
                 userEntity = new UserEntity();
@@ -190,8 +191,8 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.NormalizedUserName = "TEST3USER";
                 userEntity.Nick = "test3user";
                 userEntity.Avatar = "szop_skywalker.jpg";
-                var hashedPassword3 = has.HashPassword(userEntity, "zaq1@WSX");
-                userEntity.PasswordHash = hashedPassword3;
+                userEntity.PasswordHash = has.HashPassword(userEntity, "zaq1@WSX");
+                userEntity.Points = 3000;
                 _context.Users.Add(userEntity);
 
                 userEntity = new UserEntity();
@@ -201,7 +202,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.Nick = "admin";
                 userEntity.Avatar = "szop_toronto.jpg";
                 userEntity.PasswordHash = has.HashPassword(userEntity, "a");
-                userEntity.Points = 3116;
+                userEntity.Points = 0;
                 _context.Users.Add(userEntity);
 
                 _context.SaveChanges();

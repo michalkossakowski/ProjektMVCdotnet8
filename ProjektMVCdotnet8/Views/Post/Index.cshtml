@@ -119,7 +119,7 @@
                             Komentarze(@publishedComments)
                         </button>
                         <br>
-                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
+                        @if (SignInManager.IsSignedIn(User))
                         {
                             <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
                                 <input type="hidden" name="postId" value="@element.Id" />

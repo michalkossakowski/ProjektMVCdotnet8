@@ -66,8 +66,9 @@ namespace ProjektMVCdotnet8.Controllers
             contactEntity.ContactDate = DateTime.Now; // ustawienie daty kontaktu przy tworzeniu
             if (ModelState.IsValid)
             {
-                _context.Add(contactEntity);
-                await _context.SaveChangesAsync();
+                _contactRepository.Add(contactEntity);
+                //_context.Add(contactEntity);
+                //await _context.SaveChangesAsync();
                 return RedirectToAction("ThxForContact", "Home",contactEntity);
                 //return RedirectToAction(nameof(Index));
             }

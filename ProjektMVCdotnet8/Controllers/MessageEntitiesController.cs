@@ -11,16 +11,21 @@ using ProjektMVCdotnet8.Entities;
 using Microsoft.AspNetCore.Identity; //do sprawdzenia uzytkowknika
 using Microsoft.AspNetCore.Mvc; //do sprawdzenia uzytkowknika
 using System.Drawing.Printing;
+using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Repository;
 
 namespace ProjektMVCdotnet8.Controllers
 {
+   
     public class MessageEntitiesController : Controller
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<UserEntity> _userManager;//do sprawdzenia uzytkowknika
+        private readonly IMessageRepository _messageRepository;
 
-        public MessageEntitiesController(ApplicationDbContext context, UserManager<UserEntity> userManager)
+        public MessageEntitiesController(ApplicationDbContext context, UserManager<UserEntity> userManager, IMessageRepository messageRepository)
         {
+            _messageRepository = messageRepository;
             _userManager = userManager;//do sprawdzenia uzytkowknika
             _context = context;
         }
@@ -69,8 +74,9 @@ namespace ProjektMVCdotnet8.Controllers
             messageEntity.currentChat = chatId;
             messageEntity.UsingUser = user;
             messageEntity.SendDate = DateTime.Now;
-            _context.Add(messageEntity);
-            await _context.SaveChangesAsync();
+            _messageRepository.Add(messageEntity);
+            //_context.Add(messageEntity);
+            //await _context.SaveChangesAsync();
             return RedirectToAction("Chat", "Home", new { chatId = chatId });
             /*if (ModelState.IsValid)
             {

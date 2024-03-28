@@ -13,15 +13,17 @@ namespace ProjektMVCdotnet8.Controllers
 {
     public class PostController : Controller
     {
+        private readonly IFollowUserRepository _followUserRepository;
+        private readonly IPostRepository _postRepository;
+        private readonly ICommentRepository _commentRepository;
 
         private readonly ApplicationDbContext _context;
-        private readonly IPostRepository _postRepository;
         private readonly SignInManager<UserEntity> _signInManager;
-        private readonly IFollowUserRepository _followUserRepository;
         private readonly UserManager<UserEntity> _userManager;
-        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository)
+        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository)
         {
             _postRepository = postRepository;
+            _commentRepository = commentRepository;
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
@@ -37,7 +39,7 @@ namespace ProjektMVCdotnet8.Controllers
 
             IEnumerable<PostEntity> posts = await _postRepository.GetByCategory(Information);
 
-            IEnumerable<CommentEntity> comments =await GetAllComments();
+            IEnumerable<CommentEntity> comments = await _commentRepository.GetAll();
             ViewBag.Comments = comments;
 
             if (_signInManager.IsSignedIn(User))
@@ -63,7 +65,7 @@ namespace ProjektMVCdotnet8.Controllers
         {
             TempData["Site"] = "Followed";
 
-            IEnumerable<CommentEntity> comments = await GetAllComments();
+            IEnumerable<CommentEntity> comments = await _commentRepository.GetAll();
             ViewBag.Comments = comments;
 
             var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
@@ -86,7 +88,7 @@ namespace ProjektMVCdotnet8.Controllers
             // dodatkowy filtr biorący tylko te, które są oznaczone jako Lokalne posty :D
             posts = posts.Where(post => post.isLocal).ToList();
 
-            IEnumerable<CommentEntity> comments = await GetAllComments();
+            IEnumerable<CommentEntity> comments = await _commentRepository.GetAll();
             ViewBag.Comments = comments;
 
             if (_signInManager.IsSignedIn(User))
@@ -125,7 +127,7 @@ namespace ProjektMVCdotnet8.Controllers
             TempData["Information"] = liveSearchTitle;
             TempData["Site"] = "FindedPosts";
             
-            IEnumerable<CommentEntity> comments = await GetAllComments();
+            IEnumerable<CommentEntity> comments = await _commentRepository.GetAll();
             ViewBag.Comments = comments;
 
 
@@ -191,25 +193,17 @@ namespace ProjektMVCdotnet8.Controllers
         }
 
         //Dodawanie komentarzy
-        public async Task<IActionResult> AddComment()
+        public async Task<IActionResult> AddComment(CommentEntity commentEntity)
         {
-            CommentEntity comment = new CommentEntity();
-            comment.CommentContent = Request.Form["commentContent"];
             var user = await _userManager.GetUserAsync(User);
-            comment.userNick = _userManager.GetUserName(User);
-            comment.AuthorUser = user;
-            comment.CreatedDate = DateTime.Now;
-            var post = _context.Posts.FirstOrDefault(c => c.Id == int.Parse(Request.Form["postId"]));
-            comment.CommentedPost = post;
-            comment.postId = post.Id;
-            user.Points += 500;
-            _context.Comments.Add(comment);
-            await _context.SaveChangesAsync();
+            var post = await _postRepository.GetByIdAsync(int.Parse(Request.Form["postId"]));
+            commentEntity = await _commentRepository.MapCommentEntity(commentEntity, user, post, _userManager.GetUserName(User));
+            _commentRepository.Add(commentEntity);
+
             string Site = Request.Form["Site"];
             string Information = Request.Form["Information"];
             return RedirectToAction("Redirecting", new { Information, Site });
         }
-
         //Dynamiczne pokazywanie tytułów w wyszukiwarce
         public async Task<IActionResult> LivePostSearch(string search)
         {
@@ -261,17 +255,6 @@ namespace ProjektMVCdotnet8.Controllers
                     .Select(entry => entry.BlockedUser.Id)
                     .ToList();
             return blockedUsers;
-        }
-
-        //Zwraca wszystkie komentarze
-
-        public  async Task<IEnumerable<CommentEntity>> GetAllComments()
-        {
-            var comments = _context.Comments
-                .Include(comment => comment.AuthorUser)
-                .Include(comment => comment.CommentedPost)
-                .ToListAsync();
-            return await comments;
         }
     }
 }

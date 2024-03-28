@@ -21,7 +21,8 @@ namespace ProjektMVCdotnet8
             builder.Services.AddScoped<IPostRepository, PostRepository>();
             builder.Services.AddScoped<IFollowUserRepository, FollowUserRepository>();
             builder.Services.AddScoped<IBlockedUserRepository, BlockedUserRepository>();
-            
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
             
             builder.Services.AddControllersWithViews();

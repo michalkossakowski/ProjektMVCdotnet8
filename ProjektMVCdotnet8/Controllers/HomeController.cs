@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Interfaces;
 using ProjektMVCdotnet8.Models;
 using System.Diagnostics;
 
@@ -18,6 +19,7 @@ namespace ProjektMVCdotnet8.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<UserEntity> _userManager;//do sprawdzenia uzytkowknika
 
+      
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<UserEntity> userManager)
         {
@@ -103,9 +105,6 @@ namespace ProjektMVCdotnet8.Controllers
 
             return View();
         }
-
-
-
         public IActionResult ChatList()
         {
             var user = _userManager.GetUserName(User);

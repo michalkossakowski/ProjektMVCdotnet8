@@ -16,11 +16,12 @@ namespace ProjektMVCdotnet8.Controllers
         private readonly IFollowUserRepository _followUserRepository;
         private readonly IPostRepository _postRepository;
         private readonly ICommentRepository _commentRepository;
+        private readonly IBlockedUserRepository _blockedUserRepository;
 
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<UserEntity> _signInManager;
         private readonly UserManager<UserEntity> _userManager;
-        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository)
+        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository, IBlockedUserRepository blockedUserRepository)
         {
             _postRepository = postRepository;
             _commentRepository = commentRepository;
@@ -28,6 +29,7 @@ namespace ProjektMVCdotnet8.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _followUserRepository = followUserRepository;
+            _blockedUserRepository = blockedUserRepository;
         }
 
 
@@ -44,7 +46,7 @@ namespace ProjektMVCdotnet8.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                var blockedUsers = BlockedEntities();
+                var blockedUsers = await _blockedUserRepository.GetAllID(_userManager.GetUserId(User));
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
@@ -93,7 +95,7 @@ namespace ProjektMVCdotnet8.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                var blockedUsers = BlockedEntities();
+                var blockedUsers = await _blockedUserRepository.GetAllID(_userManager.GetUserId(User));
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
@@ -135,7 +137,7 @@ namespace ProjektMVCdotnet8.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                var blockedUsers = BlockedEntities();
+                var blockedUsers = await _blockedUserRepository.GetAllID(_userManager.GetUserId(User));
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
@@ -158,9 +160,10 @@ namespace ProjektMVCdotnet8.Controllers
             UserEntity userToBlock = _context.Users.FirstOrDefault(user => user.Id.Equals(BlockedUserID));
             UserEntity blockingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(_userManager.GetUserId(User)));
             BlockedUserEntity blockedUser = new BlockedUserEntity(blockingUser, userToBlock);
-            _context.Add(blockedUser);
-            await _context.SaveChangesAsync();
+            _blockedUserRepository.Add(blockedUser);
+
             string FollowedUserID = BlockedUserID;
+
             //Po zablokowaniu użytkownika także go przestaje obserwować
             return RedirectToAction("UnFollow", new { FollowedUserID, Information, Site });
         }
@@ -244,17 +247,6 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 return RedirectToAction("Index", new { Information });
             }
-        }
-
-        //Funkcja do blokowania użytkownika
-        public List<string> BlockedEntities()
-        {
-
-            var blockedUsers = _context.BlockedUsers
-                    .Where(entry => entry.BlockingUser.Id == _userManager.GetUserId(User))
-                    .Select(entry => entry.BlockedUser.Id)
-                    .ToList();
-            return blockedUsers;
         }
     }
 }

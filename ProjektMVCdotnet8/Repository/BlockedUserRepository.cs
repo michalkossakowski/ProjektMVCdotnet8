@@ -1,13 +1,24 @@
-﻿using ProjektMVCdotnet8.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ProjektMVCdotnet8.Areas.Identity.Data;
+using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
 
 namespace ProjektMVCdotnet8.Repository
 {
     public class BlockedUserRepository : IBlockedUserRepository
     {
-        public bool Add(BlockedUserEntity post)
+        private readonly ApplicationDbContext _context;
+
+
+        public BlockedUserRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public bool Add(BlockedUserEntity blockedUser)
+        {
+            _context.Add(blockedUser);
+            return Save();
         }
 
         public bool Delete(BlockedUserEntity post)
@@ -20,19 +31,25 @@ namespace ProjektMVCdotnet8.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<BlockedUserEntity>> GetAll()
+        public async Task<IEnumerable<BlockedUserEntity>> GetAll(string userSingedID)
         {
-            throw new NotImplementedException();
+            var blockedUsers = _context.BlockedUsers
+                .Where(entry => entry.BlockingUser.Id == userSingedID)
+                .ToListAsync();
+            return await blockedUsers;
         }
 
-        public Task<BlockedUserEntity> GetByIdAsync(int id)
+        public async Task<IEnumerable<string>> GetAllID(string userSingedID)
         {
-            throw new NotImplementedException();
+            var blockedUser = await GetAll(userSingedID);
+            var blockedUserID = blockedUser.Select(b => b.BlockedUser.Id);
+            return blockedUserID;
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
 
         public bool Update(BlockedUserEntity post)

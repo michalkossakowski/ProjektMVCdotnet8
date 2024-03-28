@@ -1,25 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Extensions.Hosting;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
 
 namespace ProjektMVCdotnet8.Repository
 {
-    public class ContactRepository : IContactRepository
+    public class MessageRepository : IMessageRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public ContactRepository(ApplicationDbContext context)
+        public MessageRepository(ApplicationDbContext context)
         {
             this._context = context;
         }
-        public bool Add(ContactEntity contact)
+        public bool Add(MessageEntity message)
         {
-            _context.Add(contact);
+            _context.Add(message);
             return Save();
         }
 
-        public bool Delete(ContactEntity contact)
+        public bool Delete(MessageEntity message)
         {
             throw new NotImplementedException();
         }
@@ -29,12 +29,12 @@ namespace ProjektMVCdotnet8.Repository
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ContactEntity>> GetAll()
+        public Task<IEnumerable<MessageEntity>> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public Task<ContactEntity> GetByIdAsync(int id)
+        public Task<MessageEntity> GetByIdAsync(int id)
         {
             throw new NotImplementedException();
         }
@@ -45,7 +45,7 @@ namespace ProjektMVCdotnet8.Repository
             return saved > 0 ? true : false;
         }
 
-        public bool Update(ContactEntity contact)
+        public bool Update(MessageEntity message)
         {
             throw new NotImplementedException();
         }

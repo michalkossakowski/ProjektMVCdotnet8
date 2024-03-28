@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Repository;
 
 namespace ProjektMVCdotnet8.Controllers
 {
@@ -16,10 +18,12 @@ namespace ProjektMVCdotnet8.Controllers
 
     {
         private readonly ApplicationDbContext _context;
+        private readonly IContactRepository _contactRepository;
 
-        public ContactEntitiesController(ApplicationDbContext context)
+        public ContactEntitiesController(ApplicationDbContext context, IContactRepository contactRepository)
         {
             _context = context;
+            _contactRepository = contactRepository;
         }
 
         // GET: ContactEntities

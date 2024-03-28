@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
 using ProjektMVCdotnet8.Repository;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Policy;
 namespace ProjektMVCdotnet8.Controllers
 {
     public class PostController : Controller
@@ -46,12 +42,12 @@ namespace ProjektMVCdotnet8.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                var blockedUsers = await _blockedUserRepository.GetAllID(_userManager.GetUserId(User));
+                var blockedUsers = await _blockedUserRepository.GetAllIDBlockedBy(_userManager.GetUserId(User));
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
 
-                var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+                var followedUsers = await _followUserRepository.GetAllFollowedBY(_userManager.GetUserId(User));
                 TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
                 return View("Index", filteredPosts);
             }
@@ -70,12 +66,12 @@ namespace ProjektMVCdotnet8.Controllers
             IEnumerable<CommentEntity> comments = await _commentRepository.GetAll();
             ViewBag.Comments = comments;
 
-            var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+            var followedUsers = await _followUserRepository.GetAllFollowedBY(_userManager.GetUserId(User));
             var followedToString = followedUsers.Select(user => user.Id).ToList();
             TempData["FollowedUsers"] = followedToString;
 
-            var posts =  _postRepository.GetAll();
-            var filteredPosts = (await posts)
+            var posts = await _postRepository.GetAll();
+            var filteredPosts = posts
                 .Where(post => followedToString.Contains(post.AuthorUser.Id))
                 .ToList();
             return View("Index", filteredPosts);
@@ -95,12 +91,12 @@ namespace ProjektMVCdotnet8.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                var blockedUsers = await _blockedUserRepository.GetAllID(_userManager.GetUserId(User));
+                var blockedUsers = await _blockedUserRepository.GetAllIDBlockedBy(_userManager.GetUserId(User));
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
 
-                var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+                var followedUsers = await _followUserRepository.GetAllFollowedBY(_userManager.GetUserId(User));
                 TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
                 return View("Local", filteredPosts);
             }
@@ -110,16 +106,14 @@ namespace ProjektMVCdotnet8.Controllers
                 return View("Local", posts);
             }
         }
+
         //Zwraca widok z pojędyńczym postem
         public async Task<IActionResult> ShowPost(int Id)
         {
-
             TempData["Site"] = "ShowPost";
             TempData["Information"] = Id.ToString();
 
-            var post = _context.Posts
-                .Where(x => x.Id == Id)
-                .FirstOrDefault();
+            var post = await  _postRepository.GetByIdAsync(Id);
             return View("ShowPost", post);
         }
 
@@ -128,7 +122,7 @@ namespace ProjektMVCdotnet8.Controllers
         {
             TempData["Information"] = liveSearchTitle;
             TempData["Site"] = "FindedPosts";
-            
+
             IEnumerable<CommentEntity> comments = await _commentRepository.GetAll();
             ViewBag.Comments = comments;
 
@@ -137,12 +131,12 @@ namespace ProjektMVCdotnet8.Controllers
 
             if (_signInManager.IsSignedIn(User))
             {
-                var blockedUsers = await _blockedUserRepository.GetAllID(_userManager.GetUserId(User));
+                var blockedUsers = await _blockedUserRepository.GetAllIDBlockedBy(_userManager.GetUserId(User));
                 var filteredPosts = posts
                     .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
                     .ToList();
 
-                var followedUsers = await _followUserRepository.GetAllFollowed(_userManager.GetUserId(User));
+                var followedUsers = await _followUserRepository.GetAllFollowedBY(_userManager.GetUserId(User));
                 TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
                 return View("Index", filteredPosts);
             }
@@ -182,16 +176,11 @@ namespace ProjektMVCdotnet8.Controllers
         //Zaprzestanie obserwowania danego użytkownika
         public async Task<IActionResult> UnFollow(string FollowedUserID, string Information, string Site)
         {
-            var userToUnfollow = _context.FollowUsers
-                .Include(user => user.FollowedUser)
-                .Include(user => user.FollowingUser)
-                .Where(user => user.FollowedUser.Id.Equals(FollowedUserID) && user.FollowingUser.Id.Equals(_userManager.GetUserId(User)))
-                .FirstOrDefault();
+            var userToUnfollow = await _followUserRepository.GetById(FollowedUserID, _userManager.GetUserId(User));
             if (userToUnfollow is not null)
             {
-                _context.FollowUsers.Remove(userToUnfollow);
+                _followUserRepository.Delete(userToUnfollow);
             }
-            await _context.SaveChangesAsync();
             return RedirectToAction("Redirecting", new { Information, Site });
         }
 
@@ -210,14 +199,12 @@ namespace ProjektMVCdotnet8.Controllers
         //Dynamiczne pokazywanie tytułów w wyszukiwarce
         public async Task<IActionResult> LivePostSearch(string search)
         {
-            List<PostEntity> res = _context.Posts
-               .Where(p => p.Title.Contains(search))
-               .ToList();
+            IEnumerable<PostEntity> res = await _postRepository.GetByContain(search);
             return PartialView("LivePostSearch", res);
         }
 
         //Routing dla naszych view
-        public async Task<IActionResult> Redirecting(string Information, string Site) 
+        public async Task<IActionResult> Redirecting(string Information, string Site)
         {
             if (Site == "Followed")
             {

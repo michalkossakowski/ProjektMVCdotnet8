@@ -30,8 +30,7 @@ namespace ProjektMVCdotnet8.Repository
         {
             throw new NotImplementedException();
         }
-
-        public async Task<IEnumerable<BlockedUserEntity>> GetAll(string userSingedID)
+        public async Task<IEnumerable<BlockedUserEntity>> GetAllBlockedBy(string userSingedID)
         {
             var blockedUsers = _context.BlockedUsers
                 .Where(entry => entry.BlockingUser.Id == userSingedID)
@@ -39,9 +38,9 @@ namespace ProjektMVCdotnet8.Repository
             return await blockedUsers;
         }
 
-        public async Task<IEnumerable<string>> GetAllID(string userSingedID)
+        public async Task<IEnumerable<string>> GetAllIDBlockedBy(string userSingedID)
         {
-            var blockedUser = await GetAll(userSingedID);
+            var blockedUser = await GetAllBlockedBy(userSingedID);
             var blockedUserID = blockedUser.Select(b => b.BlockedUser.Id);
             return blockedUserID;
         }

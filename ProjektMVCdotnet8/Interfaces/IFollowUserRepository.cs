@@ -6,8 +6,9 @@ namespace ProjektMVCdotnet8.Interfaces
     {
         Task<IEnumerable<FollowUserEntity>> GetAll();
         Task<IEnumerable<UserEntity>> GetAllFollowed();
-        Task<IEnumerable<UserEntity>> GetAllFollowed(string id);
-        Task<FollowUserEntity> GetByIdAsync(int id);
+        Task<IEnumerable<UserEntity>> GetAllFollowedBY(string id);
+
+        Task<FollowUserEntity> GetById(string followedUser, string userSignedID);
 
         bool Add(FollowUserEntity post);
         bool Delete(FollowUserEntity post);

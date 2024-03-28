@@ -4,8 +4,8 @@ namespace ProjektMVCdotnet8.Interfaces
 {
     public interface IBlockedUserRepository
     {
-        Task<IEnumerable<BlockedUserEntity>> GetAll(string userSingedID);
-        Task<IEnumerable<string>> GetAllID(string userSingedID);
+        Task<IEnumerable<BlockedUserEntity>> GetAllBlockedBy(string userSingedID);
+        Task<IEnumerable<string>> GetAllIDBlockedBy(string userSingedID);
         bool Add(BlockedUserEntity post);
         bool Delete(BlockedUserEntity post);
         bool Delete(int id);

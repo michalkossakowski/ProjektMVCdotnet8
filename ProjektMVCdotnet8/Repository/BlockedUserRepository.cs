@@ -21,18 +21,23 @@ namespace ProjektMVCdotnet8.Repository
             return Save();
         }
 
-        public bool Delete(BlockedUserEntity blockedUser, string userSingedID)
+        public bool Delete(BlockedUserEntity blockedUser)
         {
-            throw new NotImplementedException();
+            _context.Remove(blockedUser);
+            return Save();
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var blockedUser = _context.BlockedUsers.Where(b => b.Id.Equals(id));
+            _context.Remove(blockedUser);
+            return Save();
         }
         public async Task<IEnumerable<BlockedUserEntity>> GetAllBlockedBy(string userSingedID)
         {
             var blockedUsers = _context.BlockedUsers
+                .Include(b => b.BlockedUser)
+                .Include(b => b.BlockedUser)
                 .Where(entry => entry.BlockingUser.Id == userSingedID)
                 .ToListAsync();
             return await blockedUsers;
@@ -41,7 +46,7 @@ namespace ProjektMVCdotnet8.Repository
         public async Task<IEnumerable<string>> GetAllIDBlockedBy(string userSingedID)
         {
             var blockedUser = await GetAllBlockedBy(userSingedID);
-            var blockedUserID = blockedUser.Select(b => b.BlockedUser.Id);
+            var blockedUserID = blockedUser.Select(b => b.BlockedUser.Id).ToList();
             return blockedUserID;
         }
 
@@ -49,11 +54,6 @@ namespace ProjektMVCdotnet8.Repository
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
-        }
-
-        public bool Update(BlockedUserEntity post)
-        {
-            throw new NotImplementedException();
         }
     }
 }

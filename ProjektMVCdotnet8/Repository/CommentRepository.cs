@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
+using System.Xml.Linq;
 
 namespace ProjektMVCdotnet8.Repository
 {
@@ -24,6 +25,16 @@ namespace ProjektMVCdotnet8.Repository
         public async Task<IEnumerable<CommentEntity>> GetAll()
         {
             var comments = _context.Comments
+                .Include(c => c.AuthorUser)
+                .Include(c => c.CommentedPost)
+                .ToListAsync();
+            return await comments;
+        }
+
+        public async Task<IEnumerable<CommentEntity>> GetByPostID(int ID) 
+        {
+            var comments = _context.Comments
+                .Where(c => c.postId ==ID)
                 .Include(c => c.AuthorUser)
                 .Include(c => c.CommentedPost)
                 .ToListAsync();

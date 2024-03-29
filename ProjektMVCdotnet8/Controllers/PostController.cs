@@ -28,7 +28,7 @@ namespace ProjektMVCdotnet8.Controllers
             _blockedUserRepository = blockedUserRepository;
         }
 
-
+        // Wyświetla strone z danymi postami na podstawie kategorii. Odfiltruje posty blokowanych użytkowników
         public async Task<IActionResult> Index(string Information, string site)
         {
             //Przesyła informacje jakie posty będzie wyświetlał na stronie według kategorii
@@ -58,7 +58,7 @@ namespace ProjektMVCdotnet8.Controllers
             }
         }
 
-        //Wyświetla strone z postami obserwowanych użytkowników
+        // Wyświetla strone z postami obserwowanych użytkowników. Odfiltruje posty blokowanych użytkowników
         public async Task<IActionResult> Followed()
         {
             TempData["Site"] = "Followed";
@@ -76,6 +76,8 @@ namespace ProjektMVCdotnet8.Controllers
                 .ToList();
             return View("Index", filteredPosts);
         }
+
+        // Wyświetla strone z postami pasującymi do lokalizacji zalogowanego użytkownika. Odfiltruje posty blokowanych użytkowników
         public async Task<IActionResult> Local(string? Information, string site)
         {
             TempData["Information"] = Information;
@@ -107,17 +109,30 @@ namespace ProjektMVCdotnet8.Controllers
             }
         }
 
-        //Zwraca widok z pojędyńczym postem
+        // Zwraca widok z pojędyńczym postem
         public async Task<IActionResult> ShowPost(int Id)
         {
             TempData["Site"] = "ShowPost";
             TempData["Information"] = Id.ToString();
 
-            var post = await  _postRepository.GetByIdAsync(Id);
+            IEnumerable<CommentEntity> comments = await _commentRepository.GetByPostID(Id);
+            ViewBag.Comments = comments;
+
+            var post = await  _postRepository.GetById(Id);
+
+            var followedUsers = await _followUserRepository.GetById(post.AuthorUser.Id, _userManager.GetUserId(User));
+            if (followedUsers is not null)
+            {
+                TempData["FollowedUsers"] = followedUsers.Id.ToString();
+            }
+            else 
+            {
+                TempData["FollowedUsers"] = "";
+            }
             return View("ShowPost", post);
         }
 
-        //Zwraca widok z postami które wyszukujemy przez wyszukiwarke
+        // Zwraca widok z postami które wyszukujemy przez wyszukiwarke
         public async Task<IActionResult> FindedPosts(string liveSearchTitle)
         {
             TempData["Information"] = liveSearchTitle;
@@ -148,7 +163,7 @@ namespace ProjektMVCdotnet8.Controllers
         }
 
 
-        //Blokuje danego użytkownika
+        // Blokuje danego użytkownika
         public async Task<IActionResult> Block(string BlockedUserID, string Information, string Site)
         {
             UserEntity userToBlock = _context.Users.FirstOrDefault(user => user.Id.Equals(BlockedUserID));
@@ -158,11 +173,11 @@ namespace ProjektMVCdotnet8.Controllers
 
             string FollowedUserID = BlockedUserID;
 
-            //Po zablokowaniu użytkownika także go przestaje obserwować
+            // Po zablokowaniu użytkownika także go przestaje obserwować
             return RedirectToAction("UnFollow", new { FollowedUserID, Information, Site });
         }
 
-        //Obserowanie dane użytkownika
+        // Obserowanie dane użytkownika
         public async Task<IActionResult> Follow(string FollowedUserID, string Information, string Site)
         {
             UserEntity userToFollow = _context.Users.FirstOrDefault(user => user.Id.Equals(FollowedUserID));
@@ -173,7 +188,7 @@ namespace ProjektMVCdotnet8.Controllers
             return RedirectToAction("Redirecting", new { Information, Site });
         }
 
-        //Zaprzestanie obserwowania danego użytkownika
+        // Zaprzestanie obserwowania danego użytkownika
         public async Task<IActionResult> UnFollow(string FollowedUserID, string Information, string Site)
         {
             var userToUnfollow = await _followUserRepository.GetById(FollowedUserID, _userManager.GetUserId(User));
@@ -184,11 +199,11 @@ namespace ProjektMVCdotnet8.Controllers
             return RedirectToAction("Redirecting", new { Information, Site });
         }
 
-        //Dodawanie komentarzy
+        // Dodawanie komentarzy
         public async Task<IActionResult> AddComment(CommentEntity commentEntity)
         {
             var user = await _userManager.GetUserAsync(User);
-            var post = await _postRepository.GetByIdAsync(int.Parse(Request.Form["postId"]));
+            var post = await _postRepository.GetById(int.Parse(Request.Form["postId"]));
             commentEntity = await _commentRepository.MapCommentEntity(commentEntity, user, post, _userManager.GetUserName(User));
             _commentRepository.Add(commentEntity);
 
@@ -196,14 +211,15 @@ namespace ProjektMVCdotnet8.Controllers
             string Information = Request.Form["Information"];
             return RedirectToAction("Redirecting", new { Information, Site });
         }
-        //Dynamiczne pokazywanie tytułów w wyszukiwarce
+        // Dynamiczne pokazywanie tytułów w wyszukiwarce
         public async Task<IActionResult> LivePostSearch(string search)
         {
             IEnumerable<PostEntity> res = await _postRepository.GetByContain(search);
             return PartialView("LivePostSearch", res);
         }
 
-        //Routing dla naszych view
+        // Routing dla naszych view. Information zawiera informacje takie np nazwa kategorii, czy wartość wpisana w wyszukiwarce.
+        // Site informuje do jakiej akcji (strony) ma przekierować.
         public async Task<IActionResult> Redirecting(string Information, string Site)
         {
             if (Site == "Followed")

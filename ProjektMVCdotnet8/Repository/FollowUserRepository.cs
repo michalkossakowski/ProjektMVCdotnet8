@@ -25,11 +25,6 @@ namespace ProjektMVCdotnet8.Repository
             return Save();
         }
 
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IEnumerable<FollowUserEntity>> GetAll()
         {
             var followUsers = _context.FollowUsers
@@ -37,16 +32,6 @@ namespace ProjektMVCdotnet8.Repository
                 .Include(f => f.FollowedUser)
                 .ToListAsync();
             return await followUsers;
-        }
-
-        public async Task<IEnumerable<UserEntity>> GetAllFollowed()
-        {
-            var allFollow = await GetAll();
-            var followedUsers = _context.FollowUsers
-                .Include(f => f.FollowedUser)
-                .Select(f => f.FollowedUser)
-                .ToListAsync();
-            return await followedUsers;
         }
 
         public async Task<IEnumerable<UserEntity>> GetAllFollowedBY(string id)
@@ -72,11 +57,6 @@ namespace ProjektMVCdotnet8.Repository
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
-        }
-
-        public bool Update(FollowUserEntity post)
-        {
-            throw new NotImplementedException();
         }
     }
 }

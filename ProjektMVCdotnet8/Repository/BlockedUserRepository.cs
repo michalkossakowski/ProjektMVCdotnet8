@@ -21,14 +21,17 @@ namespace ProjektMVCdotnet8.Repository
             return Save();
         }
 
-        public bool Delete(BlockedUserEntity blockedUser, string userSingedID)
+        public bool Delete(BlockedUserEntity blockedUser)
         {
-            throw new NotImplementedException();
+            _context.Remove(blockedUser);
+            return Save();
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var blockedUser = _context.BlockedUsers.Where(b => b.Id.Equals(id));
+            _context.Remove(blockedUser);
+            return Save();
         }
         public async Task<IEnumerable<BlockedUserEntity>> GetAllBlockedBy(string userSingedID)
         {
@@ -49,11 +52,6 @@ namespace ProjektMVCdotnet8.Repository
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
-        }
-
-        public bool Update(BlockedUserEntity post)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace ProjektMVCdotnet8.Interfaces
         Task<IEnumerable<BlockedUserEntity>> GetAllBlockedBy(string userSingedID);
         Task<IEnumerable<string>> GetAllIDBlockedBy(string userSingedID);
         bool Add(BlockedUserEntity post);
-        bool Delete(BlockedUserEntity post);
+        bool Delete(BlockedUserEntity blockedUser, string userSingedID);
         bool Delete(int id);
         bool Update(BlockedUserEntity post);
         bool Save();

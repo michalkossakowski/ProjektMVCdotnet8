@@ -21,7 +21,7 @@ namespace ProjektMVCdotnet8.Repository
             return Save();
         }
 
-        public bool Delete(BlockedUserEntity post)
+        public bool Delete(BlockedUserEntity blockedUser, string userSingedID)
         {
             throw new NotImplementedException();
         }

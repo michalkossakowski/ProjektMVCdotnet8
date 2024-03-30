@@ -14,14 +14,15 @@ namespace ProjektMVCdotnet8.Repository
         {
             this._context = context;
         }
-        public bool Add(FollowUserEntity post)
+        public bool Add(FollowUserEntity user)
         {
-            throw new NotImplementedException();
+            _context.Add(user);
+            return Save();
         }
 
-        public bool Delete(FollowUserEntity post)
+        public bool Delete(FollowUserEntity user)
         {
-            _context.Remove(post);
+            _context.Remove(user);
             return Save();
         }
 

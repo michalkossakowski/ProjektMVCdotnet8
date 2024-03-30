@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Repository;
 namespace ProjektMVCdotnet8.Controllers
 {
     public class PostController : Controller
@@ -14,14 +15,12 @@ namespace ProjektMVCdotnet8.Controllers
         private readonly IBlockedUserRepository _blockedUserRepository;
         private readonly IUserRepository _userRepository;
 
-        private readonly ApplicationDbContext _context;
         private readonly SignInManager<UserEntity> _signInManager;
         private readonly UserManager<UserEntity> _userManager;
-        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository, IBlockedUserRepository blockedUserRepository, IUserRepository userRepository)
+        public PostController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository, IBlockedUserRepository blockedUserRepository, IUserRepository userRepository)
         {
             _postRepository = postRepository;
             _commentRepository = commentRepository;
-            _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _followUserRepository = followUserRepository;
@@ -167,8 +166,8 @@ namespace ProjektMVCdotnet8.Controllers
         // Blokuje danego użytkownika
         public async Task<IActionResult> Block(string BlockedUserID, string Information, string Site)
         {
-            UserEntity userToBlock = _context.Users.FirstOrDefault(user => user.Id.Equals(BlockedUserID));
-            UserEntity blockingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(_userManager.GetUserId(User)));
+            UserEntity userToBlock = await _userRepository.GetUserByID(BlockedUserID);
+            UserEntity blockingUser = await _userRepository.GetUserByID(_userManager.GetUserId(User));
             BlockedUserEntity blockedUser = new BlockedUserEntity(blockingUser, userToBlock);
             _blockedUserRepository.Add(blockedUser);
 
@@ -181,11 +180,10 @@ namespace ProjektMVCdotnet8.Controllers
         // Obserowanie dane użytkownika
         public async Task<IActionResult> Follow(string FollowedUserID, string Information, string Site)
         {
-            UserEntity userToFollow = _context.Users.FirstOrDefault(user => user.Id.Equals(FollowedUserID));
-            UserEntity followingUser = _context.Users.FirstOrDefault(user => user.Id.Equals(_userManager.GetUserId(User)));
+            UserEntity userToFollow = await _userRepository.GetUserByID(FollowedUserID);
+            UserEntity followingUser =  await _userRepository.GetUserByID(_userManager.GetUserId(User));
             FollowUserEntity followedUser = new FollowUserEntity(followingUser, userToFollow);
-            _context.Add(followedUser);
-            await _context.SaveChangesAsync();
+            _followUserRepository.Add(followedUser);
             return RedirectToAction("Redirecting", new { Information, Site });
         }
 

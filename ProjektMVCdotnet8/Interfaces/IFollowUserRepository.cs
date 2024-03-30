@@ -17,10 +17,10 @@ namespace ProjektMVCdotnet8.Interfaces
         Task<FollowUserEntity> GetById(string followedUser, string userSignedID);
 
         // Dodaje obiekt
-        bool Add(FollowUserEntity post);
+        bool Add(FollowUserEntity user);
 
         // Usuwanie obiektu
-        bool Delete(FollowUserEntity post);
+        bool Delete(FollowUserEntity user);
 
         // Zapisywanie zmian do bazy danych
         bool Save();

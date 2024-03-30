@@ -13,7 +13,7 @@ namespace ProjektMVCdotnet8.Repository
 
         public ContactRepository(ApplicationDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
 
         public bool Add(ContactEntity contact)

@@ -55,7 +55,6 @@ namespace ProjektMVCdotnet8.Controllers
             return View(contactEntity);
         }
 
-
         // GET: ContactEntities/Delete/5
         public async Task<IActionResult> Delete(int id)
         {

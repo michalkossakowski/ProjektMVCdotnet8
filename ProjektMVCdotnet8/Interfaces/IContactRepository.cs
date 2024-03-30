@@ -5,11 +5,10 @@ namespace ProjektMVCdotnet8.Interfaces
     public interface IContactRepository
     {
         Task<IEnumerable<ContactEntity>> GetAll();
-        Task<ContactEntity> GetByIdAsync(int id);
+        Task<ContactEntity> GetById(int id);
         bool Add(ContactEntity contact);
         bool Delete(ContactEntity contact);
-        bool Delete(int id);
-        bool Update(ContactEntity contact);
+        bool DeleteById(int id);
         bool Save();
     }
 }

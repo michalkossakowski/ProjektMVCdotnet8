@@ -20,18 +20,6 @@ namespace ProjektMVCdotnet8.Controllers
             _chatRepository = chatRepository;
         }
 
-        // GET: ChatEntities
-        public async Task<IActionResult> Index()
-        {
-            return View(await _chatRepository.GetAll());
-        }
-
-        // GET: ChatEntities/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: ChatEntities/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

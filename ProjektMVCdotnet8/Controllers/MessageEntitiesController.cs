@@ -30,18 +30,6 @@ namespace ProjektMVCdotnet8.Controllers
             _userManager = userManager;//do sprawdzenia uzytkowknika
         }
 
-        // GET: MessageEntities
-        public async Task<IActionResult> Index()
-        {
-            return View(await _messageRepository.GetAll());
-        }
-
-        // GET: MessageEntities/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         // POST: MessageEntities/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

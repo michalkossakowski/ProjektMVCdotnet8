@@ -53,12 +53,12 @@
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
-                                if (loggedInUser.City!=null)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Local">Lokalnie</a>
-                                    </li>
-                                }
+                            if (loggedInUser.City!=null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Local">Lokalnie</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Followed">Obserwowane</a>
                             </li>

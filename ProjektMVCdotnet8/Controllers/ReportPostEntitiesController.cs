@@ -7,39 +7,32 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Repository;
 
 namespace ProjektMVCdotnet8.Controllers
 {
     public class ReportPostEntitiesController : Controller
     {
-        public readonly ApplicationDbContext _context;
+        private readonly IReportRepository _reportRepository;
+        private readonly IPostRepository _postRepository;
 
-        public ReportPostEntitiesController(ApplicationDbContext context)
+        public ReportPostEntitiesController(IReportRepository reportRepository, IPostRepository postRepository)
         {
-            _context = context;
+            _reportRepository = reportRepository;
+            _postRepository = postRepository;
         }
 
         // GET: ReportPostEntities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ReportPosts.ToListAsync());
+            return View(await _reportRepository.GetAll());
         }
 
         // GET: ReportPostEntities/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var reportPostEntity = await _context.ReportPosts
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (reportPostEntity == null)
-            {
-                return NotFound();
-            }
-
+            var reportPostEntity = await _reportRepository.GetById(id);
             return View(reportPostEntity);
         }
 
@@ -57,87 +50,16 @@ namespace ProjektMVCdotnet8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,ReportContent")] ReportPostEntity reportPostEntity,int repPost)
         {
-            reportPostEntity.ReportedPost = _context.Posts.FirstOrDefault(p => p.Id == repPost);
+            reportPostEntity.ReportedPost = await _postRepository.GetById(repPost);
             reportPostEntity.postId = repPost;
-            _context.Add(reportPostEntity);
-            await _context.SaveChangesAsync();
+            _reportRepository.Add(reportPostEntity);
             return RedirectToAction("ThxForReport","Home");
-            //return RedirectToAction(nameof(Index));
-            /*if (ModelState.IsValid)
-            {
-                _context.Add(reportPostEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(reportPostEntity);*/
-        }
-
-        // GET: ReportPostEntities/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var reportPostEntity = await _context.ReportPosts.FindAsync(id);
-            if (reportPostEntity == null)
-            {
-                return NotFound();
-            }
-            return View(reportPostEntity);
-        }
-
-        // POST: ReportPostEntities/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ReportContent")] ReportPostEntity reportPostEntity)
-        {
-            if (id != reportPostEntity.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(reportPostEntity);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ReportPostEntityExists(reportPostEntity.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(reportPostEntity);
         }
 
         // GET: ReportPostEntities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var reportPostEntity = await _context.ReportPosts
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (reportPostEntity == null)
-            {
-                return NotFound();
-            }
-
+            var reportPostEntity = await _reportRepository.GetById(id);
             return View(reportPostEntity);
         }
 
@@ -146,19 +68,8 @@ namespace ProjektMVCdotnet8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var reportPostEntity = await _context.ReportPosts.FindAsync(id);
-            if (reportPostEntity != null)
-            {
-                _context.ReportPosts.Remove(reportPostEntity);
-            }
-
-            await _context.SaveChangesAsync();
+            _reportRepository.DeleteById(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ReportPostEntityExists(int id)
-        {
-            return _context.ReportPosts.Any(e => e.Id == id);
         }
     }
 }

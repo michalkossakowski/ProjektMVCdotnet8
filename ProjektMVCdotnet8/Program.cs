@@ -22,6 +22,7 @@ namespace ProjektMVCdotnet8
             builder.Services.AddScoped<IFollowUserRepository, FollowUserRepository>();
             builder.Services.AddScoped<IBlockedUserRepository, BlockedUserRepository>();
             builder.Services.AddScoped<IContactRepository, ContactRepository>();
+            builder.Services.AddScoped<IReportRepository, ReportRepository>();
             builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();

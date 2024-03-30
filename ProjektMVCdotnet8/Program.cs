@@ -24,7 +24,7 @@ namespace ProjektMVCdotnet8
             builder.Services.AddScoped<IContactRepository, ContactRepository>();
             builder.Services.AddScoped<IReportRepository, ReportRepository>();
             builder.Services.AddScoped<IMessageRepository, MessageRepository>();
-
+            builder.Services.AddScoped<IChatRepository, ChatRepository>();
             builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
             builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

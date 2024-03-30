@@ -13,7 +13,7 @@
       rel="stylesheet">
 
 <div class="row justify-content-md-center">
-    <div class="card p-0 col-sm-6">
+    <div class="card p-0 col-sm-8">
 
         <!-- Wyświetlanie zdjęcia -->
         <div class="card-img-top border-bottom p-3">
@@ -86,15 +86,15 @@
         {
             <div class="card-footer">
                 <div class="container">
-                    <div class="row justify-content-end">
-                        <div class="col-sm-2 text-center">
+                    <div class="d-flex flex-nowrap justify-content-end">
+                        <div class="col-sm-1 text-center">
                             <a href="@Url.Action("Block", "Post", new { BlockedUserId = @Model.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
                                 <span class="material-icons">
                                     block
                                 </span>
                             </a>
                         </div>
-                        <div class="col-sm-2 text-center ">
+                        <div class="col-sm-1 text-center ">
                             @if (followedUsers.Contains(@Model.AuthorUser.Id.ToString()))
                             {
                                 <a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = @Model.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
@@ -112,7 +112,7 @@
                                 </a>
                             }
                         </div>
-                        <div class="col-sm-2 text-center">
+                        <div class="col-sm-1 text-center">
                             <a href="/ReportPostEntities/Create?repPost=@Model.Id">
                                 <span class="material-icons">
                                     report

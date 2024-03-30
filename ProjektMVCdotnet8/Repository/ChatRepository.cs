@@ -6,26 +6,26 @@ using ProjektMVCdotnet8.Interfaces;
 
 namespace ProjektMVCdotnet8.Repository
 {
-    public class MessageRepository : IMessageRepository
+    public class ChatRepository : IChatRepository
     {
         private readonly ApplicationDbContext _context;
 
-        public MessageRepository(ApplicationDbContext context)
+        public ChatRepository(ApplicationDbContext context)
         {
             _context = context;
         }
-        public bool Add(MessageEntity report)
+        public bool Add(ChatEntity report)
         {
             _context.Add(report);
             return Save();
         }
-        public async Task<IEnumerable<MessageEntity>> GetAll()
+        public async Task<IEnumerable<ChatEntity>> GetAll()
         {
-            return await _context.Messages.ToListAsync();
+            return await _context.Chats.ToListAsync();
         }
-        public async Task<MessageEntity> GetById(int id)
+        public async Task<ChatEntity> GetById(int id)
         {
-            return await _context.Messages.FindAsync(id);
+            return await _context.Chats.FindAsync(id);
         }
         public bool Save()
         {

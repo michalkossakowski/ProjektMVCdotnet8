@@ -2,6 +2,8 @@
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ProjektMVCdotnet8.Repository
 {
@@ -13,6 +15,7 @@ namespace ProjektMVCdotnet8.Repository
         {
             this._context = context;
         }
+
         public bool Add(ContactEntity contact)
         {
             _context.Add(contact);
@@ -21,33 +24,31 @@ namespace ProjektMVCdotnet8.Repository
 
         public bool Delete(ContactEntity contact)
         {
-            throw new NotImplementedException();
+            _context.Remove(contact);
+            return Save();
         }
 
-        public bool Delete(int id)
+        public bool DeleteById(int id)
         {
-            throw new NotImplementedException();
+            var contact = _context.ContactForms.Find(id);
+            _context.ContactForms.Remove(contact);
+            return Save();
         }
 
-        public Task<IEnumerable<ContactEntity>> GetAll()
+        public async Task<IEnumerable<ContactEntity>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _context.ContactForms.ToListAsync();
         }
 
-        public Task<ContactEntity> GetByIdAsync(int id)
+        public async Task<ContactEntity> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.ContactForms.FindAsync(id);
         }
 
         public bool Save()
         {
             var saved = _context.SaveChanges();
-            return saved > 0 ? true : false;
-        }
-
-        public bool Update(ContactEntity contact)
-        {
-            throw new NotImplementedException();
+            return saved > 0;
         }
     }
 }

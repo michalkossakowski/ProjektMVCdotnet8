@@ -88,18 +88,18 @@
                 <div class="container">
                     <div class="d-flex flex-nowrap justify-content-end">
                         <div class="col-sm-1 text-center">
-                            <a href="@Url.Action("Block", "Post", new { BlockedUserId = @Model.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
+                            <a href="@Url.Action("Block", "Post", new { BlockedUserId = @Model.AuthorUser.Id.ToString(), Information = TempData["Information"], Site = "Home"})">
                                 <span class="material-icons">
                                     block
                                 </span>
                             </a>
                         </div>
                         <div class="col-sm-1 text-center ">
-                            @if (followedUsers.Contains(@Model.AuthorUser.Id.ToString()))
+                            @if ((@Model.AuthorUser.Id.ToString().Equals(followedUsers))) 
                             {
                                 <a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = @Model.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
                                     <span class="material-icons">
-                                        group_add
+                                        person_remove
                                     </span>
                                 </a>
                             }
@@ -107,7 +107,7 @@
                             {
                                 <a href="@Url.Action("Follow", "Post", new { FollowedUserID = @Model.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"] })">
                                     <span class="material-icons">
-                                        person_remove
+                                        person_add
                                     </span>
                                 </a>
                             }

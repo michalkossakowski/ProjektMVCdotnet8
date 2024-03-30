@@ -10,6 +10,9 @@ namespace ProjektMVCdotnet8.Interfaces
         // Zwraca wszystkich obserwowanych użytkowników wyszukąc dla osoby obserwującej (string id)
         Task<IEnumerable<UserEntity>> GetAllFollowedBY(string id);
 
+        // Zwraca użytkownika pasujący do użytkownika obserwowanego oraz jednocześnie zalogowanego użytkownika
+        Task<UserEntity> GetByIdFollowedUser(string followedUser, string userSignedID);
+
         // Zwraca obiekt pasujący do użytkownika obserwowanego oraz jednocześnie zalogowanego użytkownika
         Task<FollowUserEntity> GetById(string followedUser, string userSignedID);
 

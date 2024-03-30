@@ -43,6 +43,18 @@ namespace ProjektMVCdotnet8.Repository
             return followedUsers;
         }
 
+        public async Task<UserEntity> GetByIdFollowedUser(string followedUser, string userSignedID)
+        {
+            var allFollow = await GetAll();
+            var getFolloUser = allFollow
+                .Where(user => user.FollowedUser.Id.Equals(followedUser) && user.FollowingUser.Id.Equals(userSignedID))
+                .Select(user => user.FollowedUser)
+                .FirstOrDefault();
+            return getFolloUser;
+
+        }
+
+
         public async Task<FollowUserEntity> GetById(string followedUser, string userSignedID)
         {
             var allFollow = await GetAll();
@@ -50,7 +62,6 @@ namespace ProjektMVCdotnet8.Repository
                 .Where(user => user.FollowedUser.Id.Equals(followedUser) && user.FollowingUser.Id.Equals(userSignedID))
                 .FirstOrDefault();
             return getFolloUser;
-
         }
 
         public bool Save()

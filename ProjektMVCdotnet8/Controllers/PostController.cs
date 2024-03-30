@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
-using ProjektMVCdotnet8.Repository;
 namespace ProjektMVCdotnet8.Controllers
 {
     public class PostController : Controller
@@ -13,11 +12,12 @@ namespace ProjektMVCdotnet8.Controllers
         private readonly IPostRepository _postRepository;
         private readonly ICommentRepository _commentRepository;
         private readonly IBlockedUserRepository _blockedUserRepository;
+        private readonly IUserRepository _userRepository;
 
         private readonly ApplicationDbContext _context;
         private readonly SignInManager<UserEntity> _signInManager;
         private readonly UserManager<UserEntity> _userManager;
-        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository, IBlockedUserRepository blockedUserRepository)
+        public PostController(ApplicationDbContext context, UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository, IBlockedUserRepository blockedUserRepository, IUserRepository userRepository)
         {
             _postRepository = postRepository;
             _commentRepository = commentRepository;
@@ -26,6 +26,7 @@ namespace ProjektMVCdotnet8.Controllers
             _signInManager = signInManager;
             _followUserRepository = followUserRepository;
             _blockedUserRepository = blockedUserRepository;
+            _userRepository = userRepository;
         }
 
         // Wyświetla strone z danymi postami na podstawie kategorii. Odfiltruje posty blokowanych użytkowników
@@ -118,16 +119,16 @@ namespace ProjektMVCdotnet8.Controllers
             IEnumerable<CommentEntity> comments = await _commentRepository.GetByPostID(Id);
             ViewBag.Comments = comments;
 
-            var post = await  _postRepository.GetById(Id);
+            var post = await _postRepository.GetById(Id);
 
-            var followedUsers = await _followUserRepository.GetById(post.AuthorUser.Id, _userManager.GetUserId(User));
-            if (followedUsers is not null)
-            {
-                TempData["FollowedUsers"] = followedUsers.Id.ToString();
-            }
-            else 
+            var followedUsers = await _followUserRepository.GetByIdFollowedUser(post.AuthorUser.Id, _userManager.GetUserId(User));
+            if (followedUsers is null)
             {
                 TempData["FollowedUsers"] = "";
+            }
+            else
+            {
+                TempData["FollowedUsers"] = followedUsers.Id;
             }
             return View("ShowPost", post);
         }
@@ -214,8 +215,25 @@ namespace ProjektMVCdotnet8.Controllers
         // Dynamiczne pokazywanie tytułów w wyszukiwarce
         public async Task<IActionResult> LivePostSearch(string search)
         {
-            IEnumerable<PostEntity> res = await _postRepository.GetByContain(search);
-            return PartialView("LivePostSearch", res);
+
+            IEnumerable<PostEntity> posts = await _postRepository.GetByContain(search);
+
+            if (_signInManager.IsSignedIn(User))
+            {
+                var blockedUsers = await _blockedUserRepository.GetAllIDBlockedBy(_userManager.GetUserId(User));
+                var filteredPosts = posts
+                    .Where(post => !blockedUsers.Contains(post.AuthorUser.Id))
+                    .ToList();
+
+                var followedUsers = await _followUserRepository.GetAllFollowedBY(_userManager.GetUserId(User));
+                TempData["FollowedUsers"] = followedUsers.Select(user => user.Id).ToList();
+                return PartialView("LivePostSearch", filteredPosts);
+            }
+            else
+            {
+                TempData["FollowedUsers"] = "null";
+                return PartialView("LivePostSearch", posts);
+            }
         }
 
         // Routing dla naszych view. Information zawiera informacje takie np nazwa kategorii, czy wartość wpisana w wyszukiwarce.
@@ -246,9 +264,13 @@ namespace ProjektMVCdotnet8.Controllers
                 string liveSearchTitle = Information;
                 return RedirectToAction("FindedPosts", new { liveSearchTitle });
             }
+            else if (Site == "Home")
+            {
+                return RedirectToAction("Index", "Home");
+            }
             else
             {
-                return RedirectToAction("Index", new { Information });
+                return RedirectToAction("Index", "Home");
             }
         }
     }

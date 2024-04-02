@@ -29,7 +29,8 @@ namespace ProjektMVCdotnet8.Repository
 
         public bool Delete(int id)
         {
-            var blockedUser = _context.BlockedUsers.Where(b => b.Id.Equals(id));
+            var blockedUser = _context.BlockedUsers
+                .FirstOrDefault(x => x.Id == id);
             _context.Remove(blockedUser);
             return Save();
         }

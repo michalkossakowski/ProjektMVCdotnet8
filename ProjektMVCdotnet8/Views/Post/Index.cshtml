@@ -21,7 +21,7 @@
     {
         if (element.AttachmentSource == null)
         {
-                    <div class="col-md-12 d-flex flex-column">
+            <div class="card border-3 col-md-12 d-flex flex-column" style="margin-bottom: 10px;">
 
                         <!-- Wyświetlanie Profilu -->
                         <div class="card-header card-text d-flex flex-row sm-1">
@@ -118,10 +118,10 @@
                         <!-- Funkcje dla zalogowanego użytkownika -->
                         @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
                         {
-                            <div class="card-footer">
-                                <div class="container">
-                                    <div class="d-flex flex-nowrap justify-content-end">
-                                        <div class="col-sm-1 text-center">
+                            <div class="card-footer margin">
+                        <div class="row justify-content-end">
+                            <div class="d-flex flex-nowrap justify-content-end col-md-8">
+                                <div class="col-1 text-center">
                                             <a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site = "Home"})">
                                                 <span class="material-icons">
                                                     block
@@ -268,7 +268,7 @@
                         @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
                         {
                             <div class="card-footer">
-                                <div class="container">
+                                <div class="row">
                                     <div class="d-flex flex-nowrap justify-content-end">
                                         <div class="col-sm-1 text-center">
                                             <a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site = "Home"})">

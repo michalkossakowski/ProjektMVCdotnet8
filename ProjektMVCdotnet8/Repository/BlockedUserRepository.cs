@@ -1,43 +1,59 @@
-﻿using ProjektMVCdotnet8.Entities;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using ProjektMVCdotnet8.Areas.Identity.Data;
+using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
 
 namespace ProjektMVCdotnet8.Repository
 {
     public class BlockedUserRepository : IBlockedUserRepository
     {
-        public bool Add(BlockedUserEntity post)
+        private readonly ApplicationDbContext _context;
+
+
+        public BlockedUserRepository(ApplicationDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public bool Add(BlockedUserEntity blockedUser)
+        {
+            _context.Add(blockedUser);
+            return Save();
         }
 
-        public bool Delete(BlockedUserEntity post)
+        public bool Delete(BlockedUserEntity blockedUser)
         {
-            throw new NotImplementedException();
+            _context.Remove(blockedUser);
+            return Save();
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            var blockedUser = _context.BlockedUsers.Where(b => b.Id.Equals(id));
+            _context.Remove(blockedUser);
+            return Save();
+        }
+        public async Task<IEnumerable<BlockedUserEntity>> GetAllBlockedBy(string userSingedID)
+        {
+            var blockedUsers = _context.BlockedUsers
+                .Include(b => b.BlockedUser)
+                .Include(b => b.BlockedUser)
+                .Where(entry => entry.BlockingUser.Id == userSingedID)
+                .ToListAsync();
+            return await blockedUsers;
         }
 
-        public Task<IEnumerable<BlockedUserEntity>> GetAll()
+        public async Task<IEnumerable<string>> GetAllIDBlockedBy(string userSingedID)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<BlockedUserEntity> GetByIdAsync(int id)
-        {
-            throw new NotImplementedException();
+            var blockedUser = await GetAllBlockedBy(userSingedID);
+            var blockedUserID = blockedUser.Select(b => b.BlockedUser.Id).ToList();
+            return blockedUserID;
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(BlockedUserEntity post)
-        {
-            throw new NotImplementedException();
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }

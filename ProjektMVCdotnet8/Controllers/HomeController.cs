@@ -4,7 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Interfaces;
 using ProjektMVCdotnet8.Models;
+using ProjektMVCdotnet8.Repository;
 using System.Diagnostics;
 
 namespace ProjektMVCdotnet8.Controllers
@@ -18,9 +20,13 @@ namespace ProjektMVCdotnet8.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<UserEntity> _userManager;//do sprawdzenia uzytkowknika
 
+        private IMessageRepository _messageRepository;
+        private IChatRepository _chatRepository;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<UserEntity> userManager)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<UserEntity> userManager, IMessageRepository messageRepository, IChatRepository chatRepository)
         {
+            _messageRepository = messageRepository;
+            _chatRepository = chatRepository;
             _userManager = userManager;//do sprawdzenia uzytkowknika
             _logger = logger;
             _context = context;
@@ -103,9 +109,6 @@ namespace ProjektMVCdotnet8.Controllers
 
             return View();
         }
-
-
-
         public IActionResult ChatList()
         {
             var user = _userManager.GetUserName(User);
@@ -139,7 +142,7 @@ namespace ProjektMVCdotnet8.Controllers
 
         public async Task<IActionResult> Chat(int chatId)
         {
-            var chat = _context.Chats.FirstOrDefault(c => c.Id == chatId);
+            var chat = await _chatRepository.GetById(chatId);
             ViewBag.CurrentChat = chat.Id;
 
             var user = await _userManager.GetUserAsync(User);
@@ -153,7 +156,7 @@ namespace ProjektMVCdotnet8.Controllers
             ViewBag.SecondUser = user2;
             string avatar2 = _context.Users.FirstOrDefault(u => u.UserName == user2).Avatar;
             ViewBag.SecondAvatar = avatar2;
-            return View(await _context.Messages.ToListAsync());
+            return View(await _messageRepository.GetAll());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

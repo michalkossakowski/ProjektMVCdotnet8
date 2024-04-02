@@ -4,15 +4,25 @@ namespace ProjektMVCdotnet8.Interfaces
 {
     public interface IFollowUserRepository
     {
+        // Zwraca wszystkie obiekty 
         Task<IEnumerable<FollowUserEntity>> GetAll();
-        Task<IEnumerable<UserEntity>> GetAllFollowed();
-        Task<IEnumerable<UserEntity>> GetAllFollowed(string id);
-        Task<FollowUserEntity> GetByIdAsync(int id);
 
-        bool Add(FollowUserEntity post);
-        bool Delete(FollowUserEntity post);
-        bool Delete(int id);
-        bool Update(FollowUserEntity post);
+        // Zwraca wszystkich obserwowanych użytkowników wyszukąc dla osoby obserwującej (string id)
+        Task<IEnumerable<UserEntity>> GetAllFollowedBY(string id);
+
+        // Zwraca użytkownika pasujący do użytkownika obserwowanego oraz jednocześnie zalogowanego użytkownika
+        Task<UserEntity> GetByIdFollowedUser(string followedUser, string userSignedID);
+
+        // Zwraca obiekt pasujący do użytkownika obserwowanego oraz jednocześnie zalogowanego użytkownika
+        Task<FollowUserEntity> GetById(string followedUser, string userSignedID);
+
+        // Dodaje obiekt
+        bool Add(FollowUserEntity user);
+
+        // Usuwanie obiektu
+        bool Delete(FollowUserEntity user);
+
+        // Zapisywanie zmian do bazy danych
         bool Save();
     }
 }

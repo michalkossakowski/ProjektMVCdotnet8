@@ -11,12 +11,7 @@
     var loggedInUser = await UserManager.GetUserAsync(User);
     List<string> followedUsers = TempData["FollowedUsers"] as List<string>;
 }
-<style>
-    .awatar {
-        height: 60px;
-        width: 60px;
-    }
-</style>
+
 <div class="row g-0">
     <div class="text-center">
         <h1 class="display-4">@ViewData["Title"]</h1>

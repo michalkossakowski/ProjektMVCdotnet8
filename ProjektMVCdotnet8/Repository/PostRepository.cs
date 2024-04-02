@@ -19,7 +19,7 @@ namespace ProjektMVCdotnet8.Repository
         }
         public bool Delete(int id)
         {
-            var post = GetByIdAsync(id);
+            var post = GetById(id);
             if (post is not null)
             {
                 _context.Remove(post);
@@ -78,7 +78,7 @@ namespace ProjektMVCdotnet8.Repository
             return await posts;
         }
 
-        public async Task<PostEntity> GetByIdAsync(int id)
+        public async Task<PostEntity> GetById(int id)
         {
 
             await _context.Posts
@@ -92,11 +92,6 @@ namespace ProjektMVCdotnet8.Repository
         {
             var saved = _context.SaveChanges();
             return saved > 0 ? true : false;
-        }
-
-        public bool Update(PostEntity post)
-        {
-            throw new NotImplementedException();
         }
     }
 }

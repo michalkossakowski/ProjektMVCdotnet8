@@ -10,13 +10,8 @@
     ViewData["Title"] = "Przeglądaj Posty";
     List<string> followedUsers = TempData["FollowedUsers"] as List<string>;
 }
-<style>
-    .awatar
-    {
-        height: 60px;
-        width: 60px;
-    }
-</style>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
 <div class="row g-0">
     <div class="text-center">
         <h1 class="display-4">@ViewData["Title"]</h1>
@@ -26,10 +21,15 @@
     {
         <div class="card border-3 mb-3 " style="width:100%">
             <div class="row g-0">
+
+                <!-- Wyświetlanie zdjęcia postu -->
                 <div class="col-md-4 border-3 border-end">
                     <img src="/attachments/@element.AttachmentSource" class="card-img-top"  alt="Alternate Text" />
                 </div>
+
                 <div class="col-md-8 d-flex flex-column">
+
+                    <!-- Wyświetlanie Profilu -->
                     <div class="card-header card-text d-flex flex-row sm-1">
                         <div class="sm-2">
                             @{ 
@@ -43,35 +43,14 @@
                             <small class="text-muted">Autor: @element.AuthorUser.UserName<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
                         </div>
                     </div>
+
+                    <!-- Wyświetlanie Tytułu z zawartością -->
                     <div class="card-body">
                         <h5 class="card-title">@element.Title</h5>
                         <p class="card-text">@element.PostContent</p>
                     </div>
-                    <div class="card-footer">
-                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User))) 
-                        {
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-sm">
-                                        <span card-text><a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">Blokuj</a></span>
-                                    </div>
-                                    <div class="col-sm">
-                                        @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
-                                        {
-                                            <span card-text><a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">Przestań obserwować</a></span>
-                                        }
-                                        else
-                                        {
-                                            <span card-text><a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"] })">Obserwuj</a></span>
-                                        }
-                                    </div>
-                                    <div class="col-sm">
-                                        <a class="card-text  text-end"> <a href="/ReportPostEntities/Create?repPost=@element.Id">Zgłoś Post</a></a>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
+
+
                     <hr />
                     <!-- Modal -->
                     <div class="modal fade" id="postModal@(element.Id)" tabindex="-1" aria-labelledby="postModalLabel@(element.Id)" aria-hidden="true">
@@ -116,7 +95,7 @@
                             </div>
                         </div>
                     </div>
-                    <div style="margin-bottom: 0px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
+                    <div style="margin-bottom: 10px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
                             Komentarze(@publishedComments)
@@ -140,6 +119,50 @@
                         }
 
                     </div>
+
+
+                    <!-- Funkcje dla zalogowanego użytkownika -->
+                    @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
+                    {
+                        <div class="card-footer">
+                            <div class="container">
+                                <div class="d-flex flex-nowrap justify-content-end">
+                                    <div class="col-sm-1 text-center">
+                                        <a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site = "Home"})">
+                                            <span class="material-icons">
+                                                block
+                                            </span>
+                                        </a>
+                                    </div>
+                                    <div class="col-sm-1 text-center ">
+                                        @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
+                                        {
+                                            <a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
+                                                <span class="material-icons">
+                                                    person_remove
+                                                </span>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"] })">
+                                                <span class="material-icons">
+                                                    person_add
+                                                </span>
+                                            </a>
+                                        }
+                                    </div>
+                                    <div class="col-sm-1 text-center">
+                                        <a href="/ReportPostEntities/Create?repPost=@element.Id">
+                                            <span class="material-icons">
+                                                report
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

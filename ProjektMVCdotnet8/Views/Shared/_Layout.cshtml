@@ -44,21 +44,21 @@
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Strona Główna</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <div class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Kategorie
-                            </a>
+                            </div>
                             <ul class="dropdown-menu">
                                 @await Component.InvokeAsync("CategoryMenu")
                             </ul>
                         </li>
                         @if (SignInManager.IsSignedIn(User))
                         {
-                                if (loggedInUser.City!=null)
-                                {
-                                    <li class="nav-item">
-                                        <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Local">Lokalnie</a>
-                                    </li>
-                                }
+                            if (loggedInUser.City!=null)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Local">Lokalnie</a>
+                                </li>
+                            }
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Followed">Obserwowane</a>
                             </li>

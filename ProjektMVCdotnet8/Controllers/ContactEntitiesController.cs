@@ -8,41 +8,30 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
+using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Repository;
 
 namespace ProjektMVCdotnet8.Controllers
 {
-
     public class ContactEntitiesController : Controller
-
     {
-        private readonly ApplicationDbContext _context;
+        private readonly IContactRepository _contactRepository;
 
-        public ContactEntitiesController(ApplicationDbContext context)
+        public ContactEntitiesController(IContactRepository contactRepository)
         {
-            _context = context;
+            _contactRepository = contactRepository;
         }
 
         // GET: ContactEntities
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ContactForms.ToListAsync());
+            return View(await _contactRepository.GetAll());
         }
 
         // GET: ContactEntities/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var contactEntity = await _context.ContactForms
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (contactEntity == null)
-            {
-                return NotFound();
-            }
-
+            var contactEntity = await _contactRepository.GetById(id);
             return View(contactEntity);
         }
 
@@ -53,88 +42,24 @@ namespace ProjektMVCdotnet8.Controllers
         }
 
         // POST: ContactEntities/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Email,Topic,ContactType,ContactContent")] ContactEntity contactEntity)
         {
-            contactEntity.ContactDate = DateTime.Now; // ustawienie daty kontaktu przy tworzeniu
+            contactEntity.ContactDate = DateTime.Now;
             if (ModelState.IsValid)
             {
-                _context.Add(contactEntity);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("ThxForContact", "Home",contactEntity);
-                //return RedirectToAction(nameof(Index));
-            }
-            return View(contactEntity);
-        }
-
-        // GET: ContactEntities/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var contactEntity = await _context.ContactForms.FindAsync(id);
-            if (contactEntity == null)
-            {
-                return NotFound();
-            }
-            return View(contactEntity);
-        }
-
-        // POST: ContactEntities/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,Topic,ContactType,ContactContent,ContactDate")] ContactEntity contactEntity)
-        {
-            if (id != contactEntity.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(contactEntity);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ContactEntityExists(contactEntity.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _contactRepository.Add(contactEntity);
+                return RedirectToAction("ThxForContact", "Home", contactEntity);
             }
             return View(contactEntity);
         }
 
         // GET: ContactEntities/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var contactEntity = await _context.ContactForms
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (contactEntity == null)
-            {
-                return NotFound();
-            }
+            var contactEntity = await _contactRepository.GetById(id);
 
             return View(contactEntity);
         }
@@ -144,19 +69,8 @@ namespace ProjektMVCdotnet8.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var contactEntity = await _context.ContactForms.FindAsync(id);
-            if (contactEntity != null)
-            {
-                _context.ContactForms.Remove(contactEntity);
-            }
-
-            await _context.SaveChangesAsync();
+            _contactRepository.DeleteById(id);
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ContactEntityExists(int id)
-        {
-            return _context.ContactForms.Any(e => e.Id == id);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
@@ -13,19 +14,16 @@ namespace ProjektMVCdotnet8.Repository
         {
             this._context = context;
         }
-        public bool Add(FollowUserEntity post)
+        public bool Add(FollowUserEntity user)
         {
-            throw new NotImplementedException();
+            _context.Add(user);
+            return Save();
         }
 
-        public bool Delete(FollowUserEntity post)
+        public bool Delete(FollowUserEntity user)
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(int id)
-        {
-            throw new NotImplementedException();
+            _context.Remove(user);
+            return Save();
         }
 
         public async Task<IEnumerable<FollowUserEntity>> GetAll()
@@ -37,38 +35,40 @@ namespace ProjektMVCdotnet8.Repository
             return await followUsers;
         }
 
-        public async Task<IEnumerable<UserEntity>> GetAllFollowed()
-        {
-            var allFollow = await GetAll();
-            var followedUsers = _context.FollowUsers
-                .Include(f => f.FollowedUser)
-                .Select(f => f.FollowedUser)
-                .ToListAsync();
-            return await followedUsers;
-        }
-
-        public async Task<IEnumerable<UserEntity>> GetAllFollowed(string id)
+        public async Task<IEnumerable<UserEntity>> GetAllFollowedBY(string id)
         {
             var allFollow = await GetAll();
             var followedUsers = allFollow
                 .Where(f => f.FollowingUser.Id == id)
                 .Select(f => f.FollowedUser);
-            return  followedUsers;
+            return followedUsers;
         }
 
-        public Task<FollowUserEntity> GetByIdAsync(int id)
+        public async Task<UserEntity> GetByIdFollowedUser(string followedUser, string userSignedID)
         {
-            throw new NotImplementedException();
+            var allFollow = await GetAll();
+            var getFolloUser = allFollow
+                .Where(user => user.FollowedUser.Id.Equals(followedUser) && user.FollowingUser.Id.Equals(userSignedID))
+                .Select(user => user.FollowedUser)
+                .FirstOrDefault();
+            return getFolloUser;
+
+        }
+
+
+        public async Task<FollowUserEntity> GetById(string followedUser, string userSignedID)
+        {
+            var allFollow = await GetAll();
+            var getFolloUser = allFollow
+                .Where(user => user.FollowedUser.Id.Equals(followedUser) && user.FollowingUser.Id.Equals(userSignedID))
+                .FirstOrDefault();
+            return getFolloUser;
         }
 
         public bool Save()
         {
-            throw new NotImplementedException();
-        }
-
-        public bool Update(FollowUserEntity post)
-        {
-            throw new NotImplementedException();
+            var saved = _context.SaveChanges();
+            return saved > 0 ? true : false;
         }
     }
 }

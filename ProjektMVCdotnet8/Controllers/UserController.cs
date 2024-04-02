@@ -8,11 +8,15 @@ using Azure.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using System.Security.Policy;
+using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Repository;
 
 namespace ProjektMVCdotnet8.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IBlockedUserRepository _blockedUserRepository;
+
         private readonly UserManager<UserEntity> _userManager;
         public ApplicationDbContext _context;
         SignInManager<UserEntity> _signInManager;
@@ -32,13 +36,23 @@ namespace ProjektMVCdotnet8.Controllers
             [StringLength(250, ErrorMessage = "Opis nie może być dłuższy niż 250 znaków.")]
             public string? Description { get; set; }
         }
-        public UserController(UserManager<UserEntity> userManager, ApplicationDbContext context, SignInManager<UserEntity> signInManager)
+        public UserController(UserManager<UserEntity> userManager, ApplicationDbContext context, SignInManager<UserEntity> signInManager,IBlockedUserRepository blockedUserRepository)
         {
             _userManager = userManager;
             _context = context;
             _signInManager = signInManager;
+            _blockedUserRepository = blockedUserRepository;
         }
-
+        public async Task<IActionResult> BlockedList() 
+        {
+            var blockedList =await _blockedUserRepository.GetAllBlockedBy(_userManager.GetUserId(User));
+            return View("BlockedList", blockedList);
+        }
+        public async Task<IActionResult> Unblock(int Id) 
+        {
+            _blockedUserRepository.Delete(Id);
+            return RedirectToAction("BlockedList");
+        }
         // Akcja do wyświetlania profilu użytkownika
         public IActionResult Profile(string username)
         {

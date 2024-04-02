@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using ProjektMVCdotnet8.Areas.Identity.Data;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
+using ProjektMVCdotnet8.Models;
 using ProjektMVCdotnet8.Repository;
 namespace ProjektMVCdotnet8.Controllers
 {
@@ -14,10 +15,11 @@ namespace ProjektMVCdotnet8.Controllers
         private readonly ICommentRepository _commentRepository;
         private readonly IBlockedUserRepository _blockedUserRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         private readonly SignInManager<UserEntity> _signInManager;
         private readonly UserManager<UserEntity> _userManager;
-        public PostController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository, IBlockedUserRepository blockedUserRepository, IUserRepository userRepository)
+        public PostController(UserManager<UserEntity> userManager, SignInManager<UserEntity> signInManager, IPostRepository postRepository, IFollowUserRepository followUserRepository, ICommentRepository commentRepository, IBlockedUserRepository blockedUserRepository, IUserRepository userRepository, ICategoryRepository categoryRepository)
         {
             _postRepository = postRepository;
             _commentRepository = commentRepository;
@@ -26,6 +28,7 @@ namespace ProjektMVCdotnet8.Controllers
             _followUserRepository = followUserRepository;
             _blockedUserRepository = blockedUserRepository;
             _userRepository = userRepository;
+            _categoryRepository = categoryRepository;
         }
 
         // Wyświetla strone z danymi postami na podstawie kategorii. Odfiltruje posty blokowanych użytkowników
@@ -270,6 +273,60 @@ namespace ProjektMVCdotnet8.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+        }
+        public async Task<IActionResult> CreatePost([Bind("Id,Title,PostContent,AttachmentSource,Categories,isLocal")] PostModel postModel)
+        {
+            var loggedUser = await _userManager.GetUserAsync(User);
+
+            PostEntity postEntity = new PostEntity();
+            postEntity.Title = postModel.Title;
+            postEntity.PostContent = postModel.PostContent;
+            postEntity.AuthorUser = loggedUser;
+            postEntity.CreatedDate = DateTime.Now;
+            postEntity.isLocal = postModel.isLocal;
+
+            if (postModel.AttachmentSource != null && postModel.AttachmentSource.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "attachments");
+                if (!Directory.Exists(uploadsFolder))
+                    Directory.CreateDirectory(uploadsFolder);
+                string uniqueFileName = Guid.NewGuid().ToString() + "_" + postModel.AttachmentSource.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await postModel.AttachmentSource.CopyToAsync(fileStream);
+                }
+                Console.WriteLine(uniqueFileName);
+                postEntity.AttachmentSource = uniqueFileName;
+            }
+            else
+            {
+                postEntity.AttachmentSource = null;
+            }
+            postEntity.Categories = new List<CategoryEntity>();
+            var selectedCategoryIds = Request.Form["SelectedCategories"].ToList();
+            foreach (var categoryId in selectedCategoryIds)
+            {
+                var category = await _categoryRepository.GetById(int.Parse(categoryId));
+                if (category != null)
+                {
+                    postEntity.Categories.Add(category);
+                }
+            }
+
+            if (postEntity.Categories.Count == 0)
+            {
+                return RedirectToAction("AddPost", "Home", postModel);
+            }
+
+
+            loggedUser.Points += 1000;
+            _postRepository.Add(postEntity);
+            //string Information = _context.Categories.FirstOrDefault(c => c.Id == int.Parse(selectedCategoryIds[0])).CategoryName;
+            var firstSelectedCategory = await _categoryRepository.GetById(int.Parse(selectedCategoryIds[0]));
+            string Information = firstSelectedCategory.CategoryName;
+            string site = "Index";
+            return RedirectToAction("Index", "Post", new { Information, site });
         }
     }
 }

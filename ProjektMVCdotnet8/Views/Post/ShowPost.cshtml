@@ -16,10 +16,16 @@
     <div class="card p-0 col-sm-8">
 
         <!-- Wyświetlanie zdjęcia -->
-        <div class="card-img-top border-bottom p-3">
-            <img src="/attachments/@Model.AttachmentSource" class="img-fluid col-sm-12" alt="Zdjęcie">
-        </div>
+        @if (Model.AttachmentSource is null)
+        {
 
+        }
+        else
+        {
+            <div class="card-img-top border-bottom p-3">
+                <img src="/attachments/@Model.AttachmentSource" class="img-fluid col-sm-12" alt="Zdjęcie">
+            </div>
+        }
         <!-- Wyświetlanie awatara oraz tręści -->
         <div class="card-body border-bottom p-3">
             <div class="card-header card-text d-flex flex-row sm-1">

@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using ProjektMVCdotnet8.Areas.Identity.Data;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProjektMVCdotnet8.Entities;
 using ProjektMVCdotnet8.Interfaces;
-using ProjektMVCdotnet8.Repository;
 
 namespace ProjektMVCdotnet8.Controllers
 {
@@ -48,12 +40,12 @@ namespace ProjektMVCdotnet8.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ReportContent")] ReportPostEntity reportPostEntity,int repPost)
+        public async Task<IActionResult> Create([Bind("Id,ReportContent")] ReportPostEntity reportPostEntity, int repPost)
         {
             reportPostEntity.ReportedPost = await _postRepository.GetById(repPost);
             reportPostEntity.postId = repPost;
             _reportRepository.Add(reportPostEntity);
-            return RedirectToAction("ThxForReport","Home");
+            return RedirectToAction("ThxForReport", "Home");
         }
 
         // GET: ReportPostEntities/Delete/5

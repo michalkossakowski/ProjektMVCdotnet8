@@ -124,7 +124,7 @@ namespace ProjektMVCdotnet8.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-                user.Nick = Input.UserName;
+                user.UserName = Input.UserName;
                 user.Country = Input.Country;
                 user.City = Input.City;
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);

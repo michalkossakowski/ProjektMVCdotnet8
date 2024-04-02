@@ -10,7 +10,6 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
 {
     public class UserEntity : IdentityUser
     {
-        public string Nick { get; set; }
 
         [Display(Name = "Kraj pochodzenia")]
         public string? Country { get; set; }

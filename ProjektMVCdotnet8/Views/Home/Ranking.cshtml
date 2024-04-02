@@ -51,7 +51,7 @@
                     }
                     @foreach (var user in usersByPosts)
                     {
-                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning border border-1" : (user.Item1 == loggedInUsername) ? "table-primary border border-1" : (user.Equals(topUserByPoints)) ? "table-warning border border-1" : "")">
+                        <tr class="@((user.Equals(topUserByPosts) && user.Item1 == loggedInUsername) ? "table-warning border border-1" : (user.Item1 == loggedInUsername) ? "table-primary border border-1" : (user.Equals(topUserByPosts)) ? "table-warning border border-1" : "")">
                             <td>
                                 <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none; color: var(--bs-primary);">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
@@ -79,7 +79,7 @@
                     }
                     @foreach (var user in usersByComments)
                     {
-                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning border border-1" : (user.Item1 == loggedInUsername) ? "table-primary border border-1" : (user.Equals(topUserByPoints)) ? "table-warning border border-1" : "")">
+                        <tr class="@((user.Equals(topUserByComments) && user.Item1 == loggedInUsername) ? "table-warning border border-1" : (user.Item1 == loggedInUsername) ? "table-primary border border-1" : (user.Equals(topUserByComments)) ? "table-warning border border-1" : "")">
                             <td>
                                 <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none; color: var(--bs-primary);">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1

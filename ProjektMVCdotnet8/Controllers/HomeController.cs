@@ -34,7 +34,7 @@ namespace ProjektMVCdotnet8.Controllers
             }
             else
             {
-                var currentUser = _context.Users.FirstOrDefault(u => u.Nick == _userManager.GetUserName(User));
+                var currentUser = _context.Users.FirstOrDefault(u => u.UserName == _userManager.GetUserName(User));
                 ViewBag.userPoints = currentUser.Points;
             }
           
@@ -146,12 +146,12 @@ namespace ProjektMVCdotnet8.Controllers
             ViewBag.CurrentUser = user;
 
             var user2 = chat.User1Nick;
-            if (user.Nick == user2)
+            if (user.UserName == user2)
             {
                 user2 = chat.User2Nick;
             }
             ViewBag.SecondUser = user2;
-            string avatar2 = _context.Users.FirstOrDefault(u => u.Nick == user2).Avatar;
+            string avatar2 = _context.Users.FirstOrDefault(u => u.UserName == user2).Avatar;
             ViewBag.SecondAvatar = avatar2;
             return View(await _context.Messages.ToListAsync());
         }
@@ -182,16 +182,13 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "testuser";
                 userEntity.NormalizedUserName = "TESTUSER";
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
-                userEntity.Nick = "testuser";
                 userEntity.Avatar = "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
                 userEntity.Points = 3000;
                 _context.Users.Add(userEntity);
-
                 userEntity = new UserEntity();
                 userEntity.Email = "test2@user";
                 userEntity.UserName = "test2user";
                 userEntity.NormalizedUserName = "TEST2USER";
-                userEntity.Nick = "test2user";
                 userEntity.PasswordHash = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.Points = 8000;
                 _context.Users.Add(userEntity);
@@ -200,7 +197,6 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.Email = "test3@user";
                 userEntity.UserName = "test3user";
                 userEntity.NormalizedUserName = "TEST3USER";
-                userEntity.Nick = "test3user";
                 userEntity.Avatar = "szop_skywalker.jpg";
                 userEntity.PasswordHash = has.HashPassword(userEntity, "zaq1@WSX");
                 userEntity.Points = 3000;
@@ -210,7 +206,6 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.Email = "admin@user";
                 userEntity.UserName = "admin";
                 userEntity.NormalizedUserName = "ADMIN";
-                userEntity.Nick = "admin";
                 userEntity.Avatar = "szop_toronto.jpg";
                 userEntity.PasswordHash = has.HashPassword(userEntity, "a");
                 userEntity.Points = 0;
@@ -391,9 +386,9 @@ namespace ProjektMVCdotnet8.Controllers
                 var user11 = _context.Users.FirstOrDefault(u => u.Email == "test@user");
                 var user12 = _context.Users.FirstOrDefault(u => u.Email == "test2@user");
                 chatEntity1.ChattingUser1 = user11;
-                chatEntity1.User1Nick = user11.Nick;
+                chatEntity1.User1Nick = user11.UserName;
                 chatEntity1.ChattingUser2 = user12;
-                chatEntity1.User2Nick = user12.Nick;
+                chatEntity1.User2Nick = user12.UserName;
                 _context.Add(chatEntity1);
 
                 MessageEntity messageEntity1 = new MessageEntity();
@@ -408,11 +403,10 @@ namespace ProjektMVCdotnet8.Controllers
                 var user21 = _context.Users.FirstOrDefault(u => u.Email == "test@user");
                 var user22 = _context.Users.FirstOrDefault(u => u.Email == "test3@user");
                 chatEntity2.ChattingUser1 = user21;
-                chatEntity2.User1Nick = user21.Nick;
+                chatEntity2.User1Nick = user21.UserName;
                 chatEntity2.ChattingUser2 = user22;
-                chatEntity2.User2Nick = user22.Nick;
+                chatEntity2.User2Nick = user22.UserName;
                 _context.Add(chatEntity2);
-
                 MessageEntity messageEntity2 = new MessageEntity();
                 messageEntity2.MessageContent = "Rozpoczęcie chatu";
                 messageEntity2.UsedChat = chatEntity2;

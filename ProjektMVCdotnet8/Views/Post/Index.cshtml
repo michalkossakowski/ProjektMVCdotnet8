@@ -19,153 +19,298 @@
     </div>
     @foreach (var element in Model)
     {
-        <div class="card border-3 mb-3 " style="width:100%">
-            <div class="row g-0">
+        if (element.AttachmentSource == null)
+        {
+                    <div class="col-md-12 d-flex flex-column">
 
-                <!-- Wyświetlanie zdjęcia postu -->
-                <div class="col-md-4 border-3 border-end">
-                    <img src="/attachments/@element.AttachmentSource" class="card-img-top"  alt="Alternate Text" />
-                </div>
-
-                <div class="col-md-8 d-flex flex-column">
-
-                    <!-- Wyświetlanie Profilu -->
-                    <div class="card-header card-text d-flex flex-row sm-1">
-                        <div class="sm-2">
-                            @{ 
-                                string str = "/attachments/" + element.AuthorUser.Avatar;
-                            }
-                            <a href="@Url.Action("Profile", "User", new { username = element.AuthorUser.UserName })" style="text-decoration: none;">
-                                <img src=@str class=" awatar rounded-circle img-fluid border border-2 border-primary img-link" alt="Alternate Text" />
-                            </a>
+                        <!-- Wyświetlanie Profilu -->
+                        <div class="card-header card-text d-flex flex-row sm-1">
+                            <div class="sm-2">
+                                @{
+                                    string str = "/attachments/" + element.AuthorUser.Avatar;
+                                }
+                                <a href="@Url.Action("Profile", "User", new { username = element.AuthorUser.UserName })" style="text-decoration: none;">
+                                    <img src=@str class=" awatar rounded-circle img-fluid border border-2 border-primary img-link" alt="Alternate Text" />
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <small class="text-muted">Autor: @element.AuthorUser.UserName<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
+                            </div>
                         </div>
-                        <div class="p-2">
-                            <small class="text-muted">Autor: @element.AuthorUser.UserName<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
+
+                        <!-- Wyświetlanie Tytułu z zawartością -->
+                        <div class="card-body">
+                            <h5 class="card-title">@element.Title</h5>
+                            <p class="card-text">@element.PostContent</p>
                         </div>
-                    </div>
-
-                    <!-- Wyświetlanie Tytułu z zawartością -->
-                    <div class="card-body">
-                        <h5 class="card-title">@element.Title</h5>
-                        <p class="card-text">@element.PostContent</p>
-                    </div>
 
 
-                    <hr />
-                    <!-- Modal -->
-                    <div class="modal fade" id="postModal@(element.Id)" tabindex="-1" aria-labelledby="postModalLabel@(element.Id)" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h1 class="modal-title fs-5" id="postModalLabel@(element.Id)">Komentarze:</h1>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
-                                </div>
-                                <div class="modal-body">
-                                    @{
-                                        int publishedComments = 0;
-                                        if (ViewBag.Comments != null)
-                                        {
-                                            foreach (var comment in ViewBag.Comments)
+                        <hr />
+                        <!-- Modal -->
+                        <div class="modal fade" id="postModal@(element.Id)" tabindex="-1" aria-labelledby="postModalLabel@(element.Id)" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="postModalLabel@(element.Id)">Komentarze:</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @{
+                                            int publishedComments = 0;
+                                            if (ViewBag.Comments != null)
                                             {
-                                                if (comment.CommentedPost == element)
+                                                foreach (var comment in ViewBag.Comments)
                                                 {
-                                                    <div class=" mb-2">
-                                                        <div class="row">
-                                                            <div class="col-2">
-                                                                <a href="@Url.Action("Profile", "User", new { username = comment.userNick })" style="text-decoration: none;">
-                                                                <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
-                                                                </a>
-                                                                <small class="text-muted">@comment.userNick</small>
-                                                                <small class="text-muted"><br>@comment.CreatedDate.ToString("dd.MM.yyyy HH:mm")</small>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                @comment.CommentContent
+                                                    if (comment.CommentedPost == element)
+                                                    {
+                                                        <div class=" mb-2">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                    <a href="@Url.Action("Profile", "User", new { username = comment.userNick })" style="text-decoration: none;">
+                                                                        <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
+                                                                    </a>
+                                                                    <small class="text-muted">@comment.userNick</small>
+                                                                    <small class="text-muted"><br>@comment.CreatedDate.ToString("dd.MM.yyyy HH:mm")</small>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    @comment.CommentContent
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    publishedComments += 1;
+                                                        publishedComments += 1;
+                                                    }
                                                 }
                                             }
                                         }
-                                    }
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Zamknij</button>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Zamknij</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div style="margin-bottom: 10px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
-                            Komentarze(@publishedComments)
-                        </button>
-                        <br>
-                        @if (SignInManager.IsSignedIn(User))
+                        <div style="margin-bottom: 10px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
+                                Komentarze(@publishedComments)
+                            </button>
+                            <br>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
+                                    <input type="hidden" name="postId" value="@element.Id" />
+                                    <input type="hidden" name="Information" value="@TempData["Information"]" />
+                                    <input type="hidden" name="Site" value="@TempData["Site"]" />
+                                    <div class="form-group mb-0 flex-grow-1 mr-3">
+                                        <div class="input-group mb-3">
+                                            <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />
+                                            <div class="input-group-append">
+                                                <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+
+                        </div>
+
+
+                        <!-- Funkcje dla zalogowanego użytkownika -->
+                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
                         {
-                            <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
-                                <input type="hidden" name="postId" value="@element.Id" />
-                                <input type="hidden" name="Information" value="@TempData["Information"]" />
-                                <input type="hidden" name="Site" value="@TempData["Site"]" />
-                                <div class="form-group mb-0 flex-grow-1 mr-3">
-                                    <div class="input-group mb-3">
-                                        <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />
-                                        <div class="input-group-append">
-                                            <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
+                            <div class="card-footer">
+                                <div class="container">
+                                    <div class="d-flex flex-nowrap justify-content-end">
+                                        <div class="col-sm-1 text-center">
+                                            <a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site = "Home"})">
+                                                <span class="material-icons">
+                                                    block
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-1 text-center ">
+                                            @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
+                                            {
+                                                <a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
+                                                    <span class="material-icons">
+                                                        person_remove
+                                                    </span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"] })">
+                                                    <span class="material-icons">
+                                                        person_add
+                                                    </span>
+                                                </a>
+                                            }
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <a href="/ReportPostEntities/Create?repPost=@element.Id">
+                                                <span class="material-icons">
+                                                    report
+                                                </span>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            </div>
                         }
+                    </div>
+        }
+        else
+        {
+            <div class="card border-3 mb-3 " style="width:100%">
+                <div class="row g-0">
 
+
+                    <!-- Wyświetlanie zdjęcia postu -->
+                    <div class="col-md-4 border-3 border-end">
+                        <img src="/attachments/@element.AttachmentSource" class="card-img-top" alt="Alternate Text" />
                     </div>
 
+                    <div class="col-md-8 d-flex flex-column">
 
-                    <!-- Funkcje dla zalogowanego użytkownika -->
-                    @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
-                    {
-                        <div class="card-footer">
-                            <div class="container">
-                                <div class="d-flex flex-nowrap justify-content-end">
-                                    <div class="col-sm-1 text-center">
-                                        <a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site = "Home"})">
-                                            <span class="material-icons">
-                                                block
-                                            </span>
-                                        </a>
+                        <!-- Wyświetlanie Profilu -->
+                        <div class="card-header card-text d-flex flex-row sm-1">
+                            <div class="sm-2">
+                                @{
+                                    string str = "/attachments/" + element.AuthorUser.Avatar;
+                                }
+                                <a href="@Url.Action("Profile", "User", new { username = element.AuthorUser.UserName })" style="text-decoration: none;">
+                                    <img src=@str class=" awatar rounded-circle img-fluid border border-2 border-primary img-link" alt="Alternate Text" />
+                                </a>
+                            </div>
+                            <div class="p-2">
+                                <small class="text-muted">Autor: @element.AuthorUser.UserName<br>@element.CreatedDate.ToString("MMMM dd, yyyy HH:mm") </small>
+                            </div>
+                        </div>
+
+                        <!-- Wyświetlanie Tytułu z zawartością -->
+                        <div class="card-body">
+                            <h5 class="card-title">@element.Title</h5>
+                            <p class="card-text">@element.PostContent</p>
+                        </div>
+
+
+                        <hr />
+                        <!-- Modal -->
+                        <div class="modal fade" id="postModal@(element.Id)" tabindex="-1" aria-labelledby="postModalLabel@(element.Id)" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="postModalLabel@(element.Id)">Komentarze:</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
                                     </div>
-                                    <div class="col-sm-1 text-center ">
-                                        @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
-                                        {
-                                            <a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
-                                                <span class="material-icons">
-                                                    person_remove
-                                                </span>
-                                            </a>
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"] })">
-                                                <span class="material-icons">
-                                                    person_add
-                                                </span>
-                                            </a>
+                                    <div class="modal-body">
+                                        @{
+                                            int publishedComments = 0;
+                                            if (ViewBag.Comments != null)
+                                            {
+                                                foreach (var comment in ViewBag.Comments)
+                                                {
+                                                    if (comment.CommentedPost == element)
+                                                    {
+                                                        <div class=" mb-2">
+                                                            <div class="row">
+                                                                <div class="col-2">
+                                                                    <a href="@Url.Action("Profile", "User", new { username = comment.userNick })" style="text-decoration: none;">
+                                                                        <img src="/attachments/@comment.AuthorUser.Avatar" class="rounded-circle img-fluid border border-2" style="height: 30px;width: 30px;" alt="Alternate Text" />
+                                                                    </a>
+                                                                    <small class="text-muted">@comment.userNick</small>
+                                                                    <small class="text-muted"><br>@comment.CreatedDate.ToString("dd.MM.yyyy HH:mm")</small>
+                                                                </div>
+                                                                <div class="col-8">
+                                                                    @comment.CommentContent
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        publishedComments += 1;
+                                                    }
+                                                }
+                                            }
                                         }
                                     </div>
-                                    <div class="col-sm-1 text-center">
-                                        <a href="/ReportPostEntities/Create?repPost=@element.Id">
-                                            <span class="material-icons">
-                                                report
-                                            </span>
-                                        </a>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Zamknij</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    }
+                        <div style="margin-bottom: 10px; margin-left: 20px; margin-top: 0px;margin-right: 20px">
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#postModal@(element.Id)">
+                                Komentarze(@publishedComments)
+                            </button>
+                            <br>
+                            @if (SignInManager.IsSignedIn(User))
+                            {
+                                <form asp-action="AddComment" method="post" class="d-flex flex-grow-1">
+                                    <input type="hidden" name="postId" value="@element.Id" />
+                                    <input type="hidden" name="Information" value="@TempData["Information"]" />
+                                    <input type="hidden" name="Site" value="@TempData["Site"]" />
+                                    <div class="form-group mb-0 flex-grow-1 mr-3">
+                                        <div class="input-group mb-3">
+                                            <input placeholder="Dodaj komentarz ..." class="form-control" type="text" name="commentContent" value="" required />
+                                            <div class="input-group-append">
+                                                <input class="btn btn-primary" type="submit" name="submit" value="Dodaj" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            }
+
+                        </div>
+
+
+                        <!-- Funkcje dla zalogowanego użytkownika -->
+                        @if (SignInManager.IsSignedIn(User) && !element.AuthorUser.Id.Equals(UserManager.GetUserId(User)))
+                        {
+                            <div class="card-footer">
+                                <div class="container">
+                                    <div class="d-flex flex-nowrap justify-content-end">
+                                        <div class="col-sm-1 text-center">
+                                            <a href="@Url.Action("Block", "Post", new { BlockedUserId = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site = "Home"})">
+                                                <span class="material-icons">
+                                                    block
+                                                </span>
+                                            </a>
+                                        </div>
+                                        <div class="col-sm-1 text-center ">
+                                            @if (followedUsers.Contains(element.AuthorUser.Id.ToString()))
+                                            {
+                                                <a href="@Url.Action("Unfollow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"]})">
+                                                    <span class="material-icons">
+                                                        person_remove
+                                                    </span>
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Action("Follow", "Post", new { FollowedUserID = element.AuthorUser.Id.ToString(), Information = TempData["Information"], Site =TempData["Site"] })">
+                                                    <span class="material-icons">
+                                                        person_add
+                                                    </span>
+                                                </a>
+                                            }
+                                        </div>
+                                        <div class="col-sm-1 text-center">
+                                            <a href="/ReportPostEntities/Create?repPost=@element.Id">
+                                                <span class="material-icons">
+                                                    report
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        
     }
 </div>
 

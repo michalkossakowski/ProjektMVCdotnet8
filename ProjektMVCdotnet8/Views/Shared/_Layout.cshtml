@@ -5,23 +5,20 @@
 @inject UserManager<UserEntity> UserManager
 @{
     var loggedInUser = await UserManager.GetUserAsync(User);
-
     string theme = "light";
     if (loggedInUser != null)
     {
         if (loggedInUser.Mode == "dark")
-        {
             theme = "dark";
-        }
-    }
-    if (loggedInUser != null)
-    {
         if (loggedInUser.Mode == "gray-red")
-        {
             theme = "gray-red";
-        }
+        if (loggedInUser.Mode == "light")
+            theme = "light";
+        if (loggedInUser.Mode == "midnight")
+            theme = "midnight";
+        if (loggedInUser.Mode == "szambo")
+            theme = "szambo";
     }
-
 }
 
 <!do obsługi!/>
@@ -91,14 +88,23 @@
                     <partial name="_LoginPartial.cshtml" />
                     @if (loggedInUser != null)
                     {
-                        <form asp-controller="Home" asp-action="ChangeMode" method="post" style="margin: auto;">
-                            <select class="form-select" name="theme" id="themeSelect" style="margin-right: 10px;">
-                                <option value="light">Light</option>
-                                <option value="dark">Dark</option>
-                                <option value="gray-red">Gray & Red</option>
-                            </select>
-                            <input class="btn btn-outline-primary" type="submit" name="submit" value="Change Theme" />
+                        <form asp-controller="Home" asp-action="ChangeMode" method="post" id="themeForm" style="margin: auto;">
+                            <div class="input-group">
+                                <select class="form-select" name="theme" id="themeSelect">
+                                    <option selected>Motywy</option>
+                                    <option value="light">Jasny</option>
+                                    <option value="dark">Ciemny</option>
+                                    <option value="gray-red">Szaro-Czerwony</option>
+                                    <option value="midnight">Północ</option>
+                                    <option value="szambo">Szambo</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-primary" type="submit">Zmień</button>
+                                </div>
+                            </div>
                         </form>
+
+
                     }
                 </div>
             </div>
@@ -122,4 +128,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
+
 </html>

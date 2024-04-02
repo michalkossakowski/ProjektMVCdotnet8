@@ -189,6 +189,12 @@ namespace ProjektMVCdotnet8.Controllers
                 case "gray-red":
                     user.Mode = "gray-red";
                     break;
+                case "midnight":
+                    user.Mode = "midnight";
+                    break;
+                case "szambo":
+                    user.Mode = "szambo";
+                    break;
                 default:
                     user.Mode = "light";
                     break;

@@ -3,9 +3,7 @@
 @using ProjektMVCdotnet8.Areas.Identity.Pages.Account.Manage
 @using ProjektMVCdotnet8.Entities
 @model IEnumerable<ProjektMVCdotnet8.Entities.BlockedUserEntity>
-
 <h1 class="display-4">Lista zablokowanych:</h1>
-
 <table class="table">
     <thead>
         <tr>
@@ -31,9 +29,9 @@
             string str = "/attachments/" + item.BlockedUser.Avatar;     
             <tr>
                 <td>
-                    <a href="@Url.Action("Profile", "User", new { username = item.BlockedUser.UserName })" style="text-decoration: none;">
+                 @*    <a href="@Url.Action("Profile", "User", new { username = item.BlockedUser.UserName })" style="text-decoration: none;">
                         <img src=@str class=" awatar rounded-circle img-fluid border border-2 border-primary img-link" alt="Alternate Text" />
-                    </a>
+                    </a> *@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.BlockedUser.UserName)
@@ -47,3 +45,4 @@
             </tr>
         }
     </tbody>
+    </table>

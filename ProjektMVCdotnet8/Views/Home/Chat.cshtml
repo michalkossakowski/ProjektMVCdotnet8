@@ -47,7 +47,6 @@
     }
 
     .message-box2 {
-        background-color: #0d6efd;
         color: #ffffff;
         border-radius: 10px;
         padding: 10px;
@@ -92,9 +91,9 @@
                                             string str1 = "/attachments/" + ViewBag.CurrentUser.Avatar;
                                         }
                                         <img src=@str1 class="awatar rounded-circle img-fluid border border-2" alt="Alternate Text" />
-                                        <small style="margin-left: auto;">@ViewBag.CurrentUser</small>
+                                        <small style="margin-left: auto; color:black;">@ViewBag.CurrentUser</small>
                                         <div class="message-content">
-                                            <strong class="text-break">@item.MessageContent</strong>
+                                            <strong class="text-break" style="color:black">@item.MessageContent</strong>
                                         </div>
                                         <div class="message-date">
                                             <small>@item.SendDate.ToString("dd-MM-yyyy HH:mm:ss")</small>
@@ -105,7 +104,7 @@
                             else
                             {
                                 <div class="message-row2">
-                                    <div class="message-box2">
+                                    <div class="message-box2" style="background-color: var(--bs-primary);">
                                         @{
                                             string str2 = "/attachments/" + ViewBag.SecondAvatar;
                                         }

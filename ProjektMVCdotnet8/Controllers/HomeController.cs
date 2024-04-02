@@ -22,14 +22,16 @@ namespace ProjektMVCdotnet8.Controllers
 
         private IMessageRepository _messageRepository;
         private IChatRepository _chatRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<UserEntity> userManager, IMessageRepository messageRepository, IChatRepository chatRepository)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext context, UserManager<UserEntity> userManager, IMessageRepository messageRepository, IChatRepository chatRepository, ICategoryRepository categoryRepository)
         {
             _messageRepository = messageRepository;
             _chatRepository = chatRepository;
             _userManager = userManager;//do sprawdzenia uzytkowknika
             _logger = logger;
             _context = context;
+            _categoryRepository = categoryRepository;
             CreateElements();
         }
         public IActionResult Index()
@@ -65,12 +67,7 @@ namespace ProjektMVCdotnet8.Controllers
         }
         public IActionResult AddPost()
         {
-            List<CategoryEntity> nameCategory = new List<CategoryEntity>();
-            foreach (var el in _context.Categories)
-            {
-                nameCategory.Add(el);
-            }
-
+            var nameCategory = _categoryRepository.GetAllCategories();
             ViewBag.nameCategory = nameCategory;
             return View();
         }

@@ -8,7 +8,7 @@
     <div class="row mt-3 justify-content-center">
         <div class="col-md-4">
             <h2 class="text-center">Ranking według ilości punktów</h2>
-            <table class="table table-bordered">
+            <table class="table table-bordered border border-1">
                 <thead>
                     <tr>
                         <th scope="col">Użytkownik</th>
@@ -23,9 +23,9 @@
                     }
                     @foreach (var user in usersByPoints)
                     {
-                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning" : (user.Item1 == loggedInUsername) ? "table-primary" : (user.Equals(topUserByPoints)) ? "table-warning" : "")">
+                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning border border-1" : (user.Item1 == loggedInUsername) ? "table-primary border border-1" : (user.Equals(topUserByPoints)) ? "table-warning border border-1" : "")">
                             <td>
-                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
+                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none; color: var(--bs-primary);">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
                                 </a>
                             </td>
@@ -37,7 +37,7 @@
         </div>
         <div class="col-md-4">
             <h2 class="text-center">Ranking według ilości postów</h2>
-            <table class="table table-bordered">
+            <table class="table table-bordered border border-1">
                 <thead>
                     <tr>
                         <th scope="col">Użytkownik</th>
@@ -51,9 +51,9 @@
                     }
                     @foreach (var user in usersByPosts)
                     {
-                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning" : (user.Item1 == loggedInUsername) ? "table-primary" : (user.Equals(topUserByPoints)) ? "table-warning" : "")">
+                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning border border-1" : (user.Item1 == loggedInUsername) ? "table-primary border border-1" : (user.Equals(topUserByPoints)) ? "table-warning border border-1" : "")">
                             <td>
-                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
+                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none; color: var(--bs-primary);">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
                                 </a>
                             </td>
@@ -65,7 +65,7 @@
         </div>
         <div class="col-md-4">
             <h2 class="text-center">Ranking według ilości komentarzy</h2>
-            <table class="table table-bordered">
+            <table class="table table-bordered border border-1">
                 <thead>
                     <tr>
                         <th scope="col">Użytkownik</th>
@@ -79,9 +79,9 @@
                     }
                     @foreach (var user in usersByComments)
                     {
-                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning" : (user.Item1 == loggedInUsername) ? "table-primary" : (user.Equals(topUserByPoints)) ? "table-warning" : "")">
+                        <tr class="@((user.Equals(topUserByPoints) && user.Item1 == loggedInUsername) ? "table-warning border border-1" : (user.Item1 == loggedInUsername) ? "table-primary border border-1" : (user.Equals(topUserByPoints)) ? "table-warning border border-1" : "")">
                             <td>
-                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
+                                <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none; color: var(--bs-primary);">
                                     <img src="@user.Item5" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
                                 </a>
                             </td>

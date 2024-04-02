@@ -60,7 +60,7 @@
         <div class="col-md-3">
             <br />
             <h2 class="text-center display-4" style="font-size: 32px">Ranking według ilości punktów</h2>
-            <table class="table table-bordered">
+            <table class="table table-bordered border border-1">
                 <thead>
                     <tr>
                         <th scope="col">Użytkownik</th>
@@ -76,10 +76,10 @@
                             var topUserByPoints = usersByPoints.OrderByDescending(u => u.Item2).FirstOrDefault();
                             foreach (var user in usersByPoints)
                             {
-                                <tr class="@(user.Equals(topUserByPoints) ? "table-warning" : "") @(user.Item1 == loggedInUsername ? "table-primary" : "")">
+                                <tr class="@(user.Equals(topUserByPoints) ? "table-warning border border-1" : "") @(user.Item1 == loggedInUsername ? "table-primary border border-1" : "")">
                                     <td>
-                                        <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
-                                            <img src="@user.Item3" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
+                                        <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none; color: var(--bs-primary);">
+                                        <img src="@user.Item3" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
                                         </a>
                                     </td>
                                     <td>@user.Item2</td>

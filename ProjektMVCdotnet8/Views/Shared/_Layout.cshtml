@@ -18,12 +18,10 @@
             theme = "midnight";
         if (loggedInUser.Mode == "szambo")
             theme = "szambo";
+        if (loggedInUser.Mode == "purple")
+            theme = "purple";
     }
-}
-
-<!do obsługi!/>
-
-<!DOCTYPE html>
+}<!DOCTYPE html>
 <html lang="en" data-bs-theme=@theme>
 <head>
     <meta charset="utf-8" />
@@ -97,6 +95,7 @@
                                     <option value="gray-red">Szaro-Czerwony</option>
                                     <option value="midnight">Północ</option>
                                     <option value="szambo">Szambo</option>
+                                    <option value="purple">Fioletowy</option>
                                 </select>
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-primary" type="submit">Zmień</button>

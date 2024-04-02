@@ -125,6 +125,7 @@ root,
     --bs-primary: #dc3545; /* Red */
     --bs-link-color: #dc3545;
     --bs-link-hover-color: #dc3545;
+    --bs-link-color-rgb: 220, 53, 69;
 }
 
 [data-bs-theme="gray-red"] .btn-primary {
@@ -191,6 +192,7 @@ root,
     --bs-primary: #5e57c9;
     --bs-link-color: #6ea8fe;
     --bs-link-hover-color: #8bb9fe;
+    --bs-link-color-rgb: 110, 168, 254;
 }
 
 [data-bs-theme="midnight"] .btn-primary {
@@ -255,6 +257,7 @@ root,
     --bs-primary-bg-subtle: #874f4a; /* Light Szambo */
     --bs-primary-rgb: 31, 7, 5; /* Szambo */
     --bs-primary: #874f4a;
+    --bs-link-color-rgb: 135, 79, 74;
 }
 
 [data-bs-theme="szambo"] .btn-primary {
@@ -323,6 +326,7 @@ root,
     --bg-primary: #6f42c1;
     --bs-link-color: #6f42c1;
     --bs-link-hover-color: #6f42c1;
+    --bs-link-color-rgb: 111, 66, 193;
 }
 
 

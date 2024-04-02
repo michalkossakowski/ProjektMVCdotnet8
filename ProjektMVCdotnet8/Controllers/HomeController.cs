@@ -45,7 +45,18 @@ namespace ProjektMVCdotnet8.Controllers
                 var currentUser = _context.Users.FirstOrDefault(u => u.UserName == _userManager.GetUserName(User));
                 ViewBag.userPoints = currentUser.Points;
             }
-          
+            List<(string, int, string)> userList = new List<(string, int, string)>();
+
+            foreach (var user in _context.Users)
+            {
+                int points = (int)user.Points;
+                string avatar = "/attachments/" + user.Avatar;
+                userList.Add((user.UserName, points, avatar));
+            }
+
+            userList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
+
+            ViewBag.UserList = userList;
             return View();
         }
 
@@ -89,6 +100,7 @@ namespace ProjektMVCdotnet8.Controllers
         }
         public IActionResult Ranking()
         {
+            var currentuser = _userManager.GetUserName(User);
             List<(string, int, int, int, string)> userList = new List<(string, int, int, int, string)>();
 
             foreach (var user in _context.Users)
@@ -103,7 +115,7 @@ namespace ProjektMVCdotnet8.Controllers
             userList.Sort((x, y) => y.Item2.CompareTo(x.Item2));
 
             ViewBag.UserList = userList;
-
+            ViewBag.currentUser = currentuser;
             return View();
         }
         public IActionResult ChatList()
@@ -162,17 +174,29 @@ namespace ProjektMVCdotnet8.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public async Task<IActionResult> ChangeMode()
+        public async Task<IActionResult> ChangeMode(string theme)
         {
             var user = await _userManager.GetUserAsync(User);
-            if(user.Darkmode == false)
-                user.Darkmode = true;
-            else
-                user.Darkmode = false;
-            _context.SaveChanges();
+
+            switch (theme)
+            {
+                case "light":
+                    user.Mode = "light";
+                    break;
+                case "dark":
+                    user.Mode = "dark";
+                    break;
+                case "gray-red":
+                    user.Mode = "gray-red";
+                    break;
+                default:
+                    user.Mode = "light";
+                    break;
+            }
+
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");
         }
-
         public async void CreateElements()
         {
             if (_context.Users.IsNullOrEmpty())

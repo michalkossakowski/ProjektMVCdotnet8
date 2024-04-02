@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
 
 namespace ProjektMVCdotnet8.Areas.Identity.Data
 {
@@ -25,9 +26,8 @@ namespace ProjektMVCdotnet8.Areas.Identity.Data
         [Display(Name = "O Mnie")]
         public string? Description { get; set; }
 
-        [Display(Name = "Darkmode")]
-        public bool Darkmode { get; set; } = false;
-
+        [Display(Name = "Mode")]
+        public string Mode { get; set; } = "light";
     }
 }
 

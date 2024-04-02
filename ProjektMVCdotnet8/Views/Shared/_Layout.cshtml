@@ -9,9 +9,16 @@
     string theme = "light";
     if (loggedInUser != null)
     {
-        if (loggedInUser.Darkmode == true)
+        if (loggedInUser.Mode == "dark")
         {
             theme = "dark";
+        }
+    }
+    if (loggedInUser != null)
+    {
+        if (loggedInUser.Mode == "gray-red")
+        {
+            theme = "gray-red";
         }
     }
 
@@ -26,6 +33,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ProjektMVCdotnet8</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/custom-theme.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ProjektMVCdotnet8.styles.css" asp-append-version="true" />
 </head>
@@ -81,13 +89,16 @@
                         </li>
                     </ul>
                     <partial name="_LoginPartial.cshtml" />
-                    @{
-                        if (@loggedInUser != null)
-                        {
-                            <form asp-controller="Home" asp-action="ChangeMode" method="post" style="margin: auto;">
-                                <input class="btn btn-outline-primary" type="submit" name="submit" value="Motyw" style="margin-right: 10px;" />
-                            </form>
-                        }
+                    @if (loggedInUser != null)
+                    {
+                        <form asp-controller="Home" asp-action="ChangeMode" method="post" style="margin: auto;">
+                            <select class="form-select" name="theme" id="themeSelect" style="margin-right: 10px;">
+                                <option value="light">Light</option>
+                                <option value="dark">Dark</option>
+                                <option value="gray-red">Gray & Red</option>
+                            </select>
+                            <input class="btn btn-outline-primary" type="submit" name="submit" value="Change Theme" />
+                        </form>
                     }
                 </div>
             </div>

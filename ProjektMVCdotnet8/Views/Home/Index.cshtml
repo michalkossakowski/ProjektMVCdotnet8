@@ -6,48 +6,96 @@
 
 @inject SignInManager<UserEntity> SignInManager
 @inject UserManager<UserEntity> UserManager
+
 <div class="text-center">
     <h1 class="display-4">Witaj na forum ProjektMVCdotnet8!</h1>
 </div>
-<br />
-<div class="text-center">
-    <h1 class="display-4" style="font-size: 32px" >Wyszukaj interesujący cię temat:</h1>
-</div>
-    <form id="SearchForm" method="post" asp-controller="Post" asp-action="FindedPosts" class="container text-center w-50">
-    <div class="row justify-content-center">
-            <div class="col-sm-8 p-0">
-                <input class="form-control" id="liveSearchTitle" name="liveSearchTitle" placeholder="Szukam ..." required />
+<div class="container">
+    <div class="row">
+        <div class="col-md-9">
+            <br />
+            <div class="text-center">
+                <h1 class="display-4" style="font-size: 32px">Wyszukaj interesujący cię temat:</h1>
             </div>
-        <button class="col-sm-4 p-0 btn btn-primary" type="submit">Wyszukaj</button>
-        </div>
+            <form id="SearchForm" method="post" asp-controller="Post" asp-action="FindedPosts" class="container text-center w-50">
+                <div class="row justify-content-center">
+                    <div class="col-sm-8 p-0">
+                        <input class="form-control" id="liveSearchTitle" name="liveSearchTitle" placeholder="Szukam ..." required />
+                    </div>
+                    <button class="col-sm-4 p-0 btn btn-primary" type="submit">Wyszukaj</button>
+                </div>
+                <div id="result" class="row justify-content-start">
+                </div>
+            </form>
+            <div class="container text-center">
+                <h1 class="display-4" style="font-size: 32px">Wybierz interesującą cię kategorię:</h1>
+                <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Elektronika&Site=Index">Elektronika</a>
+                <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Elektryka&Site=Index">Elektryka</a>
+                <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Komputery&Site=Index">Komputery</a>
+                <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Programowanie&Site=Index">Programowanie</a>
+                <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Sieci&Site=Index">Sieci</a>
+                <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Spawanie&Site=Index">Spawanie</a>
+            </div>
+            <br />
+            @if (!(SignInManager.IsSignedIn(User)))
+            {
+                <div class="container text-center">
+                    <h1 class="display-4" style="font-size: 24px">Nie masz jeszcze konta?</h1>
+                    <a class="btn btn-success" style="font-size: 16px;" id="register" asp-area="Identity" asp-page="/Account/Register"><b>Zarejestruj się</b></a>
+                </div>
+            }
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="container text-center">
+                    <h1 class="display-4" style="font-size: 32px">Witaj ponownie @UserManager.GetUserName(User) !</h1>
+                    @{
+                        var points = ViewBag.userPoints;
+                    }
+                    <h1 class="display-4" style="font-size: 32px">Twoje punkty: @points</h1>
+                </div>
+            }
 
-    <div id="result" class="row justify-content-start list-group">
+            <script src="~/js/DynamicSearch.js" asp-append-version="true"></script>
         </div>
-    </form>
-<div class="container text-center">
-    <h1 class="display-4" style="font-size: 32px">Wybierz interesującą cię kategorię:</h1>
-    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Elektronika&Site=Index">Elektronika</a>
-    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Elektryka&Site=Index">Elektryka</a>
-    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Komputery&Site=Index">Komputery</a>
-    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Programowanie&Site=Index">Programowanie</a>
-    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Sieci&Site=Index">Sieci</a>
-    <a class="btn btn-primary" style="font-size: 16px" href="/Post?Information=Spawanie&Site=Index">Spawanie</a>
+        <div class="col-md-3">
+            <br />
+            <h2 class="text-center display-4" style="font-size: 32px">Ranking według ilości punktów</h2>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Użytkownik</th>
+                        <th scope="col">Punkty</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var usersByPoints = (List<(string, int, string)>)ViewBag.UserList;
+                        var loggedInUsername = @UserManager.GetUserName(User);
+                        if (usersByPoints != null)
+                        {
+                            var topUserByPoints = usersByPoints.OrderByDescending(u => u.Item2).FirstOrDefault();
+                            foreach (var user in usersByPoints)
+                            {
+                                <tr class="@(user.Equals(topUserByPoints) ? "table-warning" : "") @(user.Item1 == loggedInUsername ? "table-primary" : "")">
+                                    <td>
+                                        <a href="@Url.Action("Profile", "User", new { username = user.Item1})" style="text-decoration: none;">
+                                            <img src="@user.Item3" class="rounded-circle img-fluid border border-2 border border-primary" alt="Avatar" style="height: 40px; width: 40px;" /> @user.Item1
+                                        </a>
+                                    </td>
+                                    <td>@user.Item2</td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        //<div id="result" class="row justify-content-start list-group">
+        </div>
+    </div>
 </div>
 <br />
-@if(SignInManager.IsSignedIn(User))
-{
-    <div class="container text-center">
-        <h1 class="display-4" style="font-size: 32px" >Witaj ponownie @UserManager.GetUserName(User) !</h1>
-        @{
-            var points = ViewBag.userPoints;
-        }
-        <h1 class="display-4" style="font-size: 32px">Twoje punkty: @points</h1>
-    </div>
-}
-@if(!(SignInManager.IsSignedIn(User))){
-    <div class="container text-center">
-        <h1 class="display-4" style="font-size: 24px">Nie masz jeszcze konta?</h1>
-        <a class="btn btn-success" style="font-size: 16px;" id="register" asp-area="Identity" asp-page="/Account/Register"><b>Zarejestruj się</b></a>
-    </div>
-}
-<script src="~/js/DynamicSearch.js" asp-append-version="true"></script>
+
+
+
+
+

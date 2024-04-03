@@ -328,5 +328,18 @@ namespace ProjektMVCdotnet8.Controllers
             string site = "Index";
             return RedirectToAction("Index", "Post", new { Information, site });
         }
+        public async Task<IActionResult> ReviewPost(int id)
+        {
+            var postEntity = await _postRepository.GetById(id);
+            return View(postEntity);
+        }
+        [HttpPost, ActionName("ReviewPost")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ReviewConfirmed(int id)
+        {
+            var postEntity = await _postRepository.GetById(id);
+            _postRepository.Delete(postEntity);
+            return RedirectToAction("Index", "ReportPostEntities");
+        }
     }
 }

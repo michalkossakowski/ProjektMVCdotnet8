@@ -34,7 +34,7 @@
                         @{
                             int repPost = item.postId;
                         }
-                        <li class="list-group-item"> <a class="link-danger" asp-controller="PostEntities" asp-action="ReviewPost" asp-route-id="@repPost">Zdecyduj czy usunąć post</a></li>
+                        <li class="list-group-item"> <a class="link-danger" asp-controller="Post" asp-action="ReviewPost" asp-route-id="@repPost">Zdecyduj czy usunąć post</a></li>
                         <li class="list-group-item"> <a class="link-success" asp-action="Delete" asp-route-id="@item.Id">Usuń ze zgłoszonych postów</a></li>
                     </ul>
             </td>

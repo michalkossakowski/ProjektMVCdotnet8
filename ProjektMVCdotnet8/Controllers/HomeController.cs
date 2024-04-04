@@ -216,7 +216,7 @@ namespace ProjektMVCdotnet8.Controllers
                 userEntity.UserName = "testuser";
                 userEntity.NormalizedUserName = "TESTUSER";
                 userEntity.PasswordHash = "AQAAAAIAAYagAAAAEN5tTq6y4IMh2zyfDDricM7Ln3G6JYDvnYNJOeDL3n8K/wpvu1d6lbiEEAXwk/SYnw==";
-                userEntity.Avatar = "97c4b8d1-b58c-42d6-97a9-8dad3af404d4_profilowe.png";
+                userEntity.Avatar = "profilowe.png";
                 userEntity.Points = 3000;
                 _context.Users.Add(userEntity);
                 userEntity = new UserEntity();
@@ -284,13 +284,13 @@ namespace ProjektMVCdotnet8.Controllers
                 _context.Add(posts);
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Spawanie") || x.CategoryName.Equals("Sieci")).ToList();
-                AttachmentSource = ("26897dea-9740-40b0-a638-24e9e77bd528_image.png");
+                AttachmentSource = ("eryk.png");
                 posts = new PostEntity(user, "Dibrze czy nie dobrze?", "Jak to jest być skrybą, dobrze?\r\n\r\nA, wie pan, moim zdaniem to nie ma tak, że dobrze, albo że niedobrze.\r\nGdybym miał powiedzieć, co cenię w życiu najbardziej, powiedziałbym, że ludzi.\r\nLudzi, którzy podali mi pomocną dłoń, kiedy sobie nie radziłem, kiedy byłem sam,\r\ni co ciekawe, to właśnie przypadkowe spotkania wpływają na nasze życie.\r\nChodzi o to, że kiedy wyznaje się pewne wartości, nawet pozornie uniwersalne,\r\nbywa, że nie znajduje się zrozumienia, które by tak rzec, które pomaga się nam rozwijać.\r\nJa miałem szczęście, by tak rzec, ponieważ je znalazłem, i dziękuję życiu!\r\nDziękuję mu; życie to śpiew, życie to taniec, życie to miłość!\r\nWielu ludzi pyta mnie o to samo: ale jak ty to robisz, skąd czerpiesz tę radość? A ja odpowiadam, że to proste!\r\nTo umiłowanie życia. To właśnie ono sprawia, że dzisiaj na przykład buduję maszyny, a jutro – kto wie? Dlaczego by nie – oddam się pracy społecznej i będę, ot, choćby, sadzić... doć— m-marchew...\r\n\r\n", AttachmentSource, categories);
                 _context.Add(posts);
 
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Elektryka") || x.CategoryName.Equals("Elektronika")).ToList();
-                AttachmentSource = ("_dd417104-4aca-4b42-a483-d8c85bb48d3b.jfif");
+                AttachmentSource = ("dune.jfif");
                 posts = new PostEntity(user, "Dune", "Once upon a time, in a mystical realm known as Racoonia, a curious raccoon named Rolo found himself inexplicably transported from his cozy forest home to a parallel world. This world was unlike anything he had ever seen—a blend of ancient history, magic, and fantastical creatures.\r\n\r\nRolo’s Isekai Adventures: Chronicles of the Raccoon Sage\r\n\r\nThe Great Acorn Quest:\r\nRolo stumbled upon a prophecy etched into the bark of an ancient oak tree. It foretold that only a raccoon with a heart as brave as a squirrel’s would be able to retrieve the legendary Golden Acorn. This acorn, said to grant immense wisdom and power, was hidden deep within the Enchanted Forest.\r\nArmed with determination and a trusty acorn-shaped backpack, Rolo embarked on a perilous journey. Along the way, he encountered talking owls, mischievous sprites, and grumpy trolls—all of whom tested his wit and courage.\r\nThe Council of Creatures:\r\nIn the heart of Racoonia stood the majestic Tree of Ages, where representatives from various species convened. Rolo attended the Council of Creatures, where he met the wise Sage Squirrel and the elusive Fox Oracle.\r\nTogether, they discussed matters of magical balance, negotiated treaties between squirrels and chipmunks, and debated whether the neighboring Bunny Kingdom should be allowed to annex the carrot fields.\r\nThe Timeless Library:\r\nRolo discovered the Library of Lost Leaves, a place where forgotten stories and ancient scrolls resided. Here, he pored over dusty tomes, learning about the legendary raccoons of old—the ones who could transform into shadows, steal moonlight, and brew potions from dewdrops.\r\nHis favorite tale was that of Bandit the Clever, who outwitted a dragon by convincing it that shiny gems were mere pebbles.\r\nThe Moonlit Masquerade:\r\nEvery century, Racoonia hosted the grand Moonlit Masquerade, a magical ball where creatures from all corners of the realm gathered. Rolo donned a tiny tuxedo, complete with a miniature top hat, and danced with a graceful Fairy Fawn.\r\nAs the moon wove its silver threads, Rolo whispered secrets to the Starfire Beetles, who promised to light his way home.\r\nThe Portal’s Whispers:\r\nRolo’s ultimate quest was to find the", AttachmentSource, categories);
                 _context.Add(posts);
 
@@ -302,12 +302,12 @@ namespace ProjektMVCdotnet8.Controllers
 
                 user = _context.Users.FirstOrDefault(u => u.Email == "test2@user");
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie") || x.CategoryName.Equals("Elektryka")).ToList();
-                AttachmentSource = ("49626137-41bc-4b33-8707-f5f6573160fc_shopOpen-Photoroom.png");
+                AttachmentSource = ("shop.png");
                 posts = new PostEntity(user1, "Sklepikarz", "Exegi monumentum aere perennius\r\nregalique situ pyramidum altius,\r\nquod non imber edax, non aquilo impotens\r\npossit diruere aut innumerabilis\r\nannorum series et fuga temporum.\r\nnon omnis moriar multaque pars mei\r\nvitabit Libitinam; usque ego postera\r\ncrescam laude recens, dum Capitolium\r\nscandet cum tacita virgine pontifex.\r\ndicar, qua violens obstrepit Aufidus\r\net qua pauper aquae Daunus agrestium\r\nregnavit populorum, ex humili potens,\r\nprinceps Aeolium carmen ad Italos\r\ndeduxisse modos. sume superbiam\r\nquaesitam meritis et mihi Delphica\r\nlauro cinge volens, Melpomene, comam.", AttachmentSource, categories);
                 _context.Add(posts);
 
                 categories = _context.Categories.Where(x => x.CategoryName.Equals("Programowanie") || x.CategoryName.Equals("Elektronika")).ToList();
-                AttachmentSource = ("_04983ed1-cb43-40b4-802a-55586811b99f.jfif");
+                AttachmentSource = ("mcqueen.jfif");
                 posts = new PostEntity(user2, "I am speed, i am kebab", "Być szybkim kebabem to nie lada wyzwanie! Oto kilka wskazówek dla naszego niezwykłego kebaba, który marzy o byciu najszybszym:\r\n\r\nZwinność: Ćwicz swoje obroty! Wyobraź sobie, że jesteś na obracającej się rusztowni, a twoje mięso i warzywa muszą być gotowe w mgnieniu oka.\r\nSosy na turbo: Twoje sosy to twoje tajne bronie. Wybierz te o największym przyspieszeniu! Ostry czosnek, pikantny harissa czy pikantny kebabowy sos – to one dadzą ci przewagę.\r\nLekkość: Unikaj zbędnych dodatków. Niech twoje nadzienie będzie lekkie jak piórko. Mniej to więcej!\r\nAerodynamika: Wybierz cienkie placki na kebaba. Im mniej oporu powietrza, tym szybciej będziesz się poruszać.\r\nMotywacja: Wyobraź sobie, że jesteś na torze wyścigowym. Widzisz linię mety, a tłumy ludzi dopingują cię do przodu. To właśnie teraz jest twój moment!\r\nI pamiętaj, że być może nie osiągniesz prędkości samochodu sportowego, ale z pewnością będziesz najszybszym kebabem w okolicy! ", AttachmentSource, categories);
                 _context.Add(posts);
 

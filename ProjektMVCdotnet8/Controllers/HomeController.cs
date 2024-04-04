@@ -204,7 +204,8 @@ namespace ProjektMVCdotnet8.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            string returnUrl = Request.Headers["Referer"].ToString();
+            return Redirect(returnUrl);
         }
         public async void CreateElements()
         {

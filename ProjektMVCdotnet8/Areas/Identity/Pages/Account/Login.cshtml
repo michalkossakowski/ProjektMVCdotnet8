@@ -4,10 +4,9 @@
 @{
     ViewData["Title"] = "Logowanie";
 }
-
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+<div class="text-center d-flex justify-content-center">
     <div class="col-md-4">
+    <h1>@ViewData["Title"]</h1>
         <section>
             <form id="account" method="post">
               
@@ -47,35 +46,6 @@
                     </p>
                 </div>
             </form>
-        </section>
-    </div>
-    <div class="col-md-6 col-md-offset-2">
-        <section>
-            <h3>Inne metody logowania</h3>
-            <hr />
-            @{
-                if ((Model.ExternalLogins?.Count ?? 0) == 0)
-                {
-                    <div>
-                        <p>
-                            Tutaj dodam inne sposoby logowania się :P
-                        </p>
-                    </div>
-                }
-                else
-                {
-                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
-                        <div>
-                            <p>
-                                @foreach (var provider in Model.ExternalLogins!)
-                                {
-                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
-                                }
-                            </p>
-                        </div>
-                    </form>
-                }
-            }
         </section>
     </div>
 </div>

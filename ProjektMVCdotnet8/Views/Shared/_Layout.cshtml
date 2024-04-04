@@ -88,7 +88,7 @@
                     {
                         <form asp-controller="Home" asp-action="ChangeMode" method="post" id="themeForm" style="margin: auto;">
                             <div class="input-group">
-                                <select class="form-select" name="theme" id="themeSelect">
+                                <select class="form-select" name="theme" id="themeSelect" style="width: 110px">
                                     <option selected>Motywy</option>
                                     <option value="light">Jasny</option>
                                     <option value="dark">Ciemny</option>
@@ -98,7 +98,7 @@
                                     <option value="purple">Fioletowy</option>
                                 </select>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-primary" type="submit">Zmień</button>
+                                    <button class="btn btn-outline-primary" type="submit" hidden>Zmień</button>
                                 </div>
                             </div>
                         </form>
@@ -121,6 +121,15 @@
         </div>
 
     </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#themeSelect').change(function () {
+                $('#themeForm').submit();
+            });
+        });
+    </script>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
